@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildLexicon, findMatch, normalize, parseTemplate } from '../src/matcher.ts';
-import { loadContent } from '../src/content.ts';
+import { loadContent } from '../src/load-content.ts';
 
 const lexicon = buildLexicon(loadContent().words);
 

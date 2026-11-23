@@ -1,7 +1,7 @@
 [
   { "id": "p_order", "template": "我要 [数量][量词][东西]", "pinyin": "wǒ yào [数量][量词][东西]", "en": "I want [数量] [量词] of [东西]", "day": 1, "group": "点菜", "speaker": "customer", "why": "我要 = I want. Number + measure word + thing is how Chinese counts anything: 两碗面, 一瓶可乐." },
   { "id": "p_price_q", "template": "多少钱", "pinyin": "duōshao qián", "en": "How much is it?", "day": 1, "group": "付钱", "speaker": "customer", "why": "'many-few money?' No 吗 needed: 多少 already makes it a question." },
-  { "id": "p_price", "template": "[价钱]", "pinyin": "[价钱]", "en": "[价钱]", "day": 1, "group": "付钱", "speaker": "bot", "why": "Prices are spoken with 块: 三十六块 = 36 yuan." },
+  { "id": "p_price", "template": "[价钱]", "pinyin": "[价钱]", "en": "The price, e.g. 36 yuan", "day": 1, "group": "付钱", "speaker": "bot", "why": "Prices are spoken with 块: 三十六块 = 36 yuan." },
   { "id": "p_thanks", "template": "谢谢", "pinyin": "xièxie", "en": "Thank you", "day": 1, "group": "客气", "speaker": "customer" },
   { "id": "p_welcome", "template": "不客气", "pinyin": "búkèqi", "en": "You're welcome", "day": 1, "group": "客气", "speaker": "bot", "why": "'No need to be polite.' The standard answer to 谢谢." },
   { "id": "p_enjoy", "template": "请慢用", "pinyin": "qǐng mànyòng", "en": "Enjoy your meal", "day": 1, "group": "客气", "speaker": "bot", "why": "'Please use slowly': what staff say when the food arrives." },

@@ -1,32 +1,9 @@
-// Loads and checks the JSON content files in content/.
+// Content helpers shared by Node (CLI, tests) and the browser. No file access here:
+// Node loads the JSON with load-content.ts, the browser with ui/content.ts.
 
-import { existsSync, readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { buildLexicon, parseTemplate } from './matcher.ts';
 import type { Kitchen } from './interpreter.ts';
-import type { Content, CustomerType, Day, Pattern, Word } from './types.ts';
-
-const CONTENT_DIR = new URL('../content/', import.meta.url);
-
-function readJson<T>(name: string): T {
-  return JSON.parse(readFileSync(new URL(name, CONTENT_DIR), 'utf8')) as T;
-}
-
-export function loadContent(): Content {
-  const content: Content = {
-    words: readJson<Word[]>('words.json'),
-    patterns: readJson<Pattern[]>('patterns.json'),
-    customerTypes: readJson<CustomerType[]>('customers.json'),
-    days: readJson<Day[]>('days.json'),
-  };
-  const errors = validateContent(content);
-  if (errors.length) throw new Error(`content/ has problems:\n- ${errors.join('\n- ')}`);
-  return content;
-}
-
-export function contentPath(relative: string): string {
-  return fileURLToPath(new URL(relative, CONTENT_DIR));
-}
+import type { Content, Day, Word } from './types.ts';
 
 export function getDay(content: Content, n: number): Day {
   const day = content.days.find((d) => d.day === n);
@@ -79,7 +56,6 @@ export function validateContent(c: Content): string[] {
     for (const dish of d.soldOut) if (!d.menu.includes(dish)) errors.push(`Day ${d.day}: sold-out ${dish} is not on the menu`);
     if (d.soldOut.length >= d.menu.length) errors.push(`Day ${d.day}: everything is sold out`);
     for (const t of d.customerTypes) if (!types.has(t)) errors.push(`Day ${d.day}: unknown customer type ${t}`);
-    if (!existsSync(contentPath(d.sampleScript))) errors.push(`Day ${d.day}: missing sample script ${d.sampleScript}`);
   }
   for (const p of c.patterns) {
     if (!c.days.some((d) => d.newPatterns.includes(p.id))) errors.push(`pattern ${p.id} is not introduced on any day`);
@@ -87,28 +63,50 @@ export function validateContent(c: Content): string[] {
   return errors;
 }
 
-/** Pinyin by longest match against the word list, e.g. 我要两碗牛肉面 → wǒ yào liǎng wǎn niúròumiàn. */
-export function toPinyin(text: string, words: readonly Word[]): string {
-  const byHanzi = new Map(words.map((w) => [w.hanzi, w.pinyin]));
+export interface Token {
+  text: string;
+  /** The word this token is, if it's in the word list. */
+  word?: Word;
+}
+
+/** Splits text into known words by longest match: 我要两碗牛肉面 → 我 | 要 | 两 | 碗 | 牛肉面. */
+export function segment(text: string, words: readonly Word[]): Token[] {
+  const byHanzi = new Map(words.map((w) => [w.hanzi, w]));
   const maxLen = Math.max(...words.map((w) => w.hanzi.length));
-  const out: string[] = [];
+  const tokens: Token[] = [];
   let i = 0;
   while (i < text.length) {
-    let found = false;
-    for (let len = Math.min(maxLen, text.length - i); len >= 1; len--) {
-      const py = byHanzi.get(text.slice(i, i + len));
-      if (py) {
-        out.push(py);
-        i += len;
-        found = true;
-        break;
-      }
+    let found: Word | undefined;
+    for (let len = Math.min(maxLen, text.length - i); len >= 1 && !found; len--) {
+      found = byHanzi.get(text.slice(i, i + len));
     }
-    if (!found) {
-      const ch = text[i];
-      if (/[，。？！,.?!]/.test(ch) && out.length) out[out.length - 1] += ch === '，' ? ',' : ch === '。' ? '.' : ch === '？' ? '?' : ch === '！' ? '!' : ch;
-      else if (!/\s/.test(ch)) out.push(ch);
+    if (found) {
+      tokens.push({ text: found.hanzi, word: found });
+      i += found.hanzi.length;
+    } else {
+      const last = tokens.at(-1);
+      if (last && !last.word) last.text += text[i]; // glue unknown characters together
+      else tokens.push({ text: text[i] });
       i++;
+    }
+  }
+  return tokens;
+}
+
+const PUNCTUATION_PINYIN: Record<string, string> = { '，': ',', '。': '.', '？': '?', '！': '!', ',': ',', '.': '.', '?': '?', '!': '!' };
+
+/** Pinyin by longest match against the word list, e.g. 我要两碗牛肉面 → wǒ yào liǎng wǎn niúròumiàn. */
+export function toPinyin(text: string, words: readonly Word[]): string {
+  const out: string[] = [];
+  for (const t of segment(text, words)) {
+    if (t.word) {
+      out.push(t.word.pinyin);
+      continue;
+    }
+    for (const ch of t.text) {
+      const p = PUNCTUATION_PINYIN[ch];
+      if (p && out.length) out[out.length - 1] += p;
+      else if (!p && !/\s/.test(ch)) out.push(ch);
     }
   }
   return out.join(' ');

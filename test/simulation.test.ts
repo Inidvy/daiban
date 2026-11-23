@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { contentPath, getDay, loadContent, toPinyin, validateContent } from '../src/content.ts';
+import { getDay, segment, toPinyin, validateContent } from '../src/content.ts';
+import { contentPath, loadContent } from '../src/load-content.ts';
 import { parseTemplate } from '../src/matcher.ts';
 import { parseScript } from '../src/script.ts';
 import { runDay } from '../src/simulation.ts';

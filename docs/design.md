@@ -199,7 +199,7 @@ The MVP is one noodle shop over 5 days: about 15 sentence patterns, about 60 wor
 **Milestones:**
 
 - [x] M1: Content files for Days 1–5 and a text-only simulation that runs scripts against generated customers.
-- [ ] M2: Block-based script editor with Chinese blocks, why cards and sample scripts, plus TTS customer audio.
+- [x] M2: Block-based script editor with Chinese blocks, why cards and sample scripts, plus TTS customer audio.
 - [ ] M3: Visible simulation scene with funny failures, the menu board and a night-review replay.
 - [ ] M4: Voice input for script lines and the 代班 shift, with the hint ladder.
 - [ ] M5: Tone mirror, spaced-review scheduler, star scoring and visible-progress messages.

@@ -2,7 +2,8 @@
 
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
-import { contentPath, getDay, loadContent } from './content.ts';
+import { getDay } from './content.ts';
+import { contentPath, loadContent } from './load-content.ts';
 import { parseScript, ScriptError } from './script.ts';
 import { runDay } from './simulation.ts';
 

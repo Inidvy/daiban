@@ -1,15 +1,19 @@
 {
-  "//": "Only for editors and an optional `tsc` check. Node runs the .ts files directly (type stripping), so only erasable syntax is allowed.",
+  "//": "Only for editors and an optional `tsc` check. Node runs src/*.ts directly (type stripping), so core files use erasable syntax only. Vite builds the UI in src/ui.",
   "compilerOptions": {
     "target": "ES2023",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "types": ["vite/client"]
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "vite.config.ts"]
 }

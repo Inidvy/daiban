@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { getDay, kitchenFor, loadContent } from '../src/content.ts';
+import { getDay, kitchenFor } from '../src/content.ts';
+import { loadContent } from '../src/load-content.ts';
 import { newBotState, runTurn } from '../src/interpreter.ts';
 import { parseScript } from '../src/script.ts';
 

@@ -41,6 +41,8 @@ export interface Dials {
   politeness: number;
   /** Chance of changing their mind mid-order, from Day 5 (0–1). */
   mindChange: number;
+  /** Speaking speed: 0 = slow and clear, 1 = natural speed. */
+  speed: number;
 }
 
 export interface CustomerType {
@@ -50,6 +52,8 @@ export interface CustomerType {
   personality: string;
   firstDay: number;
   dials: Dials;
+  /** Text-to-speech pitch (0.5–1.5), so each personality sounds different. */
+  pitch: number;
 }
 
 export interface Day {

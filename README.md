@@ -2,13 +2,15 @@
 
 Learn spoken Chinese by programming noodle-shop bots in Chinese logic. Design: [docs/design.md](docs/design.md).
 
-**Status:** milestone M1: content for noodle-shop Days 1–5, pattern matcher, rule interpreter and a text-only simulation.
+**Status:** milestones M1–M2: noodle-shop Days 1–5, the logic language, a block script editor with why cards and sample scripts, and a lunch rush with spoken customers.
 
 ## Run
 
-Needs Node 23.6 or newer (runs TypeScript directly). No packages to install.
+Needs Node 23.6 or newer.
 
 ```powershell
+npm install
+npm run dev                                                     # the game at http://localhost:5173
 npm run sim -- --day 3                                          # Day 3 sample script, 20 customers
 npm run sim -- --day 5 --script content/scripts/day1.txt        # watch an old script break
 npm run sim -- --day 4 --seed 7 --customers 40 --quiet          # only show failing customers
@@ -29,6 +31,12 @@ npm test
 | `src/interpreter.ts` | Runs a script against one utterance at a time |
 | `src/simulation.ts` | Generates customers, serves them, judges the result, builds the night review |
 | `src/cli.ts` | Text-only lunch rush |
+| `src/print.ts`, `src/editor.ts`, `src/palette.ts` | Script printer, block editor model, which blocks unlock on which day |
+| `src/ui/` | React app: block editor, palette, why cards, lunch rush with speech, night review |
+
+## Audio
+
+Customers speak through the browser's built-in text-to-speech (zh-CN). Chrome and Edge include Chinese voices. If the device has none, the game shows customer text instead and says how to add a voice (Windows: Settings → Time & language → Speech → Add voices → 中文 (简体)).
 
 ## The script language
 
