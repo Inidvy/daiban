@@ -1,0 +1,27 @@
+[
+  { "id": "p_order", "template": "我要 [数量][量词][东西]", "pinyin": "wǒ yào [数量][量词][东西]", "en": "I want [数量] [量词] of [东西]", "day": 1, "group": "点菜", "speaker": "customer", "why": "我要 = I want. Number + measure word + thing is how Chinese counts anything: 两碗面, 一瓶可乐." },
+  { "id": "p_price_q", "template": "多少钱", "pinyin": "duōshao qián", "en": "How much is it?", "day": 1, "group": "付钱", "speaker": "customer", "why": "'many-few money?' No 吗 needed: 多少 already makes it a question." },
+  { "id": "p_price", "template": "[价钱]", "pinyin": "[价钱]", "en": "[价钱]", "day": 1, "group": "付钱", "speaker": "bot", "why": "Prices are spoken with 块: 三十六块 = 36 yuan." },
+  { "id": "p_thanks", "template": "谢谢", "pinyin": "xièxie", "en": "Thank you", "day": 1, "group": "客气", "speaker": "customer" },
+  { "id": "p_welcome", "template": "不客气", "pinyin": "búkèqi", "en": "You're welcome", "day": 1, "group": "客气", "speaker": "bot", "why": "'No need to be polite.' The standard answer to 谢谢." },
+  { "id": "p_enjoy", "template": "请慢用", "pinyin": "qǐng mànyòng", "en": "Enjoy your meal", "day": 1, "group": "客气", "speaker": "bot", "why": "'Please use slowly': what staff say when the food arrives." },
+
+  { "id": "p_have_q", "template": "有 [东西] 吗", "pinyin": "yǒu [东西] ma", "en": "Do you have [东西]?", "day": 2, "group": "点菜", "speaker": "customer", "why": "Statement + 吗 = yes/no question. 有牛肉面 (there is beef noodles) → 有牛肉面吗? (is there?)" },
+  { "id": "p_have", "template": "有", "pinyin": "yǒu", "en": "We have it", "day": 2, "group": "点菜", "speaker": "bot", "why": "To say yes, repeat the verb: 有吗? → 有." },
+  { "id": "p_sold_out", "template": "没有了", "pinyin": "méiyǒu le", "en": "It's sold out", "day": 2, "group": "点菜", "speaker": "bot", "why": "没有 = don't have; 了 = that changed: 'there was some, now there's none'." },
+  { "id": "p_bring", "template": "来 [数量][量词][东西]", "pinyin": "lái [数量][量词][东西]", "en": "Bring me [数量] [量词] of [东西]", "day": 2, "group": "点菜", "speaker": "customer", "why": "The casual way to order: 'come, one bowl'. Same slots as 我要." },
+
+  { "id": "p_no_spice", "template": "不要辣", "pinyin": "bú yào là", "en": "Not spicy, please", "day": 3, "group": "口味", "speaker": "customer", "why": "不要 = don't want. 不 becomes bú before a 4th tone (yào)." },
+  { "id": "p_mild", "template": "微辣", "pinyin": "wēi là", "en": "Mildly spicy", "day": 3, "group": "口味", "speaker": "customer" },
+  { "id": "p_takeaway", "template": "打包", "pinyin": "dǎbāo", "en": "To take away", "day": 3, "group": "吃法", "speaker": "customer" },
+  { "id": "p_eat_here", "template": "在这儿吃", "pinyin": "zài zhèr chī", "en": "To eat here", "day": 3, "group": "吃法", "speaker": "customer", "why": "Place comes before the verb: 在这儿 (at here) 吃 (eat)." },
+  { "id": "p_here_or_go", "template": "在这儿吃还是打包", "pinyin": "zài zhèr chī háishi dǎbāo", "en": "Eat here or take away?", "day": 3, "group": "吃法", "speaker": "bot", "why": "A 还是 B = A or B? No 吗: 还是 already makes it a question." },
+  { "id": "p_packing", "template": "好的，给您打包", "pinyin": "hǎode, gěi nín dǎbāo", "en": "OK, I'll pack it for you", "day": 3, "group": "吃法", "speaker": "bot" },
+
+  { "id": "p_scan", "template": "扫码", "pinyin": "sǎomǎ", "en": "Pay by QR code", "day": 4, "group": "付钱", "speaker": "customer" },
+  { "id": "p_cash", "template": "现金", "pinyin": "xiànjīn", "en": "Pay in cash", "day": 4, "group": "付钱", "speaker": "customer" },
+  { "id": "p_total", "template": "一共 [价钱]", "pinyin": "yígòng [价钱]", "en": "That's [价钱] in total", "day": 4, "group": "付钱", "speaker": "bot", "why": "一共 = all together. 一 becomes yí before a 4th tone (gòng)." },
+
+  { "id": "p_change", "template": "算了，我要 [数量][量词][东西]", "pinyin": "suànle, wǒ yào [数量][量词][东西]", "en": "Forget it, I want [数量] [量词] of [东西]", "day": 5, "group": "点菜", "speaker": "customer", "why": "算了 cancels what came before. Only what follows counts." },
+  { "id": "p_again", "template": "再来一个", "pinyin": "zài lái yí ge", "en": "One more, please", "day": 5, "group": "点菜", "speaker": "customer", "why": "再 = again. 'Again bring one': one more of the same." }
+]

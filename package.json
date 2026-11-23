@@ -1,0 +1,14 @@
+{
+  "name": "daiban",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "代班 (Dàibān): learn spoken Chinese by programming noodle-shop bots in Chinese logic.",
+  "engines": {
+    "node": ">=23.6"
+  },
+  "scripts": {
+    "sim": "node src/cli.ts",
+    "test": "node --test \"test/**/*.test.ts\""
+  }
+}

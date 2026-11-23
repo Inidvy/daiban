@@ -1,0 +1,34 @@
+[
+  {
+    "id": "student",
+    "name": "学生",
+    "en": "picky student",
+    "personality": "Knows exactly what they want, until they don't. Changes their mind often.",
+    "firstDay": 1,
+    "dials": { "variation": 0.2, "politeness": 0.3, "mindChange": 0.8 }
+  },
+  {
+    "id": "office",
+    "name": "上班族",
+    "en": "rushed office worker",
+    "personality": "Short sentences, no small talk, always in a hurry.",
+    "firstDay": 1,
+    "dials": { "variation": 0.1, "politeness": 0.0, "mindChange": 0.2 }
+  },
+  {
+    "id": "grandma",
+    "name": "奶奶",
+    "en": "chatty grandma",
+    "personality": "Polite, says 老板 and 麻烦你, orders the casual way with 来.",
+    "firstDay": 2,
+    "dials": { "variation": 0.6, "politeness": 0.8, "mindChange": 0.3 }
+  },
+  {
+    "id": "tourist",
+    "name": "游客",
+    "en": "tourist",
+    "personality": "Careful and polite, starts questions with 请问.",
+    "firstDay": 3,
+    "dials": { "variation": 0.1, "politeness": 0.7, "mindChange": 0.2 }
+  }
+]
