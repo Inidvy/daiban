@@ -1,6 +1,7 @@
 // Block palette: everything the player can place today, grouped. Tapping an item places it.
 
-import { Volume2 } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Mic, Volume2 } from 'lucide-react';
 import type { PaletteGroup, PaletteItem } from '../palette.ts';
 import { GROUP_LABELS, spokenText } from '../palette.ts';
 import { Sheet } from './sheet.tsx';
@@ -9,14 +10,18 @@ import { BlockLine } from './words.tsx';
 
 const ORDER: PaletteGroup[] = ['听', '查', '做', '说'];
 
-export function PaletteSheet({ items, day, onPick, onClose }: {
+export function PaletteSheet({ items, day, onPick, onClose, mustSpeak, header }: {
   items: PaletteItem[];
   day: number;
+  /** Blocks used often enough that they are now spoken, not tapped. */
+  mustSpeak?: (item: PaletteItem) => boolean;
+  header?: ReactNode;
   onPick: (item: PaletteItem) => void;
   onClose: () => void;
 }) {
   return (
     <Sheet title="放一块 Place a block" onClose={onClose}>
+      {header}
       {ORDER.map((group) => {
         const inGroup = items.filter((i) => i.group === group);
         if (inGroup.length === 0) return null;
@@ -32,6 +37,11 @@ export function PaletteSheet({ items, day, onPick, onClose }: {
                   <BlockLine block={item.template} />
                   <span className="gloss">
                     {item.day === day && day > 1 && <span className="badge">新 new</span>}
+                    {mustSpeak?.(item) && (
+                      <span className="badge speak">
+                        <Mic size={12} /> say it
+                      </span>
+                    )}
                     {item.en}
                   </span>
                 </div>

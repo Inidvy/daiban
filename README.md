@@ -2,7 +2,7 @@
 
 Learn spoken Chinese by programming noodle-shop bots in Chinese logic. Design: [docs/design.md](docs/design.md).
 
-**Status:** milestones M1–M2: noodle-shop Days 1–5, the logic language, a block script editor with why cards and sample scripts, and a lunch rush with spoken customers.
+**Status:** milestones M1–M5, plus the measurements for the M6 playtest. A day has four parts: 早上 build the script, 中午 watch the lunch rush (pause and hot-fix a rule mid-rush), 傍晚 serve the 代班 customer by speaking, 晚上 review on the menu board with repair jobs, say-it-aloud and the tone mirror.
 
 ## Run
 
@@ -32,11 +32,26 @@ npm test
 | `src/simulation.ts` | Generates customers, serves them, judges the result, builds the night review |
 | `src/cli.ts` | Text-only lunch rush |
 | `src/print.ts`, `src/editor.ts`, `src/palette.ts` | Script printer, block editor model, which blocks unlock on which day |
-| `src/ui/` | React app: block editor, palette, why cards, lunch rush with speech, night review |
+| `src/voice.ts`, `src/pinyin.ts` | Matching a spoken (or typed-pinyin) script line to its block |
+| `src/shift.ts` | 代班 answer checker (meaning first, near-miss questions), hint ladder |
+| `src/progress.ts` | Pattern strength with FSRS (ts-fsrs), stars and day unlocks |
+| `src/tones.ts` | Syllables, tone contours and the learner's pitch curve for the tone mirror |
+| `src/ui/` | React app: editor, scene, 代班 shift, menu board, tone mirror, playtest stats |
 
 ## Audio
 
 Customers speak through the browser's built-in text-to-speech (zh-CN). Chrome and Edge include Chinese voices. If the device has none, the game shows customer text instead and says how to add a voice (Windows: Settings → Time & language → Speech → Add voices → 中文 (简体)).
+
+## Speaking
+
+- **Script lines:** after a block has been tapped 3 times it has to be said aloud (or typed as pinyin) to place it. The palette also has a "说一行 Say a line" mic.
+- **代班 shift:** the customer speaks, you answer. Meaning counts, not exact words; a wrong price gets a question back; the timer grows after each miss; hints go first-word pinyin → pattern with blanks → model answer. Passing it opens ★3 for that day.
+- **Recognition** uses the browser's Web Speech API (Chrome and Edge send audio to their speech service). Without it, every speaking step takes typed 汉字 or pinyin.
+- **Tone mirror** records with the microphone and detects pitch on the device (pitchy).
+
+## Playtest (M6)
+
+The 📊 button shows speaking time vs. played time per day (goal: 50%), runs the 7-day recall check (English prompt → say the Day 1 pattern, no hints), and exports everything as JSON. Nothing leaves the device unless the player exports it.
 
 ## The script language
 

@@ -40,6 +40,7 @@
   { "hanzi": "了", "pinyin": "le", "en": "(change / done)", "day": 2, "why": "没有了 = 'there is none any more': 了 marks that something changed." },
   { "hanzi": "不", "pinyin": "bù", "en": "not", "day": 3, "why": "The general 'not'. 不要 = don't want." },
   { "hanzi": "辣", "pinyin": "là", "en": "spicy", "day": 3 },
+  { "hanzi": "的", "pinyin": "de", "en": "(the …one)", "day": 3, "why": "不辣的 = the not-spicy one. 的 turns a description into a thing." },
   { "hanzi": "微", "pinyin": "wēi", "en": "slightly", "day": 3, "why": "微辣 = slightly spicy. Same 微 as in 微信 (WeChat, 'micro message')." },
   { "hanzi": "打包", "pinyin": "dǎbāo", "en": "to pack (takeaway)", "day": 3, "why": "打 do + 包 wrap: 'do the wrapping'." },
   { "hanzi": "在", "pinyin": "zài", "en": "at / in", "day": 3, "why": "Something under a roof, so 'at / in'." },

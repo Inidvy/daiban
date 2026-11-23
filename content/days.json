@@ -3,90 +3,340 @@
     "day": 1,
     "title": "开业 Opening day",
     "twist": "Only one dish. Learn 碗 and the numbers 1–5.",
-    "newPatterns": ["p_order", "p_price_q", "p_price", "p_thanks", "p_welcome", "p_enjoy"],
-    "menu": ["牛肉面"],
+    "newPatterns": [
+      "p_order",
+      "p_price_q",
+      "p_price",
+      "p_thanks",
+      "p_welcome",
+      "p_enjoy"
+    ],
+    "menu": [
+      "牛肉面"
+    ],
     "soldOut": [],
     "maxQty": 5,
-    "customerTypes": ["student", "office"],
-    "starThresholds": [0.6, 0.8, 0.95],
+    "customerTypes": [
+      "student",
+      "office"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
     "targetRules": 3,
     "sampleScript": "scripts/day1.txt",
     "vip": {
       "name": "王老师 (Teacher Wang)",
       "situation": "Your old teacher orders for the whole class and wants to know the total.",
-      "lines": ["老板，我要五碗牛肉面。", "多少钱？", "谢谢！"]
+      "turns": [
+        {
+          "says": "老板，我要五碗牛肉面。",
+          "en": "Boss, five bowls of beef noodles.",
+          "expect": [
+            "p_enjoy"
+          ],
+          "model": "请慢用。",
+          "modelEn": "Enjoy your meal."
+        },
+        {
+          "says": "多少钱？",
+          "en": "How much is it?",
+          "expect": [
+            "p_price"
+          ],
+          "price": 90,
+          "model": "九十块。",
+          "modelEn": "90 yuan."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
     }
   },
   {
     "day": 2,
     "title": "卖完了 Sold out",
     "twist": "A dish sells out. First 如果…就… rule: check 有 before you cook.",
-    "newPatterns": ["p_have_q", "p_have", "p_sold_out", "p_bring"],
-    "menu": ["牛肉面", "鸡蛋面", "炸酱面"],
-    "soldOut": ["鸡蛋面"],
+    "newPatterns": [
+      "p_have_q",
+      "p_have",
+      "p_sold_out",
+      "p_bring"
+    ],
+    "menu": [
+      "牛肉面",
+      "鸡蛋面",
+      "炸酱面"
+    ],
+    "soldOut": [
+      "鸡蛋面"
+    ],
     "maxQty": 5,
-    "customerTypes": ["student", "office", "grandma"],
-    "starThresholds": [0.6, 0.8, 0.95],
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
     "targetRules": 11,
     "sampleScript": "scripts/day2.txt",
     "vip": {
       "name": "李奶奶 (Grandma Li)",
       "situation": "Grandma Li wants egg noodles, which are sold out. Suggest something else.",
-      "lines": ["老板，有鸡蛋面吗？", "那来两碗炸酱面吧。", "谢谢！"]
+      "turns": [
+        {
+          "says": "老板，有鸡蛋面吗？",
+          "en": "Boss, do you have egg noodles?",
+          "expect": [
+            "p_sold_out"
+          ],
+          "model": "没有了。",
+          "modelEn": "It's sold out."
+        },
+        {
+          "says": "那来两碗炸酱面吧。",
+          "en": "Then two bowls of zhajiang noodles.",
+          "expect": [
+            "p_enjoy"
+          ],
+          "model": "请慢用。",
+          "modelEn": "Enjoy your meal."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
     }
   },
   {
     "day": 3,
     "title": "口味 Taste",
     "twist": "Preferences: spice and takeaway. 不然 becomes the default branch.",
-    "newPatterns": ["p_no_spice", "p_mild", "p_takeaway", "p_eat_here", "p_here_or_go", "p_packing"],
-    "menu": ["牛肉面", "鸡蛋面", "炸酱面", "酸辣粉", "饺子"],
-    "soldOut": ["炸酱面"],
+    "newPatterns": [
+      "p_no_spice",
+      "p_mild",
+      "p_takeaway",
+      "p_eat_here",
+      "p_here_or_go",
+      "p_packing"
+    ],
+    "menu": [
+      "牛肉面",
+      "鸡蛋面",
+      "炸酱面",
+      "酸辣粉",
+      "饺子"
+    ],
+    "soldOut": [
+      "炸酱面"
+    ],
     "maxQty": 5,
-    "customerTypes": ["student", "office", "grandma", "tourist"],
-    "starThresholds": [0.6, 0.8, 0.95],
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
     "targetRules": 15,
     "sampleScript": "scripts/day3.txt",
     "vip": {
       "name": "Tom (exchange student)",
       "situation": "Tom can't eat spicy food and wants to take it back to the dorm.",
-      "lines": ["请问，我要一碗酸辣粉，不要辣。", "打包。", "谢谢！"]
+      "turns": [
+        {
+          "says": "请问，我要一碗酸辣粉，不要辣。",
+          "en": "Excuse me, one hot-and-sour noodles, not spicy.",
+          "expect": [
+            "p_here_or_go"
+          ],
+          "model": "在这儿吃还是打包？",
+          "modelEn": "Eat here or take away?"
+        },
+        {
+          "says": "打包。",
+          "en": "To take away.",
+          "expect": [
+            "p_packing"
+          ],
+          "model": "好的，给您打包。",
+          "modelEn": "OK, I'll pack it for you."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
     }
   },
   {
     "day": 4,
     "title": "付钱 Paying",
     "twist": "Customers pay by 扫码 or 现金. Bigger orders, bigger numbers.",
-    "newPatterns": ["p_scan", "p_cash", "p_total"],
-    "menu": ["牛肉面", "鸡蛋面", "炸酱面", "酸辣粉", "饺子", "包子", "可乐"],
-    "soldOut": ["饺子"],
+    "newPatterns": [
+      "p_scan",
+      "p_cash",
+      "p_total"
+    ],
+    "menu": [
+      "牛肉面",
+      "鸡蛋面",
+      "炸酱面",
+      "酸辣粉",
+      "饺子",
+      "包子",
+      "可乐"
+    ],
+    "soldOut": [
+      "饺子"
+    ],
     "maxQty": 10,
-    "customerTypes": ["student", "office", "grandma", "tourist"],
-    "starThresholds": [0.6, 0.8, 0.95],
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
     "targetRules": 17,
     "sampleScript": "scripts/day4.txt",
     "vip": {
       "name": "张经理 (Manager Zhang)",
       "situation": "A manager orders lunch for the office and pays in cash.",
-      "lines": ["我要十个包子，五瓶可乐。", "一共多少钱？", "现金可以吗？"]
+      "turns": [
+        {
+          "says": "我要十个包子，五瓶可乐。一共多少钱？",
+          "en": "Ten baozi and five colas. How much in total?",
+          "expect": [
+            "p_total",
+            "p_price"
+          ],
+          "price": 50,
+          "model": "一共五十块。",
+          "modelEn": "50 yuan in total."
+        },
+        {
+          "says": "打包，我付现金。",
+          "en": "To go, I'll pay cash.",
+          "expect": [
+            "p_packing"
+          ],
+          "model": "好的，给您打包。",
+          "modelEn": "OK, I'll pack it for you."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
     }
   },
   {
     "day": 5,
     "title": "算了 Change of mind",
     "twist": "Customers change their minds and ask for one more. Day 1–4 patterns return.",
-    "newPatterns": ["p_change", "p_again"],
-    "menu": ["牛肉面", "鸡蛋面", "炸酱面", "酸辣粉", "饺子", "包子", "可乐", "茶"],
-    "soldOut": ["酸辣粉"],
+    "newPatterns": [
+      "p_change",
+      "p_again"
+    ],
+    "menu": [
+      "牛肉面",
+      "鸡蛋面",
+      "炸酱面",
+      "酸辣粉",
+      "饺子",
+      "包子",
+      "可乐",
+      "茶"
+    ],
+    "soldOut": [
+      "酸辣粉"
+    ],
     "maxQty": 10,
-    "customerTypes": ["student", "office", "grandma", "tourist"],
-    "starThresholds": [0.6, 0.8, 0.95],
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
     "targetRules": 20,
     "sampleScript": "scripts/day5.txt",
     "vip": {
       "name": "小陈 (Xiao Chen, food blogger)",
       "situation": "A food blogger keeps changing the order while filming.",
-      "lines": ["我要一碗牛肉面，算了，我要两碗炸酱面，微辣。", "再来一个！", "我扫码吧。"]
+      "turns": [
+        {
+          "says": "我要一碗牛肉面，算了，我要两碗炸酱面，微辣。",
+          "en": "One beef noodles… forget it, two zhajiang noodles, mildly spicy.",
+          "expect": [
+            "p_here_or_go"
+          ],
+          "model": "在这儿吃还是打包？",
+          "modelEn": "Eat here or take away?"
+        },
+        {
+          "says": "在这儿吃。再来一个！",
+          "en": "Eating here. And one more!",
+          "expect": [
+            "p_enjoy"
+          ],
+          "model": "请慢用。",
+          "modelEn": "Enjoy your meal."
+        },
+        {
+          "says": "一共多少钱？",
+          "en": "How much in total?",
+          "expect": [
+            "p_total",
+            "p_price"
+          ],
+          "price": 45,
+          "model": "一共四十五块。",
+          "modelEn": "45 yuan in total."
+        }
+      ]
     }
   }
 ]

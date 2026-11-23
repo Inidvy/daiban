@@ -2,7 +2,7 @@
 // each one and judges the result. Every failure is described so it can show up in the night review.
 
 import { inStock, newBotState, runTurn } from './interpreter.ts';
-import type { BotState, Kitchen } from './interpreter.ts';
+import type { BotState, Kitchen, MadeItem } from './interpreter.ts';
 import { kitchenFor, toPinyin } from './content.ts';
 import { normalize } from './matcher.ts';
 import { priceWord, quantityWord } from './numbers.ts';
@@ -49,13 +49,30 @@ export interface Turn {
   text: string;
 }
 
+/** What went wrong, so the scene can play the matching reaction. */
+export type FailureKind =
+  | 'ignored' | 'confused' | 'stuck' | 'false-sold-out' | 'made-sold-out' | 'nothing' | 'wrong-dish'
+  | 'too-much' | 'too-little' | 'spice' | 'takeaway' | 'price' | 'pay';
+
 export interface Failure {
+  kind: FailureKind;
   reason: string;
   utterance?: Utterance;
 }
 
+/** One customer turn and what the counter looked like right after it. */
+export interface Step {
+  utterance: Utterance;
+  said: string[];
+  heard: boolean;
+  made: MadeItem[];
+  packed: boolean;
+  paid: BotState['paid'];
+}
+
 export interface CustomerResult {
   customer: Customer;
+  steps: Step[];
   transcript: Turn[];
   state: BotState;
   failures: Failure[];
@@ -66,6 +83,9 @@ export interface ReviewItem {
   pinyin: string;
   en: string;
   count: number;
+  patternIds: string[];
+  /** Why each customer who said this was unhappy, for the replay. */
+  misses: { customerId: number; reason: string }[];
 }
 
 export interface DayResult {
@@ -120,7 +140,7 @@ class CustomerFactory {
 
   private word(hanzi: string): Part {
     const w = this.content.words.find((x) => x.hanzi === hanzi);
-    return { text: hanzi, en: w?.en ?? hanzi };
+    return { text: hanzi, en: (w?.en ?? hanzi).replace(/\s*\(.*?\)/g, '') }; // "boss (how you call…)" → "boss"
   }
 
   private order(id: 'p_order' | 'p_bring' | 'p_change', qty: number, dish: string): Part {
@@ -257,6 +277,7 @@ function findUtterance(c: Customer, patternId: string): Utterance | undefined {
 export function serveCustomer(script: Script, customer: Customer, kitchen: Kitchen): CustomerResult {
   const state = newBotState();
   const transcript: Turn[] = [];
+  const steps: Step[] = [];
   const ignored: Utterance[] = [];
   const queue = [...customer.queue];
   let held = customer.afterSoldOut;
@@ -269,6 +290,14 @@ export function serveCustomer(script: Script, customer: Customer, kitchen: Kitch
     const r = runTurn(script, u.text, kitchen, state);
     for (const s of r.said) transcript.push({ who: '机器人', text: s });
     if (!r.heard && !u.optional) ignored.push(u);
+    steps.push({
+      utterance: u,
+      said: r.said,
+      heard: r.heard,
+      made: state.made.map((m) => ({ ...m })),
+      packed: state.packed,
+      paid: state.paid,
+    });
 
     const said = r.said.map(normalize).join(' ');
     if (said.includes('没有')) {
@@ -285,7 +314,7 @@ export function serveCustomer(script: Script, customer: Customer, kitchen: Kitch
   }
 
   const failures = judge(customer, state, kitchen, { ignored, saidSoldOut, stuck: held !== null, takeaway });
-  return { customer, transcript, state, failures };
+  return { customer, steps, transcript, state, failures };
 }
 
 function judge(
@@ -295,20 +324,20 @@ function judge(
   seen: { ignored: Utterance[]; saidSoldOut: boolean; stuck: boolean; takeaway: boolean | null },
 ): Failure[] {
   const failures: Failure[] = [];
-  const fail = (reason: string, utterance?: Utterance) => failures.push({ reason, utterance });
+  const fail = (kind: FailureKind, reason: string, utterance?: Utterance) => failures.push({ kind, reason, utterance });
   const orderUtterance = c.afterSoldOut ? c.afterSoldOut[0] : c.queue.find((u) => u.patternIds.some((id) => id === 'p_order' || id === 'p_bring' || id === 'p_change'));
   const want = describe(kitchen, c.want);
 
-  for (const u of seen.ignored) fail(`said “${u.text}” and the bot just stared (没反应)`, u);
-  for (const msg of state.confused) fail(`the bot got confused: ${msg}`);
+  for (const u of seen.ignored) fail('ignored', `said “${u.text}” and the bot just stared (没反应)`, u);
+  for (const msg of state.confused) fail('confused', `the bot got confused: ${msg}`);
 
   if (seen.stuck) {
-    fail(`wanted ${c.firstChoice}, which is sold out, but never heard 没有了 and left confused`, c.queue[0]);
+    fail('stuck', `wanted ${c.firstChoice}, which is sold out, but never heard 没有了 and left confused`, c.queue[0]);
   } else if (seen.saidSoldOut && inStock(kitchen, c.firstChoice)) {
-    fail(`was told 没有了, but ${c.firstChoice} was in stock`, c.queue[0]);
+    fail('false-sold-out', `was told 没有了, but ${c.firstChoice} was in stock`, c.queue[0]);
   }
   for (const item of state.made) {
-    if (item.soldOut) fail(`got ${describe(kitchen, item)}, but ${item.dish} is sold out: the kitchen had none`, c.queue[0]);
+    if (item.soldOut) fail('made-sold-out', `got ${describe(kitchen, item)}, but ${item.dish} is sold out: the kitchen had none`, c.queue[0]);
   }
   if (seen.stuck) return failures;
 
@@ -326,9 +355,10 @@ function judge(
   const qtyOfWanted = items.filter((it) => it.dish === c.want.dish).reduce((s, it) => s + it.qty, 0);
 
   if (items.length === 0) {
-    fail(`waited for ${want} and left hungry`, orderUtterance);
+    fail('nothing', `waited for ${want} and left hungry`, orderUtterance);
   } else if (items.some((it) => it.dish !== c.want.dish)) {
     fail(
+      'wrong-dish',
       c.changedMind
         ? `said 算了 and changed to ${want}, but got ${got}`
         : `ordered ${want} but got ${got}`,
@@ -337,6 +367,7 @@ function judge(
   } else if (qtyOfWanted !== c.want.qty) {
     const againU = findUtterance(c, 'p_again');
     fail(
+      qtyOfWanted > c.want.qty ? 'too-much' : 'too-little',
       qtyOfWanted > c.want.qty
         ? `ordered ${want} and got ${got}: the table is buried in food`
         : `ordered ${want} but got only ${got} and is still hungry`,
@@ -350,26 +381,26 @@ function judge(
         : c.want.spice === '微辣'
           ? `asked for 微辣, got it ${gotSpice}`
           : `wanted it spicy like normal, got it ${gotSpice}`;
-    fail(reason, findUtterance(c, c.want.spice === '不辣' ? 'p_no_spice' : 'p_mild') ?? orderUtterance);
+    fail('spice', reason, findUtterance(c, c.want.spice === '不辣' ? 'p_no_spice' : 'p_mild') ?? orderUtterance);
   }
 
   if (seen.takeaway === true && !state.packed) {
-    fail('wanted 打包, got a bowl to eat here', findUtterance(c, 'p_takeaway'));
+    fail('takeaway', 'wanted 打包, got a bowl to eat here', findUtterance(c, 'p_takeaway'));
   } else if (seen.takeaway === false && state.packed) {
-    fail('wanted to eat here (在这儿吃), got it packed in a bag', findUtterance(c, 'p_eat_here'));
+    fail('takeaway', 'wanted to eat here (在这儿吃), got it packed in a bag', findUtterance(c, 'p_eat_here'));
   }
 
   if (c.asksPrice) {
     const expected = priceWord((kitchen.dishes.get(c.want.dish)?.price ?? 0) * c.want.qty);
     if (!state.said.some((s) => normalize(s).includes(expected))) {
-      fail(`asked 多少钱 but didn't hear the right price (${expected})`, findUtterance(c, 'p_price_q'));
+      fail('price', `asked 多少钱 but didn't hear the right price (${expected})`, findUtterance(c, 'p_price_q'));
     }
   }
 
   if (c.pay) {
     const u = findUtterance(c, c.pay === '扫码' ? 'p_scan' : 'p_cash');
-    if (state.paid === null) fail(`wanted to pay by ${c.pay}, but nobody took the money`, u);
-    else if (state.paid !== 'any' && state.paid !== c.pay) fail(`wanted to pay by ${c.pay}, but the bot charged ${state.paid}`, u);
+    if (state.paid === null) fail('pay', `wanted to pay by ${c.pay}, but nobody took the money`, u);
+    else if (state.paid !== 'any' && state.paid !== c.pay) fail('pay', `wanted to pay by ${c.pay}, but the bot charged ${state.paid}`, u);
   }
   return failures;
 }
@@ -384,15 +415,18 @@ export function starsFor(day: Day, satisfaction: number, rules: number): number 
   return 0;
 }
 
-export function runDay(options: { content: Content; day: Day; script: Script; customers?: number; seed?: number }): DayResult {
-  const { content, day, script } = options;
-  const kitchen = kitchenFor(content, day);
-  const factory = new CustomerFactory(content, day, kitchen, createRng(options.seed ?? 1));
-  const results: CustomerResult[] = [];
-  for (let i = 1; i <= (options.customers ?? 20); i++) {
-    results.push(serveCustomer(script, factory.create(i), kitchen));
-  }
+/** The day's customers, decided before anyone is served (so a hot-fix can re-serve the rest). */
+export function generateCustomers(content: Content, day: Day, count: number, seed: number): Customer[] {
+  const factory = new CustomerFactory(content, day, kitchenFor(content, day), createRng(seed));
+  return Array.from({ length: count }, (_, i) => factory.create(i + 1));
+}
 
+export function serveAll(content: Content, day: Day, script: Script, customers: readonly Customer[]): CustomerResult[] {
+  const kitchen = kitchenFor(content, day);
+  return customers.map((c) => serveCustomer(script, c, kitchen));
+}
+
+export function summarize(day: Day, script: Script, results: CustomerResult[]): DayResult {
   const happy = results.filter((r) => r.failures.length === 0).length;
   const satisfaction = results.length ? happy / results.length : 0;
   const rules = countRules(script.body);
@@ -401,11 +435,19 @@ export function runDay(options: { content: Content; day: Day; script: Script; cu
   for (const r of results) {
     for (const f of r.failures) {
       if (!f.utterance) continue;
-      const item = review.get(f.utterance.text) ?? { text: f.utterance.text, pinyin: f.utterance.pinyin, en: f.utterance.en, count: 0 };
+      const u = f.utterance;
+      const item = review.get(u.text) ?? { text: u.text, pinyin: u.pinyin, en: u.en, count: 0, patternIds: u.patternIds, misses: [] };
       item.count++;
+      item.misses.push({ customerId: r.customer.id, reason: f.reason });
       review.set(item.text, item);
     }
   }
 
   return { day, results, satisfaction, rules, stars: starsFor(day, satisfaction, rules), review: [...review.values()] };
+}
+
+export function runDay(options: { content: Content; day: Day; script: Script; customers?: number; seed?: number }): DayResult {
+  const { content, day, script } = options;
+  const customers = generateCustomers(content, day, options.customers ?? 20, options.seed ?? 1);
+  return summarize(day, script, serveAll(content, day, script, customers));
 }

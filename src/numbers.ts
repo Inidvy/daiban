@@ -77,3 +77,8 @@ export function quantityWord(n: number): string {
 export function priceWord(n: number): string {
   return `${quantityWord(n)}块`;
 }
+
+/** Speech recognizers often write numbers as digits ("我要2碗", "90块"): turn them back into Chinese numerals. */
+export function digitsToChinese(text: string): string {
+  return text.replace(/\d+/g, (d) => toChineseNumber(Number(d)));
+}

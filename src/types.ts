@@ -71,7 +71,8 @@ export interface Day {
   targetRules: number;
   /** Path relative to content/. */
   sampleScript: string;
-  vip: { name: string; situation: string; lines: string[] };
+  /** The evening 代班 shift: an unusual customer the player serves by speaking. */
+  vip: { name: string; situation: string; turns: ShiftTurn[] };
 }
 
 export interface Content {
@@ -79,4 +80,17 @@ export interface Content {
   patterns: Pattern[];
   customerTypes: CustomerType[];
   days: Day[];
+}
+
+/** One exchange in the 代班 shift: the customer speaks, the player answers with one of the expected patterns. */
+export interface ShiftTurn {
+  says: string;
+  en: string;
+  /** Bot pattern ids that count as a right answer. */
+  expect: string[];
+  /** The right total, when the answer contains [价钱]. */
+  price?: number;
+  /** A model answer for the last hint. */
+  model: string;
+  modelEn: string;
 }

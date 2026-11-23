@@ -56,6 +56,15 @@ export function validateContent(c: Content): string[] {
     for (const dish of d.soldOut) if (!d.menu.includes(dish)) errors.push(`Day ${d.day}: sold-out ${dish} is not on the menu`);
     if (d.soldOut.length >= d.menu.length) errors.push(`Day ${d.day}: everything is sold out`);
     for (const t of d.customerTypes) if (!types.has(t)) errors.push(`Day ${d.day}: unknown customer type ${t}`);
+    if (!d.vip.turns.length) errors.push(`Day ${d.day}: the 代班 shift has no turns`);
+    for (const turn of d.vip.turns) {
+      for (const id of turn.expect) {
+        const p = patterns.get(id);
+        if (!p) errors.push(`Day ${d.day} 代班: unknown pattern ${id}`);
+        else if (p.speaker !== 'bot') errors.push(`Day ${d.day} 代班: ${id} is not something the shop says`);
+        else if (p.day > d.day) errors.push(`Day ${d.day} 代班: ${id} is not taught until Day ${p.day}`);
+      }
+    }
   }
   for (const p of c.patterns) {
     if (!c.days.some((d) => d.newPatterns.includes(p.id))) errors.push(`pattern ${p.id} is not introduced on any day`);
