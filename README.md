@@ -21,7 +21,8 @@ npm test
 
 | Path | What |
 |---|---|
-| `content/words.json` | ~75 words: hanzi, pinyin, English, slot type, why card; dishes have price and measure word |
+| `content/words.json` | ~190 words: hanzi, pinyin, English, slot type, why card; dishes have price and measure word. `"day": 0` entries are UI and reaction words, there only so every label gets pinyin |
+| `src/lesson.ts` | The guided first lesson (11 steps) and the checks that advance it |
 | `content/patterns.json` | 21 sentence patterns with slots, grouped by situation for the menu board |
 | `content/customers.json` | Customer personalities and their difficulty dials |
 | `content/days.json` | Days 1–5: new patterns, menu, sold-out dishes, star thresholds, 代班 VIP |
@@ -41,6 +42,12 @@ npm test
 ## Audio
 
 Customers speak through the browser's built-in text-to-speech (zh-CN). Chrome and Edge include Chinese voices. If the device has none, the game shows customer text instead and says how to add a voice (Windows: Settings → Time & language → Speech → Add voices → 中文 (简体)).
+
+## Starting from zero
+
+- **Pinyin everywhere, on by default:** every Chinese word in the game (buttons, tabs, signs, customer bubbles, cards) shows pinyin above it. The 拼音 button turns it off. Customer bubbles also show the English, and customer text is shown by default.
+- **Guided start (跟我学):** a brand-new player gets an 11-step coach on Day 1. A customer speaks, the robot is stuck, and the player builds three rules one block at a time (order, how much, thank you), with every sentence broken into word tiles they can tap to hear. The palette only offers the block the step asks for. "从零开始 Start from zero" on the Day 1 card restarts it.
+- **Today's words:** the day card lists every new word of the day, grouped (numbers, food, customers and you, robot words), with pinyin, meaning and audio.
 
 ## Speaking
 

@@ -6,6 +6,7 @@ import { Check, Mic, Square } from 'lucide-react';
 import { saidSentence } from '../shift.ts';
 import { listener } from './listener.ts';
 import { addSaidAloud } from './stats.ts';
+import { Zh } from './words.tsx';
 
 export function SayAloud({ text, onSaid }: { text: string; onSaid: () => void }) {
   const [state, setState] = useState<'idle' | 'listening' | 'done' | 'again'>('idle');
@@ -14,7 +15,7 @@ export function SayAloud({ text, onSaid }: { text: string; onSaid: () => void })
   if (state === 'done') {
     return (
       <span className="said-ok">
-        <Check size={16} /> 说了
+        <Check size={16} /> <Zh text="说了" />
       </span>
     );
   }
@@ -29,7 +30,7 @@ export function SayAloud({ text, onSaid }: { text: string; onSaid: () => void })
           onSaid();
         }}
       >
-        <Check size={16} /> 我说了 I said it
+        <Check size={16} /> <Zh text="我说了 I said it" />
       </button>
     );
   }
@@ -49,7 +50,7 @@ export function SayAloud({ text, onSaid }: { text: string; onSaid: () => void })
         } else setState('again');
       }}
     >
-      {state === 'listening' ? <Square size={16} /> : <Mic size={16} />} {state === 'again' ? '再说 Say it again' : '说 Say it'}
+      {state === 'listening' ? <Square size={16} /> : <Mic size={16} />} <Zh text={state === 'again' ? '再说 Say it again' : '说 Say it'} />
     </button>
   );
 }

@@ -12,6 +12,8 @@ import { countRules, parseScript } from '../script.ts';
 import { generateCustomers, serveAll, summarize } from '../simulation.ts';
 import type { Customer, CustomerResult } from '../simulation.ts';
 import { SPEAK_AFTER } from '../voice.ts';
+import { FIRST_LESSON } from '../lesson.ts';
+import { CoachCard, TodaysWords } from './coach.tsx';
 import { content, sampleScript } from './content.ts';
 import { ScriptEditor } from './editor-view.tsx';
 import { MenuBoard, ProgressLine, RepairJobs } from './menu-board.tsx';
@@ -26,7 +28,7 @@ import { StatsSheet } from './stats-sheet.tsx';
 import { load, save } from './storage.ts';
 import { ToneMirror } from './tone-mirror.tsx';
 import { WhyCard } from './why-card.tsx';
-import { Tokens, WordContext, whyKey, whyTargets } from './words.tsx';
+import { Tokens, WordContext, whyKey, whyTargets, Zh } from './words.tsx';
 import type { WhyTarget } from './words.tsx';
 
 type Tab = 'program' | 'rush' | 'shift' | 'review';
@@ -79,13 +81,24 @@ export function App() {
 
   const [dayNumber, setDayNumber] = useState(() => load('day', 1));
   const [blocks, setBlocksState] = useState<Block[]>(() => load(SCRIPT_KEY, []));
+  // The guided first lesson: starts by itself for a brand-new player (empty script, no stars yet).
+  const [lesson, setLessonState] = useState<number | null>(() => {
+    const saved = load<number | null | undefined>('lesson', undefined);
+    if (saved !== undefined) return saved;
+    return load<Block[]>(SCRIPT_KEY, []).length === 0 && Object.keys(load('rushStars', {})).length === 0 ? 0 : null;
+  });
+  const setLesson = (n: number | null) => {
+    setLessonState(n);
+    save('lesson', n);
+  };
   const [tab, setTab] = useState<Tab>('program');
   const [paletteAt, setPaletteAt] = useState<Place | null>(null);
   const [speakItem, setSpeakItem] = useState<PaletteItem | null>(null);
   const [placed, setPlaced] = useState<Record<string, number>>(() => load('placed', {}));
   const [whyQueue, setWhyQueue] = useState<WhyTarget[]>([]);
   const [seen, setSeen] = useState<string[]>(() => load('seenWords', []));
-  const [showPinyin, setShowPinyin] = useState(() => load('pinyin', false));
+  // Pinyin is on by default: the game starts from zero (it can be turned off later).
+  const [showPinyin, setShowPinyin] = useState(() => load('pinyinOn', true));
   const [rush, setRush] = useState<Rush | null>(null);
   const [sheet, setSheet] = useState<'sample' | 'text' | 'hotfix' | 'stats' | null>(null);
   const [hotFixFrom, setHotFixFrom] = useState(0);
@@ -125,12 +138,40 @@ export function App() {
   };
   const togglePinyin = () => {
     setShowPinyin(!showPinyin);
-    save('pinyin', !showPinyin);
+    save('pinyinOn', !showPinyin);
   };
 
   const openWhy = useCallback((t: WhyTarget) => setWhyQueue([t]), []);
 
   const mustSpeak = (item: PaletteItem) => (placed[item.key] ?? 0) >= SPEAK_AFTER;
+
+  const lessonStep = lesson !== null && dayNumber === 1 ? FIRST_LESSON[lesson] : undefined;
+  const nextLessonStep = () => setLesson(lesson !== null && lesson + 1 < FIRST_LESSON.length ? lesson + 1 : null);
+  // A build step finishes as soon as the script has the block it asked for.
+  useEffect(() => {
+    if (lessonStep?.kind === 'place' && lessonStep.done(blocks)) nextLessonStep();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blocks, lessonStep]);
+  // While a build step is open, the palette only offers the blocks it asks for.
+  const shownPalette = lessonStep?.kind === 'place' ? palette.filter((i) => lessonStep.paletteKeys.includes(i.key)) : palette;
+  const startLesson = () => {
+    if (blocks.length && !window.confirm('Start the guided lesson from zero? Your current script will be cleared.')) return;
+    setBlocks([]);
+    setRush(null);
+    if (dayNumber !== 1) chooseDay(1);
+    setLesson(0);
+    setTab('program');
+  };
+  const coach = lessonStep && lesson !== null && (
+    <CoachCard
+      step={lessonStep}
+      index={lesson}
+      total={FIRST_LESSON.length}
+      onNext={nextLessonStep}
+      onSkip={() => setLesson(null)}
+      onGoToScript={tab !== 'program' ? () => setTab('program') : undefined}
+    />
+  );
 
   // Why cards appear the first time a word is used (docs/design.md).
   const place = (item: PaletteItem, spoken = false) => {
@@ -158,7 +199,8 @@ export function App() {
 
   const run = () => {
     if (dayNumber === 1) markFirstPlayed();
-    const customers = generateCustomers(content, day, CUSTOMERS_PER_RUSH, Math.floor(Math.random() * 1e6));
+    const count = lessonStep?.kind === 'run' ? lessonStep.customers : CUSTOMERS_PER_RUSH;
+    const customers = generateCustomers(content, day, count, Math.floor(Math.random() * 1e6));
     setRush({ customers, results: serveAll(content, day, toScript(blocks), customers), startAt: 0, done: false });
     setTab('rush');
     window.scrollTo({ top: 0 });
@@ -177,6 +219,7 @@ export function App() {
 
   const rushDone = () => {
     setRush((r) => (r ? { ...r, done: true } : r));
+    if (lessonStep?.kind === 'run') nextLessonStep();
     if (!result) return;
     applyGrades(rushGrades(result.results));
     addTips(result.results.filter((r) => r.failures.length === 0).length);
@@ -197,8 +240,8 @@ export function App() {
       <div className="app">
         <header className="top">
           <div className="brand">
-            <span className="logo">代班</span>
-            <span className="muted">面馆 Noodle shop</span>
+            <span className="logo"><Zh text="代班" /></span>
+            <span className="muted"><Zh text="面馆 Noodle shop" /></span>
           </div>
           <div className="top-actions">
             <span className="tips-total" aria-label={`${tips} tips`}>
@@ -208,7 +251,7 @@ export function App() {
               <BarChart3 size={16} />
             </button>
             <button type="button" className={`btn ghost small ${showPinyin ? 'on' : ''}`} onClick={togglePinyin} aria-pressed={showPinyin}>
-              <Languages size={16} /> 拼音
+              <Languages size={16} /> <Zh text="拼音" />
             </button>
           </div>
         </header>
@@ -219,7 +262,7 @@ export function App() {
             return (
               <button key={d.day} type="button" className={d.day === dayNumber ? 'active' : ''} onClick={() => chooseDay(d.day)} disabled={!open}
                 title={open ? undefined : `Get a star on Day ${d.day - 1} first`}>
-                {!open && <Lock size={12} />} 第{d.day}天
+                {!open && <Lock size={12} />} <Zh text={`第${d.day}天`} />
                 {(bestStars[d.day] ?? 0) > 0 && <small className="pill-stars">{'★'.repeat(bestStars[d.day])}</small>}
               </button>
             );
@@ -230,42 +273,51 @@ export function App() {
           {TABS.map((t) => (
             <button key={t.id} type="button" role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'active' : ''}
               onClick={() => setTab(t.id)}>
-              {t.hanzi} <small>{t.en}</small>
+              <Zh text={t.hanzi} /> <small><Zh text={t.en} /></small>
             </button>
           ))}
         </nav>
 
         <main>
+          {(tab === 'program' || tab === 'rush') && coach}
           {tab === 'program' && (
             <>
               <section className="day-card">
-                <h1>{day.title}</h1>
-                <p>{day.twist}</p>
+                <h1><Zh text={day.title} /></h1>
+                <p><Zh text={day.twist} /></p>
                 <div className="menu">
                   {day.menu.map((dish) => (
                     <span key={dish} className={`dish ${day.soldOut.includes(dish) ? 'sold-out' : ''}`}>
                       <Tokens text={dish} />
-                      {day.soldOut.includes(dish) && <small>没有了</small>}
+                      {day.soldOut.includes(dish) && <small><Zh text="没有了" /></small>}
                     </span>
                   ))}
                 </div>
                 <ProgressLine day={dayNumber} cards={cards} />
+                {dayNumber === 1 && lesson === null && (
+                  <button type="button" className="btn small ghost" onClick={startLesson}>
+                    <Zh text="从零开始" /> Start from zero (guided)
+                  </button>
+                )}
+              </section>
+              <section className="day-words">
+                <TodaysWords day={dayNumber} />
               </section>
 
               <ScriptEditor blocks={blocks} day={dayNumber} onChange={setBlocks} onAddAt={setPaletteAt} />
 
               <div className="actions">
                 <button type="button" className="btn ghost" onClick={() => setSheet('sample')}>
-                  <BookOpen size={16} /> 看例子 Sample
+                  <BookOpen size={16} /> <Zh text="看例子 Sample" />
                 </button>
                 <button type="button" className="btn ghost" onClick={() => setSheet('text')}>
-                  <FileText size={16} /> 文本 Text
+                  <FileText size={16} /> <Zh text="文本 Text" />
                 </button>
                 <button type="button" className="btn primary" onClick={run}>
-                  <Play size={16} /> 开门 Run lunch
+                  <Play size={16} /> <Zh text="开门 Run lunch" />
                 </button>
               </div>
-              {empties > 0 && <p className="hint warn-text">{empties} empty 如果 will be skipped when the shop opens.</p>}
+              {empties > 0 && <p className="hint warn-text"><Zh text={`${empties} empty 如果 will be skipped when the shop opens.`} /></p>}
             </>
           )}
 
@@ -284,7 +336,7 @@ export function App() {
                 summaryExtra={
                   result && result.stars === 3 && !shiftPassed[dayNumber] ? (
                     <button type="button" className="btn small primary star-gate" onClick={() => setTab('shift')}>
-                      ★3 needs tonight's 代班 shift →
+                      <Zh text="★3 needs tonight's 代班 shift →" />
                     </button>
                   ) : null
                 }
@@ -320,7 +372,7 @@ export function App() {
                   if (r.ok) addTips(1);
                 }}
               />
-              <h3 className="section-title">今天的错 Today's misunderstandings</h3>
+              <h3 className="section-title"><Zh text="今天的错 Today's misunderstandings" /></h3>
               <ReviewList
                 result={rush?.done ? result : null}
                 renderExtra={(item) => (
@@ -336,12 +388,12 @@ export function App() {
 
         {paletteAt && !speakItem && (
           <PaletteSheet
-            items={palette}
+            items={shownPalette}
             day={dayNumber}
             onPick={(item) => place(item)}
             onClose={() => setPaletteAt(null)}
             mustSpeak={mustSpeak}
-            header={<SayAnyLine items={palette} onPlaced={(item) => place(item, true)} />}
+            header={lessonStep ? undefined : <SayAnyLine items={palette} onPlaced={(item) => place(item, true)} />}
           />
         )}
         {paletteAt && speakItem && (
@@ -378,7 +430,7 @@ export function App() {
                   }
                 }}
               >
-                用这个 Use it
+                <Zh text="用这个 Use it" />
               </button>
             </div>
           </Sheet>
@@ -389,7 +441,7 @@ export function App() {
             <ScriptEditor blocks={blocks} day={dayNumber} onChange={setBlocks} onAddAt={setPaletteAt} />
             <div className="row-end">
               <button type="button" className="btn primary" onClick={finishHotFix}>
-                <Play size={16} /> 继续 Resume
+                <Play size={16} /> <Zh text="继续 Resume" />
               </button>
             </div>
           </Sheet>

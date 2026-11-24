@@ -9,6 +9,7 @@ import { ResultMark, SpeakPrompt } from './menu-board.tsx';
 import { Sheet } from './sheet.tsx';
 import { allStats, exportData, firstPlayed, recallRuns, saveRecallRun } from './stats.ts';
 import type { RecallAnswer } from './stats.ts';
+import { Zh } from './words.tsx';
 
 const DAY_MS = 86_400_000;
 const minutes = (ms: number) => `${(ms / 60_000).toFixed(1)} min`;
@@ -90,7 +91,7 @@ export function StatsSheet({ cards, onClose }: { cards: Cards; onClose: () => vo
 
   return (
     <Sheet title="试玩 Playtest" onClose={onClose}>
-      <h3 className="section-title">说话时间 Speaking time</h3>
+      <h3 className="section-title"><Zh text="说话时间 Speaking time" /></h3>
       <p>
         {minutes(total.speaking)} speaking of {minutes(total.active)} played
         {total.active > 0 && <b> · {Math.round((100 * total.speaking) / total.active)}%</b>} <span className="muted">(goal: 50%)</span>
@@ -119,7 +120,7 @@ export function StatsSheet({ cards, onClose }: { cards: Cards; onClose: () => vo
       </div>
       <p className="hint">Speaking is measured by the microphone (recognizer and tone mirror). Lines read aloud without a mic are only counted.</p>
 
-      <h3 className="section-title">7天测试 Recall check</h3>
+      <h3 className="section-title"><Zh text="7天测试 Recall check" /></h3>
       <p>
         {daysSince === null
           ? 'Starts counting when you first play Day 1.'
@@ -133,10 +134,10 @@ export function StatsSheet({ cards, onClose }: { cards: Cards; onClose: () => vo
         </p>
       ))}
       <button type="button" className="btn primary" onClick={() => setChecking(true)}>
-        开始 Start the check
+        <Zh text="开始 Start the check" />
       </button>
 
-      <h3 className="section-title">导出 Export</h3>
+      <h3 className="section-title"><Zh text="导出 Export" /></h3>
       <p className="hint">Send this file to whoever runs the playtest. It stays on this device otherwise.</p>
       <div className="row-end">
         <button

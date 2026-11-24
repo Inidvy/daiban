@@ -6,6 +6,7 @@ import { FastForward, Pause, Play, SkipForward, Wrench } from 'lucide-react';
 import type { MadeItem } from '../interpreter.ts';
 import type { CustomerResult, Failure } from '../simulation.ts';
 import { BOT_VOICE, rateForSpeed, speaker, useChineseVoice } from './speech.ts';
+import { Zh } from './words.tsx';
 
 const AVATAR: Record<string, string> = { student: '🧑‍🎓', office: '🧑‍💼', grandma: '👵', tourist: '🧑‍🦰' };
 const FOOD: Record<string, string> = {
@@ -73,7 +74,7 @@ function CounterFood({ made, packed }: { made: MadeItem[]; packed: boolean }) {
   );
 }
 
-type Bubble = { who: 'them' | 'bot'; text: string } | null;
+type Bubble = { who: 'them' | 'bot'; text: string; en?: string } | null;
 
 interface View {
   index: number;
@@ -121,11 +122,11 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
       await new Promise((r) => setTimeout(r, live.current.fast ? ms / 3 : ms));
       await pauseGate();
     };
-    const say = async (text: string, r: CustomerResult, who: 'them' | 'bot') => {
+    const say = async (text: string, r: CustomerResult, who: 'them' | 'bot', en?: string) => {
       await pauseGate();
       if (!alive()) return;
       setRevealed(false);
-      setView((v) => ({ ...v, bubble: { who, text } }));
+      setView((v) => ({ ...v, bubble: { who, text, en } }));
       if (canSpeak && !live.current.fast) {
         const voice = who === 'bot' ? BOT_VOICE : { rate: rateForSpeed(r.customer.type.dials.speed), pitch: r.customer.type.pitch };
         await speaker.speak(text, voice);
@@ -146,7 +147,7 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
           // Re-read in case a hot-fix replaced this customer's result.
           const step = live.current.results[i].steps[s] ?? r.steps[s];
           setView((v) => ({ ...v, stepIndex: s }));
-          await say(step.utterance.text, r, 'them');
+          await say(step.utterance.text, r, 'them', step.utterance.en);
           for (const line of step.said) await say(line, r, 'bot');
           if (!step.said.length && !step.heard) {
             setView((v) => ({ ...v, bubble: { who: 'bot', text: '……' } }));
@@ -190,7 +191,7 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
     <div className="scene-wrap">
       <div className="scene" aria-live="polite">
         <div className="wall">
-          <span className="sign">面馆</span>
+          <span className="sign"><Zh text="面馆" /></span>
           <span className="tips">🪙 {view.tips}</span>
         </div>
         <div className="robot">🤖</div>
@@ -198,7 +199,7 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
           <div className={`guest ${view.phase} ${view.reaction?.anim ?? ''}`}>
             <span className="guest-face">{view.phase === 'react' && view.reaction ? view.reaction.face : AVATAR[r.customer.type.id] ?? '🙂'}</span>
             {view.reaction?.anim === 'fan' && view.phase === 'react' && <span className="fan">🪭</span>}
-            <span className="guest-name">{r.customer.type.name}</span>
+            <span className="guest-name"><Zh text={r.customer.type.name} /></span>
           </div>
         )}
         {view.bubble && (
@@ -208,22 +209,29 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
             onClick={() => setRevealed(true)}
             aria-label={hideThem ? 'Show what they said' : undefined}
           >
-            {hideThem ? '🔊 ～～～' : view.bubble.text}
+            {hideThem ? (
+              '🔊 ～～～'
+            ) : (
+              <>
+                <Zh text={view.bubble.text} />
+                {view.bubble.en && <small className="bubble-en">{view.bubble.en}</small>}
+              </>
+            )}
           </button>
         )}
         <div className="counter">
           <CounterFood made={view.made} packed={view.packed} />
         </div>
         {view.phase === 'react' && view.reaction && <div className="reaction-en">{view.reaction.en}</div>}
-        {view.phase === 'done' && <div className="closed">打烊了 · Closed for lunch</div>}
+        {view.phase === 'done' && <div className="closed"><Zh text="打烊了 · Closed for lunch" /></div>}
       </div>
 
       <div className="scene-controls">
         <button type="button" className="btn small" onClick={togglePlay} disabled={view.phase === 'done'}>
-          {playing ? <Pause size={16} /> : <Play size={16} />} {playing ? '暂停' : '继续'}
+          {playing ? <Pause size={16} /> : <Play size={16} />} <Zh text={playing ? '暂停' : '继续'} />
         </button>
         <button type="button" className={`btn small ${fast ? 'on' : ''}`} onClick={() => setFast(!fast)} aria-pressed={fast}>
-          <FastForward size={16} /> 快
+          <FastForward size={16} /> <Zh text="快" />
         </button>
         {onHotFix && view.phase !== 'done' && (
           <button
@@ -235,7 +243,7 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
               onHotFix(view.index);
             }}
           >
-            <Wrench size={16} /> 改规则 Fix
+            <Wrench size={16} /> <Zh text="改规则 Fix" />
           </button>
         )}
         {view.phase !== 'done' && (

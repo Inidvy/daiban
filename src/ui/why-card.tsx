@@ -6,6 +6,7 @@ import { SLOT_INFO } from '../palette.ts';
 import { Sheet } from './sheet.tsx';
 import { speaker, TEACHER_VOICE } from './speech.ts';
 import type { WhyTarget } from './words.tsx';
+import { Zh } from './words.tsx';
 
 export function WhyCard({ target, remaining, onNext, onClose }: {
   target: WhyTarget;
@@ -39,7 +40,11 @@ export function WhyCard({ target, remaining, onNext, onClose }: {
         </button>
         <p className="why-pinyin">{card.pinyin}</p>
         <p className="why-en">{card.en}</p>
-        {card.why && <p className="why-text">{card.why}</p>}
+        {card.why && (
+          <p className="why-text">
+            <Zh text={card.why} />
+          </p>
+        )}
         <div className="row-end">
           {remaining > 0 ? (
             <>
@@ -47,12 +52,12 @@ export function WhyCard({ target, remaining, onNext, onClose }: {
                 Skip all
               </button>
               <button type="button" className="btn primary" onClick={onNext}>
-                Next 下一个
+                <Zh text="Next 下一个" />
               </button>
             </>
           ) : (
             <button type="button" className="btn primary" onClick={onClose}>
-              好的 OK
+              <Zh text="好的 OK" />
             </button>
           )}
         </div>

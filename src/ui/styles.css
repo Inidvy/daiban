@@ -341,3 +341,44 @@ ruby rt { font-size: 0.6rem; color: var(--muted); font-family: system-ui, sans-s
 .brand { min-width: 0; }
 @media (max-width: 420px) { .brand .muted { display: none; } }
 .board-hanzi { font-size: 1.05rem; }
+
+/* Beginners: pinyin everywhere, English under customer lines */
+.bubble-en { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.bubble ruby rt, .sign ruby rt, .closed ruby rt { color: inherit; opacity: 0.75; }
+.logo ruby rt { font-size: 0.45rem; }
+.bubble { line-height: 1.9; }
+
+/* Guided start and today's words */
+.coach { border: 2px solid var(--green); background: var(--surface); border-radius: var(--radius); padding: 14px; margin-bottom: 14px; }
+.coach-head { display: flex; align-items: center; gap: 6px; color: var(--green); font-weight: 700; font-size: 0.85rem; }
+.coach-head .link-btn { margin-left: auto; }
+.coach h2 { margin: 8px 0 4px; font-size: 1.15rem; }
+.coach p { margin: 0 0 10px; line-height: 1.5; }
+.coach-status { color: var(--muted); font-style: italic; }
+.link-btn { background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; padding: 4px; font: inherit; font-size: 0.85rem; }
+.line-breakdown { background: var(--quote-bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px; margin-bottom: 10px; }
+.line-head { display: flex; align-items: center; gap: 6px; }
+.line-text { font-size: 1.4rem; line-height: 2; }
+.line-en { color: var(--muted); margin: 0 0 8px 4px; }
+.tiles { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.word-tile {
+  display: flex; flex-direction: column; align-items: center; min-width: 64px; padding: 6px 8px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit;
+}
+.word-tile:hover { border-color: var(--red); }
+.tile-pinyin { font-size: 0.75rem; color: var(--muted); }
+.tile-hanzi { font-size: 1.35rem; line-height: 1.3; }
+.tile-en { font-size: 0.7rem; color: var(--muted); max-width: 9em; text-align: center; }
+.day-words { margin-bottom: 14px; }
+.todays-words { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; }
+.todays-words summary { cursor: pointer; font-weight: 700; line-height: 2; }
+.word-group h4 { margin: 8px 0 4px; font-size: 0.85rem; color: var(--muted); }
+.day-card .btn.small { margin-top: 8px; }
+.coach p, .day-card p { line-height: 2; }
+.btn.primary ruby rt, .badge ruby rt, .days button.active ruby rt { color: inherit; opacity: 0.85; }
+.why-text { line-height: 2; }
+/* Each word is a small column (pinyin over hanzi), so long pinyin never overlaps the next word. */
+ruby { display: inline-flex; flex-direction: column-reverse; align-items: center; vertical-align: bottom; margin: 0 0.08em; line-height: 1.25; }
+ruby rt { display: block; line-height: 1; white-space: nowrap; }
+/* In the palette a tap anywhere on a block places it; its words explain themselves after placing. */
+.palette-item .word, .palette-item .slot { pointer-events: none; }

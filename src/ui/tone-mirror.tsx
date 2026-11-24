@@ -8,6 +8,7 @@ import { learnerContour, targetContour } from '../tones.ts';
 import { Sheet } from './sheet.tsx';
 import { speaker, TEACHER_VOICE } from './speech.ts';
 import { addSpeaking } from './stats.ts';
+import { Tokens, Zh } from './words.tsx';
 
 const W = 320;
 const H = 130;
@@ -111,11 +112,13 @@ export function ToneMirror({ text, pinyin }: { text: string; pinyin: string }) {
   return (
     <>
       <button type="button" className="btn small ghost" onClick={() => setOpen(true)}>
-        <Waves size={16} /> 声调 Tones
+        <Waves size={16} /> <Zh text="声调 Tones" />
       </button>
       {open && (
         <Sheet title="声调镜子 Tone mirror" onClose={() => setOpen(false)}>
-          <p className="mirror-text">{text}</p>
+          <p className="mirror-text">
+            <Tokens text={text} />
+          </p>
           <p className="muted">{pinyin}</p>
           <MirrorChart pinyin={pinyin} learner={learner} />
           <p className="hint">
@@ -123,10 +126,10 @@ export function ToneMirror({ text, pinyin }: { text: string; pinyin: string }) {
           </p>
           <div className="row-end">
             <button type="button" className="btn ghost" onClick={() => void speaker.speak(text, TEACHER_VOICE)}>
-              <Volume2 size={16} /> 听 Listen
+              <Volume2 size={16} /> <Zh text="听 Listen" />
             </button>
             <button type="button" className={`btn primary ${recording ? 'listening' : ''}`} onClick={record} disabled={!canRecord}>
-              {recording ? <Square size={16} /> : <Mic size={16} />} {recording ? '停 Stop' : '说 Record'}
+              {recording ? <Square size={16} /> : <Mic size={16} />} <Zh text={recording ? '停 Stop' : '说 Record'} />
             </button>
           </div>
           {error && <p className="hint warn-text">{error}</p>}

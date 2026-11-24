@@ -15,7 +15,7 @@ export interface WordUi {
   showPinyin: boolean;
 }
 
-export const WordContext = createContext<WordUi>({ openWhy: () => {}, showPinyin: false });
+export const WordContext = createContext<WordUi>({ openWhy: () => {}, showPinyin: true });
 
 export function whyKey(t: WhyTarget): string {
   return t.kind === 'word' ? t.word.hanzi : `[${t.slot}]`;
@@ -100,6 +100,28 @@ export function Tokens({ text }: { text: string }) {
     });
   });
   return <>{nodes}</>;
+}
+
+/**
+ * Chinese text in labels, buttons and speech bubbles: pinyin above every known word.
+ * Not tappable, so it is safe inside buttons; mixed text like "开门 Run lunch" works.
+ */
+export function Zh({ text }: { text: string }) {
+  const { showPinyin } = useContext(WordContext);
+  return (
+    <>
+      {segment(text, content.words).map((t, i) =>
+        t.word && showPinyin ? (
+          <ruby key={i}>
+            {t.text}
+            <rt>{t.word.pinyin}</rt>
+          </ruby>
+        ) : (
+          <span key={i}>{t.text}</span>
+        ),
+      )}
+    </>
+  );
 }
 
 /** A keyword chip (如果, 听到, 做 …) that also opens its why card. */

@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Mic, Send, Square } from 'lucide-react';
 import { listener } from './listener.ts';
+import { Zh } from './words.tsx';
 
 export function SpeakInput({ onAnswer, disabled, label = '说 Speak' }: {
   onAnswer: (alternatives: string[]) => void;
@@ -46,7 +47,7 @@ export function SpeakInput({ onAnswer, disabled, label = '说 Speak' }: {
     <div className="speak-input">
       {listener.available && (
         <button type="button" className={`btn mic ${listening ? 'listening' : ''}`} onClick={listen} disabled={disabled} aria-pressed={listening}>
-          {listening ? <Square size={20} /> : <Mic size={20} />} {listening ? '听着… Listening' : label}
+          {listening ? <Square size={20} /> : <Mic size={20} />} <Zh text={listening ? '听着… Listening' : label} />
         </button>
       )}
       <form

@@ -9,7 +9,7 @@ import { ShopScene } from './scene.tsx';
 import { Sheet } from './sheet.tsx';
 import { BOT_VOICE, rateForSpeed, speaker, TEACHER_VOICE, useChineseVoice } from './speech.ts';
 import type { Voice } from './speech.ts';
-import { Tokens } from './words.tsx';
+import { Tokens, Zh } from './words.tsx';
 
 function voiceFor(r: CustomerResult, who: '客人' | '机器人'): Voice {
   return who === '机器人' ? BOT_VOICE : { rate: rateForSpeed(r.customer.type.dials.speed), pitch: r.customer.type.pitch };
@@ -35,7 +35,8 @@ export function RushView({ result, startAt, done, onDone, onHotFix, onBackToScri
   /** Extra lines under the summary (e.g. the 代班 bonus). */
   summaryExtra?: ReactNode;
 }) {
-  const [showText, setShowText] = useState(false);
+  // Text and pinyin are shown from the start; hiding them is an optional challenge.
+  const [showText, setShowText] = useState(true);
   const canSpeak = useChineseVoice();
   const happy = result.results.filter((r) => r.failures.length === 0).length;
 
@@ -57,7 +58,7 @@ export function RushView({ result, startAt, done, onDone, onHotFix, onBackToScri
           <div className="summary">
             <div>
               <div className="big">
-                满意度 {happy}/{result.results.length}
+                <Zh text="满意度" /> {happy}/{result.results.length}
               </div>
               <div className="muted">
                 {result.rules} rules · target {result.day.targetRules} or fewer for ★3
@@ -67,12 +68,12 @@ export function RushView({ result, startAt, done, onDone, onHotFix, onBackToScri
             <Stars n={result.stars} />
           </div>
 
-          <h3 className="section-title">记录 Log</h3>
+          <h3 className="section-title"><Zh text="记录 Log" /></h3>
           {result.results.map((r) => (
             <CustomerLog key={r.customer.id} r={r} showText={showText || !canSpeak} />
           ))}
           <button type="button" className="btn ghost wide" onClick={onBackToScript}>
-            Fix the script 改规则
+            <Zh text="Fix the script 改规则" />
           </button>
         </>
       )}
@@ -105,13 +106,13 @@ function CustomerLog({ r, showText }: { r: CustomerResult; showText: boolean }) 
         const hidden = t.who === '客人' && !showText && !revealed.has(i);
         return (
           <div key={i} className={`turn ${t.who === '客人' ? 'them' : 'bot'}`}>
-            <span className="who">{t.who}</span>
+            <span className="who"><Zh text={t.who} /></span>
             <button type="button" className="icon-btn" aria-label="Play" onClick={() => void speaker.speak(t.text, voiceFor(r, t.who))}>
               <Volume2 size={16} />
             </button>
             {hidden ? (
               <button type="button" className="hidden-text" onClick={() => setRevealed(new Set(revealed).add(i))}>
-                字 show
+                <Zh text="字 show" />
               </button>
             ) : (
               <span className="said">
@@ -150,7 +151,7 @@ export function ReviewCard({ item, result, extra }: { item: ReviewItem; result: 
         <div className="review-actions">
           {first && (
             <button type="button" className="btn small ghost" onClick={() => setReplay(first)}>
-              <RotateCcw size={16} /> 回放 Replay
+              <RotateCcw size={16} /> <Zh text="回放 Replay" />
             </button>
           )}
           {extra}
@@ -167,7 +168,7 @@ export function ReviewCard({ item, result, extra }: { item: ReviewItem; result: 
 
 export function ReviewList({ result, renderExtra }: { result: DayResult | null; renderExtra?: (item: ReviewItem) => ReactNode }) {
   if (!result) return <p className="hint">Run a lunch rush first. Every sentence the bot got wrong ends up here.</p>;
-  if (result.review.length === 0) return <p className="hint">没有错 Nothing went wrong today. Every customer left happy.</p>;
+  if (result.review.length === 0) return <p className="hint"><Zh text="没有错 Nothing went wrong today. Every customer left happy." /></p>;
   return (
     <div className="review">
       <p className="hint">Listen, then say each sentence aloud once.</p>

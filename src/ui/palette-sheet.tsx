@@ -6,7 +6,7 @@ import type { PaletteGroup, PaletteItem } from '../palette.ts';
 import { GROUP_LABELS, spokenText } from '../palette.ts';
 import { Sheet } from './sheet.tsx';
 import { speaker, TEACHER_VOICE } from './speech.ts';
-import { BlockLine } from './words.tsx';
+import { BlockLine, Zh } from './words.tsx';
 
 const ORDER: PaletteGroup[] = ['听', '查', '做', '说'];
 
@@ -28,7 +28,7 @@ export function PaletteSheet({ items, day, onPick, onClose, mustSpeak, header }:
         return (
           <section key={group} className="palette-group">
             <h3>
-              {GROUP_LABELS[group].hanzi} <small>{GROUP_LABELS[group].en}</small>
+              <Zh text={GROUP_LABELS[group].hanzi} /> <small>{GROUP_LABELS[group].en}</small>
             </h3>
             {inGroup.map((item) => (
               <div key={item.key} className="palette-item" onClick={() => onPick(item)} role="button" tabIndex={0}
@@ -36,7 +36,7 @@ export function PaletteSheet({ items, day, onPick, onClose, mustSpeak, header }:
                 <div className="palette-main">
                   <BlockLine block={item.template} />
                   <span className="gloss">
-                    {item.day === day && day > 1 && <span className="badge">新 new</span>}
+                    {item.day === day && day > 1 && <span className="badge"><Zh text="新 new" /></span>}
                     {mustSpeak?.(item) && (
                       <span className="badge speak">
                         <Mic size={12} /> say it

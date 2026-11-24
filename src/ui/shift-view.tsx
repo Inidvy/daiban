@@ -12,7 +12,7 @@ import { content } from './content.ts';
 import { SpeakInput } from './speak-input.tsx';
 import { speaker, TEACHER_VOICE, useChineseVoice } from './speech.ts';
 import { ToneMirror } from './tone-mirror.tsx';
-import { Tokens } from './words.tsx';
+import { Tokens, Zh } from './words.tsx';
 
 const VIP_VOICE = { rate: 0.75, pitch: 1.05 };
 
@@ -42,7 +42,7 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
   const [misses, setMisses] = useState(0);
   const [hints, setHints] = useState(0);
   const [bubble, setBubble] = useState<{ text: string; en: string; who: 'them' | 'you' } | null>(null);
-  const [showText, setShowText] = useState(false);
+  const [showText, setShowText] = useState(true);
   const [deadline, setDeadline] = useState<number | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [log, setLog] = useState<LoggedTurn[]>([]);
@@ -129,15 +129,15 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
     return (
       <section className="shift">
         <div className="day-card">
-          <h1>代班 · {day.vip.name}</h1>
-          <p>{day.vip.situation}</p>
+          <h1><Zh text={`代班 · ${day.vip.name}`} /></h1>
+          <p><Zh text={day.vip.situation} /></p>
           <p className="hint">
             The bot can't handle this one. You serve them yourself, by speaking. Say what the shop would say; the exact words don't matter, the meaning does.
             {passedBefore && ' (Passed before: ★3 is open for today.)'}
           </p>
         </div>
         <button type="button" className="btn primary wide" onClick={() => startTurn(0)}>
-          开始 Start ({turns.length} lines)
+          <Zh text={`开始 Start (${turns.length} lines)`} />
         </button>
       </section>
     );
@@ -148,13 +148,13 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
       <section className="shift">
         <div className="summary">
           <div>
-            <div className="big">{gaveUp.current ? '还行 Not quite' : '代班成功 Shift done!'}</div>
+            <div className="big"><Zh text={gaveUp.current ? '还行 Not quite' : '代班成功 Shift done!'} /></div>
             <div className="muted">
               🪙 {tips} tips · {gaveUp.current ? 'Skip a line and ★3 stays locked. Try again any time.' : '★3 is open for today.'}
             </div>
           </div>
         </div>
-        <h3 className="section-title">你说的 What you said</h3>
+        <h3 className="section-title"><Zh text="你说的 What you said" /></h3>
         {log.map((l, i) => (
           <div key={i} className="review-item">
             <button type="button" className="icon-btn" aria-label="Play" onClick={() => void speaker.speak(l.model, TEACHER_VOICE)}>
@@ -162,7 +162,7 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
             </button>
             <div className="review-main">
               <div className="muted">
-                客人: <Tokens text={l.says} />
+                <Zh text="客人" />: <Tokens text={l.says} />
               </div>
               <div className="review-text">
                 <Tokens text={l.model} />
@@ -186,7 +186,7 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
             setPhase('intro');
           }}
         >
-          <RotateCcw size={16} /> 再来 Again
+          <RotateCcw size={16} /> <Zh text="再来 Again" />
         </button>
       </section>
     );
@@ -199,17 +199,17 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
     <section className="shift">
       <div className="scene shift-scene">
         <div className="wall">
-          <span className="sign">代班</span>
+          <span className="sign"><Zh text="代班" /></span>
           <span className="tips">🪙 {tips}</span>
         </div>
         <div className="guest talk">
           <span className="guest-face">{bubble?.text === '啊？' ? '🤨' : '🧑‍🏫'}</span>
-          <span className="guest-name">{day.vip.name.split(' ')[0]}</span>
+          <span className="guest-name"><Zh text={day.vip.name.split(' ')[0]} /></span>
         </div>
         <div className="robot you">🙋</div>
         {bubble && (
           <button type="button" className={`bubble ${bubble.who === 'them' ? 'them' : 'bot'}`} onClick={() => setShowText(true)}>
-            {bubble.who === 'them' && !textVisible ? '🔊 ～～～' : bubble.text}
+            {bubble.who === 'them' && !textVisible ? '🔊 ～～～' : <Zh text={bubble.text} />}
           </button>
         )}
         <div className="counter" />
@@ -225,15 +225,15 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
 
       <div className="toolbar">
         <button type="button" className="btn small ghost" onClick={() => void speaker.speak(turn.says, VIP_VOICE)}>
-          <Volume2 size={16} /> 再听 Again
+          <Volume2 size={16} /> <Zh text="再听 Again" />
         </button>
         {canSpeak && !showText && (
           <button type="button" className="btn small ghost" onClick={() => setShowText(true)}>
-            <Eye size={16} /> 字 Text
+            <Eye size={16} /> <Zh text="字 Text" />
           </button>
         )}
         <button type="button" className="btn small ghost" onClick={() => setHints((h) => Math.min(3, h + 1))} disabled={hints >= 3}>
-          <Lightbulb size={16} /> 提示 Hint
+          <Lightbulb size={16} /> <Zh text="提示 Hint" />
         </button>
       </div>
 
@@ -257,7 +257,7 @@ export function ShiftView({ day, passedBefore, onAnswered, onFinish }: {
 
       {hints >= 3 && (
         <button type="button" className="btn small ghost" onClick={giveUp}>
-          <SkipForward size={16} /> 跳过 Skip this line (★3 stays locked)
+          <SkipForward size={16} /> <Zh text="跳过 Skip this line (★3 stays locked)" />
         </button>
       )}
     </section>

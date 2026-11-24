@@ -8,7 +8,7 @@ import { moveBlock, removeBlock, setElse } from '../editor.ts';
 import type { Block, Place } from '../editor.ts';
 import { ELSE_DAY, spokenText } from '../palette.ts';
 import { speaker, TEACHER_VOICE } from './speech.ts';
-import { BlockLine, Tokens } from './words.tsx';
+import { BlockLine, Tokens, Zh } from './words.tsx';
 
 interface Props {
   blocks: Block[];
@@ -29,7 +29,7 @@ export function ScriptEditor(props: Props) {
       <BlockList list={props.blocks} place={{ parentId: null, branch: 'then' }} ctx={ctx} />
       {!props.readOnly && (
         <AddButton onClick={() => props.onAddAt({ parentId: null, branch: 'then' })}>
-          如果… <small>add a rule</small>
+          <Zh text="如果…" /> <small>add a rule</small>
         </AddButton>
       )}
       {props.blocks.length === 0 && !props.readOnly && (
@@ -71,7 +71,7 @@ function BlockView({ block, first, last, ctx }: { block: Block; first: boolean; 
       className={`row ${block.kind === 'if' ? 'rule' : 'action'} ${isSelected ? 'selected' : ''} ${empty ? 'warn' : ''}`}
       onClick={() => !ctx.readOnly && ctx.setSelected(isSelected ? null : block.id)}
     >
-      {block.kind === 'do' && <span className="jiu">就</span>}
+      {block.kind === 'do' && <span className="jiu"><Zh text="就" /></span>}
       <BlockLine block={block} />
       <button
         type="button"
@@ -90,14 +90,14 @@ function BlockView({ block, first, last, ctx }: { block: Block; first: boolean; 
   const tools = isSelected && !ctx.readOnly && (
     <div className="tools">
       <button type="button" className="tool" disabled={first} onClick={() => change(moveBlock(ctx.blocks, block.id, -1))}>
-        <ArrowUp size={16} /> 上
+        <ArrowUp size={16} /> <Zh text="上" />
       </button>
       <button type="button" className="tool" disabled={last} onClick={() => change(moveBlock(ctx.blocks, block.id, 1))}>
-        <ArrowDown size={16} /> 下
+        <ArrowDown size={16} /> <Zh text="下" />
       </button>
       {block.kind === 'if' && block.else === null && ctx.day >= ELSE_DAY && (
         <button type="button" className="tool" onClick={() => change(setElse(ctx.blocks, block.id, true))}>
-          <CornerDownRight size={16} /> 不然
+          <CornerDownRight size={16} /> <Zh text="不然" />
         </button>
       )}
       <button
@@ -108,7 +108,7 @@ function BlockView({ block, first, last, ctx }: { block: Block; first: boolean; 
           change(removeBlock(ctx.blocks, block.id));
         }}
       >
-        <Trash2 size={16} /> 删
+        <Trash2 size={16} /> <Zh text="删" />
       </button>
     </div>
   );
@@ -126,12 +126,12 @@ function BlockView({ block, first, last, ctx }: { block: Block; first: boolean; 
     <div className="rule-group">
       {row}
       {tools}
-      {empty && <p className="hint warn-text">This 如果 does nothing yet: add a 就 line.</p>}
+      {empty && <p className="hint warn-text"><Zh text="This 如果 does nothing yet: add a 就 line." /></p>}
       <div className="body">
         <BlockList list={block.then} place={{ parentId: block.id, branch: 'then' }} ctx={ctx} />
         {!ctx.readOnly && (
           <AddButton onClick={() => ctx.onAddAt({ parentId: block.id, branch: 'then' })}>
-            就… <small>then</small>
+            <Zh text="就…" /> <small>then</small>
           </AddButton>
         )}
       </div>
@@ -156,7 +156,7 @@ function BlockView({ block, first, last, ctx }: { block: Block; first: boolean; 
             <BlockList list={block.else} place={{ parentId: block.id, branch: 'else' }} ctx={ctx} />
             {!ctx.readOnly && (
               <AddButton onClick={() => ctx.onAddAt({ parentId: block.id, branch: 'else' })}>
-                就… <small>otherwise</small>
+                <Zh text="就…" /> <small>otherwise</small>
               </AddButton>
             )}
           </div>

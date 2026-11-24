@@ -14,7 +14,7 @@ import { content } from './content.ts';
 import { Sheet } from './sheet.tsx';
 import { SpeakInput } from './speak-input.tsx';
 import { speaker, TEACHER_VOICE } from './speech.ts';
-import { Tokens } from './words.tsx';
+import { Tokens, Zh } from './words.tsx';
 
 const STRENGTH_LABEL: Record<Strength, string> = { new: '新 new', shaky: '还不稳 shaky', known: '会了 known' };
 const lexicon = kitchenFor(content, getDay(content, content.days.length)).lexicon;
@@ -28,7 +28,7 @@ export function ProgressLine({ day, cards }: { day: number; cards: Cards }) {
   const s = progressSummary(content, day, cards, new Date());
   return (
     <p className="progress-line">
-      能听懂 You can handle <b>{s.handled}</b> of {s.total} sentences · <b>{s.known}</b> known for good
+      <Zh text="能听懂" /> You can handle <b>{s.handled}</b> of {s.total} sentences · <b>{s.known}</b> known for good
     </p>
   );
 }
@@ -39,7 +39,7 @@ export function MenuBoard({ day, cards, highlight }: { day: number; cards: Cards
   const groups = [...new Set(patterns.map((p) => p.group))];
   return (
     <section className="menu-board">
-      <h3 className="section-title">菜单 Menu board</h3>
+      <h3 className="section-title"><Zh text="菜单 Menu board" /></h3>
       <ProgressLine day={day} cards={cards} />
       <div className="board-groups">
         {groups.map((g) => (
@@ -60,7 +60,7 @@ export function MenuBoard({ day, cards, highlight }: { day: number; cards: Cards
                       </span>
                       <small className="muted">{p.en}</small>
                     </span>
-                    <span className={`strength ${st}`}>{STRENGTH_LABEL[st]}</span>
+                    <span className={`strength ${st}`}><Zh text={STRENGTH_LABEL[st]} /></span>
                   </div>
                 );
               })}
@@ -111,11 +111,11 @@ export function SpeakPrompt({ pattern, allowHelp, onResult }: { pattern: Pattern
               void speaker.speak(example(pattern), TEACHER_VOICE);
             }}
           >
-            <Volume2 size={16} /> 听答案 Show me
+            <Volume2 size={16} /> <Zh text="听答案 Show me" />
           </button>
         )}
         <button type="button" className="btn small ghost" onClick={() => onResult({ ok: false, heard: wrong ?? '', ms: Date.now() - started, helped })}>
-          <X size={16} /> 不会 Don't know
+          <X size={16} /> <Zh text="不会 Don't know" />
         </button>
       </div>
     </div>
@@ -130,7 +130,7 @@ export function RepairJobs({ due, onDone }: { due: string[]; onDone: (patternId:
   const pattern = jobs.find((p) => p.id === active);
   return (
     <section className="repairs">
-      <h3 className="section-title">修理 Repair jobs</h3>
+      <h3 className="section-title"><Zh text="修理 Repair jobs" /></h3>
       <p className="hint">These sentences are starting to slip. Fix each one by saying it: under a minute, 🪙 1 each.</p>
       {jobs.map((p) => (
         <button key={p.id} type="button" className="repair-job" onClick={() => setActive(p.id)}>
