@@ -508,7 +508,7 @@
       {
         "title": "最后的高峰 Final rush",
         "newPatterns": [],
-        "customers": 12,
+        "customers": 10,
         "maxQty": 9,
         "heat": 1
       }
@@ -597,12 +597,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.55
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -684,7 +684,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.25
       },
       {
         "title": "便宜一点吧 A bit cheaper, please.",
@@ -694,12 +694,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.6
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -782,7 +782,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.3
       },
       {
         "title": "有袋子吗 Do you have a bag?",
@@ -792,12 +792,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.65
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -881,7 +881,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.35
       },
       {
         "title": "你忙吗 Are you busy?",
@@ -891,12 +891,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.7
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -980,7 +980,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.4
       },
       {
         "title": "再见 Goodbye!",
@@ -990,12 +990,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.75
       },
       {
         "title": "最后的高峰 Final rush",
         "newPatterns": [],
-        "customers": 12,
+        "customers": 10,
         "maxQty": 5,
         "heat": 1
       }
@@ -1084,12 +1084,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.55
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1171,7 +1171,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.25
       },
       {
         "title": "你叫什么名字 What's your name?",
@@ -1181,12 +1181,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.6
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1269,7 +1269,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.3
       },
       {
         "title": "你会说英语吗 Do you speak English?",
@@ -1279,12 +1279,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.65
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1368,7 +1368,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.35
       },
       {
         "title": "你几点下班 When do you finish work?",
@@ -1378,12 +1378,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.7
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1467,7 +1467,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.4
       },
       {
         "title": "你的微信是多少 What's your WeChat?",
@@ -1477,12 +1477,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.75
       },
       {
         "title": "最后的高峰 Final rush",
         "newPatterns": [],
-        "customers": 12,
+        "customers": 10,
         "maxQty": 5,
         "heat": 1
       }
@@ -1571,12 +1571,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.55
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1656,7 +1656,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.25
       },
       {
         "title": "要多长时间 How long will it take?",
@@ -1666,12 +1666,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.6
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1752,7 +1752,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.3
       },
       {
         "title": "前面右转 Turn right ahead.",
@@ -1762,12 +1762,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.65
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1849,7 +1849,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.35
       },
       {
         "title": "开慢一点儿 Drive a bit slower!",
@@ -1859,12 +1859,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.7
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -1946,7 +1946,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.4
       },
       {
         "title": "可以开空调吗 Can you turn on the AC?",
@@ -1956,12 +1956,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.75
       },
       {
         "title": "最后的高峰 Final rush",
         "newPatterns": [],
-        "customers": 12,
+        "customers": 10,
         "maxQty": 5,
         "heat": 1
       }
@@ -2049,12 +2049,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.55
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2133,7 +2133,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.25
       },
       {
         "title": "早饭在哪儿 Where is breakfast?",
@@ -2143,12 +2143,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.6
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2228,7 +2228,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.3
       },
       {
         "title": "没有热水 There's no hot water.",
@@ -2237,12 +2237,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.65
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2323,7 +2323,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.35
       },
       {
         "title": "附近有饭馆吗 Is there a restaurant nearby?",
@@ -2333,12 +2333,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.7
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2419,7 +2419,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.4
       },
       {
         "title": "可以帮我叫出租车吗 Can you call me a taxi?",
@@ -2429,12 +2429,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.75
       },
       {
         "title": "最后的高峰 Final rush",
         "newPatterns": [],
-        "customers": 12,
+        "customers": 10,
         "maxQty": 5,
         "heat": 1
       }
@@ -2522,12 +2522,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.55
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2606,7 +2606,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.25
       },
       {
         "title": "饭前吃还是饭后吃 Before or after meals?",
@@ -2616,12 +2616,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.6
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2703,7 +2703,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.3
       },
       {
         "title": "我咳嗽 I'm coughing.",
@@ -2713,12 +2713,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.65
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2800,7 +2800,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.35
       },
       {
         "title": "我们几点见 What time shall we meet?",
@@ -2810,12 +2810,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.7
       },
       {
         "title": "高峰 Peak",
         "newPatterns": [],
-        "customers": 9,
+        "customers": 8,
         "maxQty": 5,
         "heat": 1
       }
@@ -2897,7 +2897,7 @@
         ],
         "customers": 4,
         "maxQty": 2,
-        "heat": 0.2
+        "heat": 0.4
       },
       {
         "title": "祝你一切顺利 All the best!",
@@ -2907,12 +2907,12 @@
         ],
         "customers": 6,
         "maxQty": 3,
-        "heat": 0.5
+        "heat": 0.75
       },
       {
         "title": "最后的高峰 Final rush",
         "newPatterns": [],
-        "customers": 12,
+        "customers": 10,
         "maxQty": 5,
         "heat": 1
       }

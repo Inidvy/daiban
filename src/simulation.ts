@@ -133,7 +133,7 @@ class CustomerFactory {
   private heated(type: CustomerType): CustomerType {
     const k = 0.3 + 0.7 * (this.day.heat ?? 1);
     const d = type.dials;
-    return { ...type, dials: { ...d, variation: d.variation * k, politeness: d.politeness * k, speed: d.speed * k } };
+    return { ...type, dials: { ...d, variation: d.variation * k, politeness: d.politeness * k, speed: d.speed * k, mindChange: d.mindChange * k } };
   }
 
   private say(parts: Part[], optional = false): Utterance {
@@ -191,6 +191,9 @@ class CustomerFactory {
 
   create(id: number): Customer {
     const { rng, day, kitchen } = this;
+    // Heat changes what customers want, not only how they say it: a hot level brings more requests per customer,
+    // so every gap in the script shows up more often.
+    const h = day.heat ?? 1;
     const type = this.heated(pick(rng, day.customerTypes.map((t) => this.content.customerTypes.find((c) => c.id === t)!)));
     const d = type.dials;
     const available = this.goods();
@@ -202,13 +205,17 @@ class CustomerFactory {
     const opened = newest && day.levels.some((l) => l.newPatterns.length && !l.newPatterns.every((p) => day.allowed!.includes(p))) ? newest.newPatterns : day.newPatterns;
     const fresh = exchanges.filter((p) => opened.includes(p));
     const chats: Utterance[] = [];
-    const chatCount = exchanges.length === 0 ? 0 : orders ? (chance(rng, 0.6) ? 1 : 0) : 1 + (chance(rng, 0.5) ? 1 : 0);
+    const density = Math.min(1, exchanges.length / 8);
+    const chatCount =
+      exchanges.length === 0
+        ? 0
+        : (orders ? (chance(rng, 0.4 + 0.4 * h) ? 1 : 0) : 1 + (chance(rng, 0.3 + 0.5 * h) ? 1 : 0)) + (chance(rng, h * density) ? 1 : 0);
     for (let i = 0; i < chatCount; i++) {
       const id = fresh.length && chance(rng, 0.6) ? pick(rng, fresh) : pick(rng, exchanges);
       if (!chats.some((u) => u.patternIds.includes(id))) chats.push(this.exchange(id, d.politeness));
     }
 
-    const soldOutFirst = orders && day.soldOut.length > 0 && this.has('p_sold_out') && chance(rng, 0.35);
+    const soldOutFirst = orders && day.soldOut.length > 0 && this.has('p_sold_out') && chance(rng, 0.2 + 0.3 * h);
     const firstChoice = !orders ? '' : soldOutFirst ? pick(rng, day.soldOut) : pick(rng, available);
     const dish = !orders ? '' : soldOutFirst ? pick(rng, available) : firstChoice;
     const qty = 1 + Math.floor(rng() * day.maxQty);
@@ -216,7 +223,7 @@ class CustomerFactory {
     let spice: Spice = '辣';
     if (this.has('p_no_spice', 'p_mild') && kitchen.dishes.get(dish)?.spicy) {
       const r = rng();
-      spice = r < 0.3 ? '不辣' : r < 0.5 ? '微辣' : '辣';
+      spice = r < 0.25 + 0.1 * h ? '不辣' : r < 0.4 + 0.2 * h ? '微辣' : '辣';
     }
     let takeaway: boolean | null = null;
     const canTakeaway = orders && this.has('p_takeaway', 'p_eat_here');
@@ -227,10 +234,10 @@ class CustomerFactory {
       takeaway = r < 0.3 ? true : r < 0.6 || !canAsk ? false : null;
     }
     const asksStock = orders && this.has('p_have_q') && chance(rng, soldOutFirst ? 0.5 : 0.3);
-    const asksPrice = orders && this.has('p_price_q') && chance(rng, 0.5);
+    const asksPrice = orders && this.has('p_price_q') && chance(rng, 0.3 + 0.4 * h);
     const pay: PayMethod | null = this.has('p_scan', 'p_cash') ? (chance(rng, 0.5) ? '扫码' : '现金') : null;
-    const changedMind = orders && this.has('p_change') && available.length > 1 && chance(rng, d.mindChange * 0.5);
-    const again = orders && this.has('p_again') && chance(rng, 0.3);
+    const changedMind = orders && this.has('p_change') && available.length > 1 && chance(rng, d.mindChange * 0.7);
+    const again = orders && this.has('p_again') && chance(rng, 0.15 + 0.3 * h);
     const thanks = this.has('p_thanks') && chance(rng, 0.5);
     const verb = this.has('p_bring') && chance(rng, Math.max(d.variation, 0.3)) ? 'p_bring' : 'p_order';
 

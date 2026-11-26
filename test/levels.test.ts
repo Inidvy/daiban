@@ -112,3 +112,28 @@ test('every word in a course sentence is introduced on some day (none hide among
   }
   assert.deepEqual([...hidden], []);
 });
+
+// A script that skips what a level just taught must not clear it: the thresholds have to bind on the sentences
+// the level is about, not only on an empty script. (谢谢 is an optional line, so its level is left out.)
+test('skipping the sentences a level just taught costs the 3 stars', () => {
+  type Node = { kind: string; cond?: { template?: string }; then?: Node[]; otherwise?: Node[] };
+  const hears = (s: Node, templates: Set<string>): boolean =>
+    s.kind === 'if' &&
+    ((!!s.cond?.template && templates.has(normalize(s.cond.template))) || [...(s.then ?? []), ...(s.otherwise ?? [])].some((x) => hears(x, templates)));
+  for (const level of levels) {
+    const fresh = level.newPatterns
+      .map((id) => content.patterns.find((p) => p.id === id)!)
+      .filter((p) => p.speaker === 'customer' && p.id !== 'p_thanks');
+    if (!fresh.length) continue;
+    const day = levelDay(content, level);
+    const full = parseScript(readSampleScript(day));
+    const templates = new Set(fresh.map((p) => normalize(p.template)));
+    const cut = { ...full, body: full.body.filter((s) => !hears(s as Node, templates)) };
+    if (cut.body.length === full.body.length) continue;
+    let three = 0;
+    for (let seed = 1; seed <= 10; seed++) {
+      if (summarize(day, cut, serveAll(content, day, cut, generateCustomers(content, day, level.customers, seed))).stars === 3) three++;
+    }
+    assert.ok(three <= 3, `${level.id}: 3 stars on ${three}/10 seeds without its new sentences`);
+  }
+});

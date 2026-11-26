@@ -28,7 +28,7 @@ npm test
 | 21–25 | 酒店 Hotel | Check-in, breakfast, broken things, service, check-out |
 | 26–30 | 药店 Pharmacy | Colds and headaches, taking medicine, feeling ill, making plans, saying goodbye |
 
-- **Levels:** each day is split into short levels (1-1, 1-2, …). A level adds one or two new sentences, then the day ends on a busy peak. Each level brings more customers, bigger orders, and faster, more varied speech. One star opens the next level, and clearing a day opens the next one. There's no tutorial: a "新句子 New in this level" card shows the new sentences word by word, then you play.
+- **Levels:** each day is split into short levels (1-1, 1-2, …). A level adds one or two new sentences, then the day ends on a busy peak. Each level brings more customers, bigger orders, faster and more varied speech, and more requests per customer (extra questions, 再来一个, 算了, sold-out first choices), so every gap in the script shows up more often. Heat also climbs through each place's five days. One star opens the next level, and clearing a day opens the next one. There's no tutorial: a "新句子 New in this level" card shows the new sentences word by word, then you play.
 - **Places:** every place has its own script and its own sentences. Ordering, prices, paying and thanks are general and work everywhere. Customers at a place only say what that place has taught, plus the general sentences.
 - **Questions that need an answer:** customers also chat ("你叫什么名字？", "远吗？"). The robot needs a rule that answers each one, or the customer is unhappy.
 - **Pinyin everywhere, on by default:** every Chinese word in the game shows pinyin above it, and customer bubbles show the English. The 拼音 button turns pinyin off.

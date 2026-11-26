@@ -195,6 +195,7 @@ const have = new Set(keptWords.map((w) => w.hanzi));
 const keptPatterns = patterns.filter((p) => p.day < FIRST_NEW);
 const keptDays = days.filter((d) => d.day < FIRST_NEW);
 
+const round = (x) => Math.round(x * 100) / 100;
 const newDays = [];
 const newPatterns = [];
 const firstDayOfWord = new Map();
@@ -222,9 +223,10 @@ for (const place of PLACES) {
     // Level title: the new line without punctuation; a slot reads as "…".
     const titleOf = (e) => `${e[1].replace(/[。！？]/g, '').replace(/\s*\[地方\]/g, '…')} ${e[3].replace(/\s*\[地方\]\.?/, '…')}`;
     const levels = [
-      { title: titleOf(a), newPatterns: pair(a), customers: 4, maxQty: 2, heat: 0.2 },
-      { title: titleOf(b), newPatterns: pair(b), customers: 6, maxQty: 3, heat: 0.5 },
-      { title: i === 4 ? '最后的高峰 Final rush' : '高峰 Peak', newPatterns: [], customers: i === 4 ? 12 : 9, maxQty: 5, heat: 1 },
+      // Heat sets how many requests each customer brings (src/simulation.ts), and it climbs through a place's week.
+      { title: titleOf(a), newPatterns: pair(a), customers: 4, maxQty: 2, heat: round(0.2 + 0.05 * i) },
+      { title: titleOf(b), newPatterns: pair(b), customers: 6, maxQty: 3, heat: round(0.55 + 0.05 * i) },
+      { title: i === 4 ? '最后的高峰 Final rush' : '高峰 Peak', newPatterns: [], customers: i === 4 ? 10 : 8, maxQty: 5, heat: 1 },
     ];
     const vipTurns = [a, b].map((e) => {
       const replyText = e[5] ?? newPatterns.find((p) => p.id === e[4]).template;
