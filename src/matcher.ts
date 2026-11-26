@@ -30,7 +30,7 @@ export function normalize(text: string): string {
 }
 
 export function buildLexicon(words: readonly Word[]): Lexicon {
-  const lexicon: Lexicon = { 数量: [], 量词: [], 东西: [], 价钱: [] };
+  const lexicon: Lexicon = { 数量: [], 量词: [], 东西: [], 价钱: [], 地方: [] };
   for (const w of words) if (w.slot) lexicon[w.slot].push(w.hanzi);
   for (const slot of SLOT_TYPES) lexicon[slot].sort((a, b) => b.length - a.length);
   return lexicon;

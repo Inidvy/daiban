@@ -45,7 +45,7 @@ export function LineBreakdown({ line }: { line: { text: string; en: string } }) 
   );
 }
 
-const EXAMPLE_EN: Record<string, string> = { 数量: 'two', 量词: 'bowls', 东西: 'beef noodles', 价钱: '36 yuan' };
+const EXAMPLE_EN: Record<string, string> = { 数量: 'two', 量词: 'bowls', 东西: 'beef noodles', 价钱: '36 yuan', 地方: 'the airport' };
 
 /** The sentences a level adds, with slots filled by examples, so a new line is never a surprise. */
 export function NewLines({ level }: { level: Level }) {

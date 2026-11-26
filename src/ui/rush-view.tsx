@@ -42,7 +42,7 @@ export function RushView({ result, startAt, done, onDone, onHotFix, onBackToScri
 
   return (
     <div className="rush">
-      <ShopScene results={result.results} startAt={startAt} showText={showText || !canSpeak} onDone={onDone} onHotFix={onHotFix} />
+      <ShopScene place={result.day.place} results={result.results} startAt={startAt} showText={showText || !canSpeak} onDone={onDone} onHotFix={onHotFix} />
 
       <div className="toolbar">
         {canSpeak && (
@@ -159,7 +159,7 @@ export function ReviewCard({ item, result, extra }: { item: ReviewItem; result: 
       </div>
       {replay && (
         <Sheet title={`回放 Replay · #${replay.customer.id} ${replay.customer.type.name}`} onClose={() => setReplay(null)}>
-          <ShopScene results={[replay]} showText />
+          <ShopScene place={result.day.place} results={[replay]} showText />
         </Sheet>
       )}
     </div>

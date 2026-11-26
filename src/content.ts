@@ -11,6 +11,21 @@ export function getDay(content: Content, n: number): Day {
   return day;
 }
 
+/** Where a pattern is taught: the place of the day that introduces it. */
+export function placeOf(content: Content, patternDay: number): string | undefined {
+  return content.days.find((d) => d.day === patternDay)?.place;
+}
+
+/**
+ * Patterns open at `day`'s place up to that day: general ones from any earlier day (ordering, prices,
+ * paying, thanks) and the ones this place taught. A fruit-shop customer never asks for 不要辣.
+ */
+export function openPatterns(content: Content, day: Day): string[] {
+  return content.patterns
+    .filter((p) => p.day <= day.day && (p.general || placeOf(content, p.day) === day.place))
+    .map((p) => p.id);
+}
+
 export function kitchenFor(content: Content, day: Day): Kitchen {
   const dishes = new Map(content.words.filter((w) => w.slot === '东西').map((w) => [w.hanzi, w]));
   return { lexicon: buildLexicon(content.words), dishes, menu: new Set(day.menu), soldOut: new Set(day.soldOut) };
@@ -30,6 +45,15 @@ export function validateContent(c: Content): string[] {
   dupes(c.patterns, (p) => p.id, 'pattern id');
   dupes(c.customerTypes, (t) => t.id, 'customer type');
   dupes(c.days, (d) => String(d.day), 'day');
+  const places = new Set(c.places.map((p) => p.id));
+  for (const d of c.days) if (!places.has(d.place)) errors.push(`Day ${d.day}: unknown place ${d.place}`);
+  for (const p of c.patterns) {
+    for (const r of p.reply ?? []) {
+      const rp = c.patterns.find((x) => x.id === r);
+      if (!rp || rp.speaker !== 'bot') errors.push(`pattern ${p.id}: reply ${r} is not a bot pattern`);
+    }
+    if (p.reply && p.speaker !== 'customer') errors.push(`pattern ${p.id}: only customer patterns have a reply`);
+  }
 
   const words = new Map(c.words.map((w) => [w.hanzi, w]));
   for (const w of c.words) {
@@ -52,9 +76,9 @@ export function validateContent(c: Content): string[] {
       if (!p) errors.push(`Day ${d.day}: unknown pattern ${id}`);
       else if (p.day !== d.day) errors.push(`Day ${d.day}: pattern ${id} says day ${p.day}`);
     }
-    for (const dish of d.menu) if (words.get(dish)?.slot !== '东西') errors.push(`Day ${d.day}: menu item ${dish} is not a dish word`);
+    for (const dish of d.menu) if (!['东西', '地方'].includes(words.get(dish)?.slot ?? '')) errors.push(`Day ${d.day}: menu item ${dish} is not a goods or place word`);
     for (const dish of d.soldOut) if (!d.menu.includes(dish)) errors.push(`Day ${d.day}: sold-out ${dish} is not on the menu`);
-    if (d.soldOut.length >= d.menu.length) errors.push(`Day ${d.day}: everything is sold out`);
+    if (d.menu.length && d.soldOut.length >= d.menu.length) errors.push(`Day ${d.day}: everything is sold out`);
     for (const t of d.customerTypes) if (!types.has(t)) errors.push(`Day ${d.day}: unknown customer type ${t}`);
     if (!d.vip.turns.length) errors.push(`Day ${d.day}: the 代班 shift has no turns`);
     // Levels must introduce the day's patterns exactly once between them (src/levels.ts).

@@ -18,7 +18,8 @@ export type Condition =
   | { kind: '没有'; item: string };
 
 export type Action =
-  | { kind: '做'; what: string; again: boolean }
+  /** verb 给 (give) words it for shops; the bot does the same thing. */
+  | { kind: '做'; what: string; again: boolean; verb?: '给' }
   | { kind: '说'; text: string }
   | { kind: '收钱'; method?: PayMethod }
   | { kind: '上菜' }
@@ -130,6 +131,11 @@ function parseAction(piece: string, line: number): Action {
     if (!what) throw new ScriptError(line, '做 what? e.g. 做 [数量][量词][东西]');
     return { kind: '做', what, again };
   }
+  if (text.startsWith('给') && !again) {
+    const what = rest('给');
+    if (!what) throw new ScriptError(line, '给 what? e.g. 给 [数量][量词][东西]');
+    return { kind: '做', what, again, verb: '给' };
+  }
   if (again) throw new ScriptError(line, '再 only works with 做 (再 做 一个)');
   if (text.startsWith('说') || text.startsWith('问')) {
     const { value, rest: after } = readQuoted(rest(text[0]), line);
@@ -144,7 +150,7 @@ function parseAction(piece: string, line: number): Action {
   }
   if (text === '上菜') return { kind: '上菜' };
   if (text === '打包') return { kind: '打包' };
-  throw new ScriptError(line, `不懂 "${piece}": unknown action (known: 说, 问, 做, 再 做, 收钱, 上菜, 打包)`);
+  throw new ScriptError(line, `不懂 "${piece}": unknown action (known: 说, 问, 做, 给, 再 做, 收钱, 上菜, 打包)`);
 }
 
 function parseActionLine(text: string, line: number): DoStmt {

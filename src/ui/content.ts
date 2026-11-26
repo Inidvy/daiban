@@ -4,8 +4,9 @@ import wordsJson from '../../content/words.json';
 import patternsJson from '../../content/patterns.json';
 import customersJson from '../../content/customers.json';
 import daysJson from '../../content/days.json';
+import placesJson from '../../content/places.json';
 import { validateContent } from '../content.ts';
-import type { Content, CustomerType, Day, Pattern, Word } from '../types.ts';
+import type { Content, CustomerType, Day, Pattern, Place, Word } from '../types.ts';
 
 // see https://vite.dev/guide/features#glob-import (?raw gives the file text)
 const sampleFiles = import.meta.glob('../../content/scripts/*.txt', { query: '?raw', import: 'default', eager: true }) as Record<
@@ -18,6 +19,7 @@ export const content: Content = {
   patterns: patternsJson as Pattern[],
   customerTypes: customersJson as CustomerType[],
   days: daysJson as unknown as Day[],
+  places: placesJson as Place[],
 };
 
 const problems = validateContent(content);

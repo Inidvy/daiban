@@ -1,0 +1,8 @@
+[
+  { "id": "noodles", "sign": "面馆", "name": "面馆 Noodle shop", "emoji": "🍜" },
+  { "id": "fruit", "sign": "水果店", "name": "水果店 Fruit shop", "emoji": "🍎" },
+  { "id": "cafe", "sign": "咖啡馆", "name": "咖啡馆 Café", "emoji": "☕" },
+  { "id": "taxi", "sign": "出租车", "name": "出租车 Taxi", "emoji": "🚕" },
+  { "id": "hotel", "sign": "酒店", "name": "酒店 Hotel", "emoji": "🏨" },
+  { "id": "pharmacy", "sign": "药店", "name": "药店 Pharmacy", "emoji": "💊" }
+]

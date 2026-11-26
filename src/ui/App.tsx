@@ -48,7 +48,7 @@ interface Rush {
 }
 
 /** The script belongs to the business, not the day: yesterday's rules meet today's customers. */
-const SCRIPT_KEY = 'noodle.blocks';
+const scriptKey = (place: string) => (place === 'noodles' ? 'noodle.blocks' : `${place}.blocks`);
 
 /** Counts active play time for the playtest stats: visible, and touched in the last minute. */
 function useActiveTime() {
@@ -88,7 +88,15 @@ export function App() {
     return out;
   }, [levelStars]);
 
-  const [blocks, setBlocksState] = useState<Block[]>(() => load(SCRIPT_KEY, []));
+  const shop = content.places.find((p) => p.id === getDay(content, dayNumber).place) ?? content.places[0];
+  const [blocks, setBlocksState] = useState<Block[]>(() => load(scriptKey(shop.id), []));
+  // A new place starts from its own (empty) script.
+  const shownPlace = useRef(shop.id);
+  useEffect(() => {
+    if (shownPlace.current === shop.id) return;
+    shownPlace.current = shop.id;
+    setBlocksState(load(scriptKey(shop.id), []));
+  }, [shop.id]);
   const [tab, setTab] = useState<Tab>('program');
   const [paletteAt, setPaletteAt] = useState<Place | null>(null);
   const [speakItem, setSpeakItem] = useState<PaletteItem | null>(null);
@@ -126,7 +134,7 @@ export function App() {
 
   const setBlocks = (next: Block[]) => {
     setBlocksState(next);
-    save(SCRIPT_KEY, next);
+    save(scriptKey(shop.id), next);
   };
   const chooseLevel = (id: string) => {
     setLevelId(id);
@@ -215,7 +223,7 @@ export function App() {
         <header className="top">
           <div className="brand">
             <span className="logo"><Zh text="代班" /></span>
-            <span className="muted"><Zh text="面馆 Noodle shop" /></span>
+            <span className="muted">{shop.emoji} <Zh text={shop.name} /></span>
           </div>
           <div className="top-actions">
             <span className="tips-total" aria-label={`${tips} tips`}>
@@ -236,7 +244,7 @@ export function App() {
             return (
               <button key={d.day} type="button" className={d.day === dayNumber ? 'active' : ''} onClick={() => chooseDay(d.day)} disabled={!open}
                 title={open ? undefined : `Clear Day ${d.day - 1} first`}>
-                {!open && <Lock size={12} />} <Zh text={`第${d.day}天`} />
+                {!open && <Lock size={12} />} {content.days.find((x) => x.day === d.day - 1)?.place !== d.place && <span aria-hidden>{content.places.find((p) => p.id === d.place)?.emoji}</span>} <Zh text={`第${d.day}天`} />
                 {dayStars[d.day] > 0 && <small className="pill-stars">{'★'.repeat(dayStars[d.day])}</small>}
               </button>
             );

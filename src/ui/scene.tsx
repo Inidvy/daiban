@@ -5,13 +5,19 @@ import { useEffect, useRef, useState } from 'react';
 import { FastForward, Pause, Play, SkipForward, Wrench } from 'lucide-react';
 import type { MadeItem } from '../interpreter.ts';
 import type { CustomerResult, Failure } from '../simulation.ts';
+import { content } from './content.ts';
 import { BOT_VOICE, rateForSpeed, speaker, useChineseVoice } from './speech.ts';
 import { Zh } from './words.tsx';
 
 const AVATAR: Record<string, string> = { student: '🧑‍🎓', office: '🧑‍💼', grandma: '👵', tourist: '🧑‍🦰' };
 const FOOD: Record<string, string> = {
   牛肉面: '🍜', 鸡蛋面: '🍜', 炸酱面: '🍝', 酸辣粉: '🍲', 饺子: '🥟', 包子: '🍙', 可乐: '🥤', 茶: '🍵',
+  苹果: '🍎', 香蕉: '🍌', 西瓜: '🍉', 葡萄: '🍇', 橙子: '🍊', 草莓: '🍓',
+  咖啡: '☕', 奶茶: '🧋', 果汁: '🧃', 蛋糕: '🍰', 水: '💧',
+  单人间: '🛏️', 双人间: '🛏️', 早饭: '🥐', 感冒药: '💊', 创可贴: '🩹', 口罩: '😷',
 };
+/** Places where a happy customer says the food was good. */
+const EATS = new Set(['noodles', 'cafe']);
 
 interface Reaction {
   face: string;
@@ -20,9 +26,9 @@ interface Reaction {
   anim?: 'fan' | 'shake' | 'bury';
 }
 
-export function reactionFor(failures: readonly Failure[]): Reaction {
+export function reactionFor(failures: readonly Failure[], place = 'noodles'): Reaction {
   const f = failures[0];
-  if (!f) return { face: '😋', says: '好吃！', en: 'Delicious! (leaves a tip)' };
+  if (!f) return EATS.has(place) ? { face: '😋', says: '好吃！', en: 'Delicious! (leaves a tip)' } : { face: '😄', says: '太好了！', en: 'Great! (leaves a tip)' };
   switch (f.kind) {
     case 'ignored':
       return { face: '😶', says: '喂？', en: 'Hello? Anyone?', anim: 'shake' };
@@ -52,6 +58,8 @@ export function reactionFor(failures: readonly Failure[]): Reaction {
       return { face: '🤔', says: '多少钱啊？', en: 'So how much is it?' };
     case 'pay':
       return { face: '💸', says: '怎么付钱？', en: 'How do I pay?' };
+    case 'no-answer':
+      return { face: '🤨', says: '什么？', en: 'What? (that was no answer)', anim: 'shake' };
   }
 }
 
@@ -89,7 +97,9 @@ interface View {
 
 const START: View = { index: 0, stepIndex: -1, phase: 'enter', bubble: null, made: [], packed: false, reaction: null, tips: 0 };
 
-export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, autoPlay = true }: {
+export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, autoPlay = true, place = 'noodles' }: {
+  /** Place id: sets the shop sign and how happy customers react. */
+  place?: string;
   results: CustomerResult[];
   startAt?: number;
   showText: boolean;
@@ -157,7 +167,7 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
           await wait(400);
         }
         if (!alive()) return;
-        const reaction = reactionFor(live.current.results[i].failures);
+        const reaction = reactionFor(live.current.results[i].failures, place);
         if (live.current.results[i].failures.length === 0) tips++;
         setView((v) => ({ ...v, phase: 'react', bubble: { who: 'them', text: reaction.says }, reaction, tips }));
         if (canSpeak && !live.current.fast) await speaker.speak(reaction.says, { rate: rateForSpeed(r.customer.type.dials.speed), pitch: r.customer.type.pitch });
@@ -191,7 +201,7 @@ export function ShopScene({ results, startAt = 0, showText, onDone, onHotFix, au
     <div className="scene-wrap">
       <div className="scene" aria-live="polite">
         <div className="wall">
-          <span className="sign"><Zh text="面馆" /></span>
+          <span className="sign"><Zh text={content.places.find((p) => p.id === place)?.sign ?? '面馆'} /></span>
           <span className="tips">🪙 {view.tips}</span>
         </div>
         <div className="robot">🤖</div>

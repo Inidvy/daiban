@@ -1,27 +1,1259 @@
 [
-  { "id": "p_order", "template": "我要 [数量][量词][东西]", "pinyin": "wǒ yào [数量][量词][东西]", "en": "I want [数量] [量词] of [东西]", "day": 1, "group": "点菜", "speaker": "customer", "why": "我要 = I want. Number + measure word + thing is how Chinese counts anything: 两碗面, 一瓶可乐." },
-  { "id": "p_price_q", "template": "多少钱", "pinyin": "duōshao qián", "en": "How much is it?", "day": 1, "group": "付钱", "speaker": "customer", "why": "'many-few money?' No 吗 needed: 多少 already makes it a question." },
-  { "id": "p_price", "template": "[价钱]", "pinyin": "[价钱]", "en": "The price, e.g. 36 yuan", "day": 1, "group": "付钱", "speaker": "bot", "why": "Prices are spoken with 块: 三十六块 = 36 yuan." },
-  { "id": "p_thanks", "template": "谢谢", "pinyin": "xièxie", "en": "Thank you", "day": 1, "group": "客气", "speaker": "customer" },
-  { "id": "p_welcome", "template": "不客气", "pinyin": "búkèqi", "en": "You're welcome", "day": 1, "group": "客气", "speaker": "bot", "why": "'No need to be polite.' The standard answer to 谢谢." },
-  { "id": "p_enjoy", "template": "请慢用", "pinyin": "qǐng mànyòng", "en": "Enjoy your meal", "day": 1, "group": "客气", "speaker": "bot", "why": "'Please use slowly': what staff say when the food arrives." },
-
-  { "id": "p_have_q", "template": "有 [东西] 吗", "pinyin": "yǒu [东西] ma", "en": "Do you have [东西]?", "day": 2, "group": "点菜", "speaker": "customer", "why": "Statement + 吗 = yes/no question. 有牛肉面 (there is beef noodles) → 有牛肉面吗? (is there?)" },
-  { "id": "p_have", "template": "有", "pinyin": "yǒu", "en": "We have it", "day": 2, "group": "点菜", "speaker": "bot", "why": "To say yes, repeat the verb: 有吗? → 有." },
-  { "id": "p_sold_out", "template": "没有了", "pinyin": "méiyǒu le", "en": "It's sold out", "day": 2, "group": "点菜", "speaker": "bot", "why": "没有 = don't have; 了 = that changed: 'there was some, now there's none'." },
-  { "id": "p_bring", "template": "来 [数量][量词][东西]", "pinyin": "lái [数量][量词][东西]", "en": "Bring me [数量] [量词] of [东西]", "day": 2, "group": "点菜", "speaker": "customer", "why": "The casual way to order: 'come, one bowl'. Same slots as 我要." },
-
-  { "id": "p_no_spice", "template": "不要辣", "pinyin": "bú yào là", "en": "Not spicy, please", "day": 3, "group": "口味", "speaker": "customer", "why": "不要 = don't want. 不 becomes bú before a 4th tone (yào)." },
-  { "id": "p_mild", "template": "微辣", "pinyin": "wēi là", "en": "Mildly spicy", "day": 3, "group": "口味", "speaker": "customer" },
-  { "id": "p_takeaway", "template": "打包", "pinyin": "dǎbāo", "en": "To take away", "day": 3, "group": "吃法", "speaker": "customer" },
-  { "id": "p_eat_here", "template": "在这儿吃", "pinyin": "zài zhèr chī", "en": "To eat here", "day": 3, "group": "吃法", "speaker": "customer", "why": "Place comes before the verb: 在这儿 (at here) 吃 (eat)." },
-  { "id": "p_here_or_go", "template": "在这儿吃还是打包", "pinyin": "zài zhèr chī háishi dǎbāo", "en": "Eat here or take away?", "day": 3, "group": "吃法", "speaker": "bot", "why": "A 还是 B = A or B? No 吗: 还是 already makes it a question." },
-  { "id": "p_packing", "template": "好的，给您打包", "pinyin": "hǎode, gěi nín dǎbāo", "en": "OK, I'll pack it for you", "day": 3, "group": "吃法", "speaker": "bot" },
-
-  { "id": "p_scan", "template": "扫码", "pinyin": "sǎomǎ", "en": "Pay by QR code", "day": 4, "group": "付钱", "speaker": "customer" },
-  { "id": "p_cash", "template": "现金", "pinyin": "xiànjīn", "en": "Pay in cash", "day": 4, "group": "付钱", "speaker": "customer" },
-  { "id": "p_total", "template": "一共 [价钱]", "pinyin": "yígòng [价钱]", "en": "That's [价钱] in total", "day": 4, "group": "付钱", "speaker": "bot", "why": "一共 = all together. 一 becomes yí before a 4th tone (gòng)." },
-
-  { "id": "p_change", "template": "算了，我要 [数量][量词][东西]", "pinyin": "suànle, wǒ yào [数量][量词][东西]", "en": "Forget it, I want [数量] [量词] of [东西]", "day": 5, "group": "点菜", "speaker": "customer", "why": "算了 cancels what came before. Only what follows counts." },
-  { "id": "p_again", "template": "再来一个", "pinyin": "zài lái yí ge", "en": "One more, please", "day": 5, "group": "点菜", "speaker": "customer", "why": "再 = again. 'Again bring one': one more of the same." }
+  {
+    "id": "p_order",
+    "template": "我要 [数量][量词][东西]",
+    "pinyin": "wǒ yào [数量][量词][东西]",
+    "en": "I want [数量] [量词] of [东西]",
+    "day": 1,
+    "group": "点菜",
+    "speaker": "customer",
+    "why": "我要 = I want. Number + measure word + thing is how Chinese counts anything: 两碗面, 一瓶可乐.",
+    "general": true
+  },
+  {
+    "id": "p_price_q",
+    "template": "多少钱",
+    "pinyin": "duōshao qián",
+    "en": "How much is it?",
+    "day": 1,
+    "group": "付钱",
+    "speaker": "customer",
+    "why": "'many-few money?' No 吗 needed: 多少 already makes it a question.",
+    "general": true
+  },
+  {
+    "id": "p_price",
+    "template": "[价钱]",
+    "pinyin": "[价钱]",
+    "en": "The price, e.g. 36 yuan",
+    "day": 1,
+    "group": "付钱",
+    "speaker": "bot",
+    "why": "Prices are spoken with 块: 三十六块 = 36 yuan.",
+    "general": true
+  },
+  {
+    "id": "p_thanks",
+    "template": "谢谢",
+    "pinyin": "xièxie",
+    "en": "Thank you",
+    "day": 1,
+    "group": "客气",
+    "speaker": "customer",
+    "general": true
+  },
+  {
+    "id": "p_welcome",
+    "template": "不客气",
+    "pinyin": "búkèqi",
+    "en": "You're welcome",
+    "day": 1,
+    "group": "客气",
+    "speaker": "bot",
+    "why": "'No need to be polite.' The standard answer to 谢谢.",
+    "general": true
+  },
+  {
+    "id": "p_enjoy",
+    "template": "请慢用",
+    "pinyin": "qǐng mànyòng",
+    "en": "Enjoy your meal",
+    "day": 1,
+    "group": "客气",
+    "speaker": "bot",
+    "why": "'Please use slowly': what staff say when the food arrives."
+  },
+  {
+    "id": "p_have_q",
+    "template": "有 [东西] 吗",
+    "pinyin": "yǒu [东西] ma",
+    "en": "Do you have [东西]?",
+    "day": 2,
+    "group": "点菜",
+    "speaker": "customer",
+    "why": "Statement + 吗 = yes/no question. 有牛肉面 (there is beef noodles) → 有牛肉面吗? (is there?)",
+    "general": true
+  },
+  {
+    "id": "p_have",
+    "template": "有",
+    "pinyin": "yǒu",
+    "en": "We have it",
+    "day": 2,
+    "group": "点菜",
+    "speaker": "bot",
+    "why": "To say yes, repeat the verb: 有吗? → 有.",
+    "general": true
+  },
+  {
+    "id": "p_sold_out",
+    "template": "没有了",
+    "pinyin": "méiyǒu le",
+    "en": "It's sold out",
+    "day": 2,
+    "group": "点菜",
+    "speaker": "bot",
+    "why": "没有 = don't have; 了 = that changed: 'there was some, now there's none'.",
+    "general": true
+  },
+  {
+    "id": "p_bring",
+    "template": "来 [数量][量词][东西]",
+    "pinyin": "lái [数量][量词][东西]",
+    "en": "Bring me [数量] [量词] of [东西]",
+    "day": 2,
+    "group": "点菜",
+    "speaker": "customer",
+    "why": "The casual way to order: 'come, one bowl'. Same slots as 我要.",
+    "general": true
+  },
+  {
+    "id": "p_no_spice",
+    "template": "不要辣",
+    "pinyin": "bú yào là",
+    "en": "Not spicy, please",
+    "day": 3,
+    "group": "口味",
+    "speaker": "customer",
+    "why": "不要 = don't want. 不 becomes bú before a 4th tone (yào)."
+  },
+  {
+    "id": "p_mild",
+    "template": "微辣",
+    "pinyin": "wēi là",
+    "en": "Mildly spicy",
+    "day": 3,
+    "group": "口味",
+    "speaker": "customer"
+  },
+  {
+    "id": "p_takeaway",
+    "template": "打包",
+    "pinyin": "dǎbāo",
+    "en": "To take away",
+    "day": 3,
+    "group": "吃法",
+    "speaker": "customer"
+  },
+  {
+    "id": "p_eat_here",
+    "template": "在这儿吃",
+    "pinyin": "zài zhèr chī",
+    "en": "To eat here",
+    "day": 3,
+    "group": "吃法",
+    "speaker": "customer",
+    "why": "Place comes before the verb: 在这儿 (at here) 吃 (eat)."
+  },
+  {
+    "id": "p_here_or_go",
+    "template": "在这儿吃还是打包",
+    "pinyin": "zài zhèr chī háishi dǎbāo",
+    "en": "Eat here or take away?",
+    "day": 3,
+    "group": "吃法",
+    "speaker": "bot",
+    "why": "A 还是 B = A or B? No 吗: 还是 already makes it a question."
+  },
+  {
+    "id": "p_packing",
+    "template": "好的，给您打包",
+    "pinyin": "hǎode, gěi nín dǎbāo",
+    "en": "OK, I'll pack it for you",
+    "day": 3,
+    "group": "吃法",
+    "speaker": "bot"
+  },
+  {
+    "id": "p_scan",
+    "template": "扫码",
+    "pinyin": "sǎomǎ",
+    "en": "Pay by QR code",
+    "day": 4,
+    "group": "付钱",
+    "speaker": "customer",
+    "general": true
+  },
+  {
+    "id": "p_cash",
+    "template": "现金",
+    "pinyin": "xiànjīn",
+    "en": "Pay in cash",
+    "day": 4,
+    "group": "付钱",
+    "speaker": "customer",
+    "general": true
+  },
+  {
+    "id": "p_total",
+    "template": "一共 [价钱]",
+    "pinyin": "yígòng [价钱]",
+    "en": "That's [价钱] in total",
+    "day": 4,
+    "group": "付钱",
+    "speaker": "bot",
+    "why": "一共 = all together. 一 becomes yí before a 4th tone (gòng).",
+    "general": true
+  },
+  {
+    "id": "p_change",
+    "template": "算了，我要 [数量][量词][东西]",
+    "pinyin": "suànle, wǒ yào [数量][量词][东西]",
+    "en": "Forget it, I want [数量] [量词] of [东西]",
+    "day": 5,
+    "group": "点菜",
+    "speaker": "customer",
+    "why": "算了 cancels what came before. Only what follows counts."
+  },
+  {
+    "id": "p_again",
+    "template": "再来一个",
+    "pinyin": "zài lái yí ge",
+    "en": "One more, please",
+    "day": 5,
+    "group": "点菜",
+    "speaker": "customer",
+    "why": "再 = again. 'Again bring one': one more of the same."
+  },
+  {
+    "id": "f_fresh",
+    "template": "很新鲜。",
+    "pinyin": "hěn xīnxiān.",
+    "en": "Very fresh.",
+    "day": 6,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_fresh_q",
+    "template": "新鲜吗？",
+    "pinyin": "xīnxiān ma?",
+    "en": "Is it fresh?",
+    "day": 6,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_fresh"
+    ]
+  },
+  {
+    "id": "f_sweet",
+    "template": "很甜。",
+    "pinyin": "hěn tián.",
+    "en": "Very sweet.",
+    "day": 6,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_sweet_q",
+    "template": "甜不甜？",
+    "pinyin": "tián bu tián?",
+    "en": "Is it sweet?",
+    "day": 6,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_sweet"
+    ]
+  },
+  {
+    "id": "f_cheap",
+    "template": "不贵，很便宜。",
+    "pinyin": "bú guì, hěn piányi.",
+    "en": "It's not expensive, it's cheap.",
+    "day": 7,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_expensive",
+    "template": "太贵了！",
+    "pinyin": "tài guì le!",
+    "en": "Too expensive!",
+    "day": 7,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_cheap"
+    ]
+  },
+  {
+    "id": "f_discount",
+    "template": "好吧，便宜一点。",
+    "pinyin": "hǎo ba, piányi yìdiǎn.",
+    "en": "OK, a bit cheaper.",
+    "day": 7,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_discount_q",
+    "template": "便宜一点吧。",
+    "pinyin": "piányi yìdiǎn ba.",
+    "en": "A bit cheaper, please.",
+    "day": 7,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_discount"
+    ]
+  },
+  {
+    "id": "f_taste",
+    "template": "可以，尝尝吧。",
+    "pinyin": "kěyǐ, chángchang ba.",
+    "en": "Sure, have a taste.",
+    "day": 8,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_taste_q",
+    "template": "可以尝一下吗？",
+    "pinyin": "kěyǐ cháng yíxià ma?",
+    "en": "Can I try one?",
+    "day": 8,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_taste"
+    ]
+  },
+  {
+    "id": "f_bag",
+    "template": "有，给你。",
+    "pinyin": "yǒu, gěi nǐ.",
+    "en": "Yes, here you go.",
+    "day": 8,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_bag_q",
+    "template": "有袋子吗？",
+    "pinyin": "yǒu dàizi ma?",
+    "en": "Do you have a bag?",
+    "day": 8,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_bag"
+    ]
+  },
+  {
+    "id": "f_hot_reply",
+    "template": "是啊，太热了。",
+    "pinyin": "shì a, tài rè le.",
+    "en": "Yes, far too hot.",
+    "day": 9,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_hot",
+    "template": "今天好热啊！",
+    "pinyin": "jīntiān hǎo rè a!",
+    "en": "It's so hot today!",
+    "day": 9,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_hot_reply"
+    ]
+  },
+  {
+    "id": "f_busy",
+    "template": "不忙。",
+    "pinyin": "bù máng.",
+    "en": "Not busy.",
+    "day": 9,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_busy_q",
+    "template": "你忙吗？",
+    "pinyin": "nǐ máng ma?",
+    "en": "Are you busy?",
+    "day": 9,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_busy"
+    ]
+  },
+  {
+    "id": "f_open",
+    "template": "开，早上八点开门。",
+    "pinyin": "kāi, zǎoshang bā diǎn kāimén.",
+    "en": "Yes, we open at 8 am.",
+    "day": 10,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_open_q",
+    "template": "明天开门吗？",
+    "pinyin": "míngtiān kāimén ma?",
+    "en": "Are you open tomorrow?",
+    "day": 10,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_open"
+    ]
+  },
+  {
+    "id": "f_bye_reply",
+    "template": "再见，慢走！",
+    "pinyin": "zàijiàn, màn zǒu!",
+    "en": "Bye, take care!",
+    "day": 10,
+    "group": "买水果",
+    "speaker": "bot"
+  },
+  {
+    "id": "f_bye",
+    "template": "再见！",
+    "pinyin": "zàijiàn!",
+    "en": "Goodbye!",
+    "day": 10,
+    "group": "买水果",
+    "speaker": "customer",
+    "reply": [
+      "f_bye_reply"
+    ]
+  },
+  {
+    "id": "c_large_ok",
+    "template": "好的，大杯。",
+    "pinyin": "hǎode, dà bēi.",
+    "en": "OK, large.",
+    "day": 11,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_large",
+    "template": "要大杯的。",
+    "pinyin": "yào dà bēi de.",
+    "en": "A large one.",
+    "day": 11,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_large_ok"
+    ]
+  },
+  {
+    "id": "c_iced_ok",
+    "template": "好的，冰的。",
+    "pinyin": "hǎode, bīng de.",
+    "en": "OK, iced.",
+    "day": 11,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_iced",
+    "template": "要冰的。",
+    "pinyin": "yào bīng de.",
+    "en": "Iced, please.",
+    "day": 11,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_iced_ok"
+    ]
+  },
+  {
+    "id": "c_hello_reply",
+    "template": "你好！欢迎光临！",
+    "pinyin": "nǐ hǎo! huānyíng guānglín!",
+    "en": "Hello! Welcome!",
+    "day": 12,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_hello",
+    "template": "你好！",
+    "pinyin": "nǐ hǎo!",
+    "en": "Hello!",
+    "day": 12,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_hello_reply"
+    ]
+  },
+  {
+    "id": "c_name",
+    "template": "我叫小代。",
+    "pinyin": "wǒ jiào Xiǎo Dài.",
+    "en": "I'm Xiao Dai.",
+    "day": 12,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_name_q",
+    "template": "你叫什么名字？",
+    "pinyin": "nǐ jiào shénme míngzi?",
+    "en": "What's your name?",
+    "day": 12,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_name"
+    ]
+  },
+  {
+    "id": "c_country",
+    "template": "我是中国人。",
+    "pinyin": "wǒ shì Zhōngguó rén.",
+    "en": "I'm Chinese.",
+    "day": 13,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_country_q",
+    "template": "你是哪国人？",
+    "pinyin": "nǐ shì nǎ guó rén?",
+    "en": "Where are you from?",
+    "day": 13,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_country"
+    ]
+  },
+  {
+    "id": "c_english",
+    "template": "会一点儿。",
+    "pinyin": "huì yìdiǎnr.",
+    "en": "A little.",
+    "day": 13,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_english_q",
+    "template": "你会说英语吗？",
+    "pinyin": "nǐ huì shuō Yīngyǔ ma?",
+    "en": "Do you speak English?",
+    "day": 13,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_english"
+    ]
+  },
+  {
+    "id": "c_student",
+    "template": "不是，我在这儿工作。",
+    "pinyin": "bú shì, wǒ zài zhèr gōngzuò.",
+    "en": "No, I work here.",
+    "day": 14,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_student_q",
+    "template": "你是学生吗？",
+    "pinyin": "nǐ shì xuésheng ma?",
+    "en": "Are you a student?",
+    "day": 14,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_student"
+    ]
+  },
+  {
+    "id": "c_off",
+    "template": "晚上六点下班。",
+    "pinyin": "wǎnshang liù diǎn xiàbān.",
+    "en": "At 6 in the evening.",
+    "day": 14,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_off_q",
+    "template": "你几点下班？",
+    "pinyin": "nǐ jǐ diǎn xiàbān?",
+    "en": "When do you finish work?",
+    "day": 14,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_off"
+    ]
+  },
+  {
+    "id": "c_weekend_reply",
+    "template": "好啊！",
+    "pinyin": "hǎo a!",
+    "en": "Sure!",
+    "day": 15,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_weekend",
+    "template": "周末一起喝咖啡吧！",
+    "pinyin": "zhōumò yìqǐ hē kāfēi ba!",
+    "en": "Let's have coffee this weekend!",
+    "day": 15,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_weekend_reply"
+    ]
+  },
+  {
+    "id": "c_wechat",
+    "template": "我扫你吧。",
+    "pinyin": "wǒ sǎo nǐ ba.",
+    "en": "I'll scan yours.",
+    "day": 15,
+    "group": "认识人",
+    "speaker": "bot"
+  },
+  {
+    "id": "c_wechat_q",
+    "template": "你的微信是多少？",
+    "pinyin": "nǐ de Wēixìn shì duōshao?",
+    "en": "What's your WeChat?",
+    "day": 15,
+    "group": "认识人",
+    "speaker": "customer",
+    "reply": [
+      "c_wechat"
+    ]
+  },
+  {
+    "id": "t_go_ok",
+    "template": "好的，去 [地方]。",
+    "pinyin": "hǎode, qù [地方].",
+    "en": "OK, to [地方].",
+    "day": 16,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_go",
+    "template": "我去 [地方]。",
+    "pinyin": "wǒ qù [地方].",
+    "en": "I'm going to [地方].",
+    "day": 16,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_go_ok"
+    ]
+  },
+  {
+    "id": "t_where",
+    "template": "你好！去哪儿？",
+    "pinyin": "nǐ hǎo! qù nǎr?",
+    "en": "Hello! Where to?",
+    "day": 16,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_hello",
+    "template": "师傅，你好！",
+    "pinyin": "shīfu, nǐ hǎo!",
+    "en": "Hello, driver!",
+    "day": 16,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_where"
+    ]
+  },
+  {
+    "id": "t_far",
+    "template": "不远。",
+    "pinyin": "bù yuǎn.",
+    "en": "Not far.",
+    "day": 17,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_far_q",
+    "template": "远吗？",
+    "pinyin": "yuǎn ma?",
+    "en": "Is it far?",
+    "day": 17,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_far"
+    ]
+  },
+  {
+    "id": "t_time",
+    "template": "二十分钟。",
+    "pinyin": "èrshí fēnzhōng.",
+    "en": "Twenty minutes.",
+    "day": 17,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_time_q",
+    "template": "要多长时间？",
+    "pinyin": "yào duō cháng shíjiān?",
+    "en": "How long will it take?",
+    "day": 17,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_time"
+    ]
+  },
+  {
+    "id": "t_left_ok",
+    "template": "好的，左转。",
+    "pinyin": "hǎode, zuǒ zhuǎn.",
+    "en": "OK, left.",
+    "day": 18,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_left",
+    "template": "前面左转。",
+    "pinyin": "qiánmiàn zuǒ zhuǎn.",
+    "en": "Turn left ahead.",
+    "day": 18,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_left_ok"
+    ]
+  },
+  {
+    "id": "t_right_ok",
+    "template": "好的，右转。",
+    "pinyin": "hǎode, yòu zhuǎn.",
+    "en": "OK, right.",
+    "day": 18,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_right",
+    "template": "前面右转。",
+    "pinyin": "qiánmiàn yòu zhuǎn.",
+    "en": "Turn right ahead.",
+    "day": 18,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_right_ok"
+    ]
+  },
+  {
+    "id": "t_stop_ok",
+    "template": "好的，到了。",
+    "pinyin": "hǎode, dào le.",
+    "en": "OK, we're here.",
+    "day": 19,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_stop",
+    "template": "在这儿停吧。",
+    "pinyin": "zài zhèr tíng ba.",
+    "en": "Stop here, please.",
+    "day": 19,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_stop_ok"
+    ]
+  },
+  {
+    "id": "t_slow_ok",
+    "template": "好的，慢一点儿。",
+    "pinyin": "hǎode, màn yìdiǎnr.",
+    "en": "OK, slower.",
+    "day": 19,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_slow",
+    "template": "开慢一点儿！",
+    "pinyin": "kāi màn yìdiǎnr!",
+    "en": "Drive a bit slower!",
+    "day": 19,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_slow_ok"
+    ]
+  },
+  {
+    "id": "t_almost",
+    "template": "快到了。",
+    "pinyin": "kuài dào le.",
+    "en": "Almost there.",
+    "day": 20,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_there_q",
+    "template": "到了吗？",
+    "pinyin": "dào le ma?",
+    "en": "Are we there yet?",
+    "day": 20,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_almost"
+    ]
+  },
+  {
+    "id": "t_ac",
+    "template": "可以。",
+    "pinyin": "kěyǐ.",
+    "en": "Sure.",
+    "day": 20,
+    "group": "坐车",
+    "speaker": "bot"
+  },
+  {
+    "id": "t_ac_q",
+    "template": "可以开空调吗？",
+    "pinyin": "kěyǐ kāi kōngtiáo ma?",
+    "en": "Can you turn on the AC?",
+    "day": 20,
+    "group": "坐车",
+    "speaker": "customer",
+    "reply": [
+      "t_ac"
+    ]
+  },
+  {
+    "id": "h_passport",
+    "template": "请给我看一下护照。",
+    "pinyin": "qǐng gěi wǒ kàn yíxià hùzhào.",
+    "en": "Please show me your passport.",
+    "day": 21,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_booked",
+    "template": "我订了房间。",
+    "pinyin": "wǒ dìng le fángjiān.",
+    "en": "I booked a room.",
+    "day": 21,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_passport"
+    ]
+  },
+  {
+    "id": "h_floor",
+    "template": "五楼。",
+    "pinyin": "wǔ lóu.",
+    "en": "The fifth floor.",
+    "day": 21,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_floor_q",
+    "template": "几楼？",
+    "pinyin": "jǐ lóu?",
+    "en": "Which floor?",
+    "day": 21,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_floor"
+    ]
+  },
+  {
+    "id": "h_breakfast",
+    "template": "早上七点到九点。",
+    "pinyin": "zǎoshang qī diǎn dào jiǔ diǎn.",
+    "en": "From 7 to 9 am.",
+    "day": 22,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_breakfast_q",
+    "template": "早饭几点？",
+    "pinyin": "zǎofàn jǐ diǎn?",
+    "en": "What time is breakfast?",
+    "day": 22,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_breakfast"
+    ]
+  },
+  {
+    "id": "h_where",
+    "template": "在二楼。",
+    "pinyin": "zài èr lóu.",
+    "en": "On the second floor.",
+    "day": 22,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_where_q",
+    "template": "早饭在哪儿？",
+    "pinyin": "zǎofàn zài nǎr?",
+    "en": "Where is breakfast?",
+    "day": 22,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_where"
+    ]
+  },
+  {
+    "id": "h_fix",
+    "template": "对不起，我马上去看看。",
+    "pinyin": "duìbuqǐ, wǒ mǎshàng qù kànkan.",
+    "en": "Sorry, I'll come and look right away.",
+    "day": 23,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_ac",
+    "template": "空调坏了。",
+    "pinyin": "kōngtiáo huài le.",
+    "en": "The AC is broken.",
+    "day": 23,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_fix"
+    ]
+  },
+  {
+    "id": "h_water",
+    "template": "没有热水。",
+    "pinyin": "méiyǒu rè shuǐ.",
+    "en": "There's no hot water.",
+    "day": 23,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_fix"
+    ]
+  },
+  {
+    "id": "h_towel",
+    "template": "可以，马上给您送。",
+    "pinyin": "kěyǐ, mǎshàng gěi nín sòng.",
+    "en": "Sure, I'll bring it right away.",
+    "day": 24,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_towel_q",
+    "template": "可以多给我一条毛巾吗？",
+    "pinyin": "kěyǐ duō gěi wǒ yì tiáo máojīn ma?",
+    "en": "Could I have an extra towel?",
+    "day": 24,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_towel"
+    ]
+  },
+  {
+    "id": "h_food",
+    "template": "有，出门右转。",
+    "pinyin": "yǒu, chūmén yòu zhuǎn.",
+    "en": "Yes, turn right out the door.",
+    "day": 24,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_food_q",
+    "template": "附近有饭馆吗？",
+    "pinyin": "fùjìn yǒu fànguǎn ma?",
+    "en": "Is there a restaurant nearby?",
+    "day": 24,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_food"
+    ]
+  },
+  {
+    "id": "h_card",
+    "template": "好的，请给我房卡。",
+    "pinyin": "hǎode, qǐng gěi wǒ fángkǎ.",
+    "en": "OK, the room card please.",
+    "day": 25,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_checkout",
+    "template": "我要退房。",
+    "pinyin": "wǒ yào tuìfáng.",
+    "en": "I'd like to check out.",
+    "day": 25,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_card"
+    ]
+  },
+  {
+    "id": "h_wait",
+    "template": "可以，请等一下。",
+    "pinyin": "kěyǐ, qǐng děng yíxià.",
+    "en": "Sure, please wait a moment.",
+    "day": 25,
+    "group": "住酒店",
+    "speaker": "bot"
+  },
+  {
+    "id": "h_taxi_q",
+    "template": "可以帮我叫出租车吗？",
+    "pinyin": "kěyǐ bāng wǒ jiào chūzūchē ma?",
+    "en": "Can you call me a taxi?",
+    "day": 25,
+    "group": "住酒店",
+    "speaker": "customer",
+    "reply": [
+      "h_wait"
+    ]
+  },
+  {
+    "id": "m_fever_q",
+    "template": "你发烧吗？",
+    "pinyin": "nǐ fāshāo ma?",
+    "en": "Do you have a fever?",
+    "day": 26,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_cold",
+    "template": "我感冒了。",
+    "pinyin": "wǒ gǎnmào le.",
+    "en": "I have a cold.",
+    "day": 26,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_fever_q"
+    ]
+  },
+  {
+    "id": "m_rest",
+    "template": "多喝水，多休息。",
+    "pinyin": "duō hē shuǐ, duō xiūxi.",
+    "en": "Drink lots of water and rest.",
+    "day": 26,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_head",
+    "template": "我头疼。",
+    "pinyin": "wǒ tóu téng.",
+    "en": "I have a headache.",
+    "day": 26,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_rest"
+    ]
+  },
+  {
+    "id": "m_how",
+    "template": "一天三次，一次两片。",
+    "pinyin": "yì tiān sān cì, yí cì liǎng piàn.",
+    "en": "Three times a day, two tablets each time.",
+    "day": 27,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_how_q",
+    "template": "这个药怎么吃？",
+    "pinyin": "zhège yào zěnme chī?",
+    "en": "How do I take this medicine?",
+    "day": 27,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_how"
+    ]
+  },
+  {
+    "id": "m_meal",
+    "template": "饭后吃。",
+    "pinyin": "fàn hòu chī.",
+    "en": "After meals.",
+    "day": 27,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_meal_q",
+    "template": "饭前吃还是饭后吃？",
+    "pinyin": "fàn qián chī háishi fàn hòu chī?",
+    "en": "Before or after meals?",
+    "day": 27,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_meal"
+    ]
+  },
+  {
+    "id": "m_ate_q",
+    "template": "你吃什么了？",
+    "pinyin": "nǐ chī shénme le?",
+    "en": "What did you eat?",
+    "day": 28,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_stomach",
+    "template": "我肚子疼。",
+    "pinyin": "wǒ dùzi téng.",
+    "en": "My stomach hurts.",
+    "day": 28,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_ate_q"
+    ]
+  },
+  {
+    "id": "m_hot_water",
+    "template": "多喝热水。",
+    "pinyin": "duō hē rè shuǐ.",
+    "en": "Drink lots of hot water.",
+    "day": 28,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_cough",
+    "template": "我咳嗽。",
+    "pinyin": "wǒ késou.",
+    "en": "I'm coughing.",
+    "day": 28,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_hot_water"
+    ]
+  },
+  {
+    "id": "m_free",
+    "template": "有空。",
+    "pinyin": "yǒu kòng.",
+    "en": "I'm free.",
+    "day": 29,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_free_q",
+    "template": "明天你有空吗？",
+    "pinyin": "míngtiān nǐ yǒu kòng ma?",
+    "en": "Are you free tomorrow?",
+    "day": 29,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_free"
+    ]
+  },
+  {
+    "id": "m_meet",
+    "template": "下午三点吧。",
+    "pinyin": "xiàwǔ sān diǎn ba.",
+    "en": "Let's say 3 pm.",
+    "day": 29,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_meet_q",
+    "template": "我们几点见？",
+    "pinyin": "wǒmen jǐ diǎn jiàn?",
+    "en": "What time shall we meet?",
+    "day": 29,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_meet"
+    ]
+  },
+  {
+    "id": "m_modest",
+    "template": "哪里哪里，谢谢！",
+    "pinyin": "nǎli nǎli, xièxie!",
+    "en": "Not at all, thank you!",
+    "day": 30,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_good",
+    "template": "你的中文很好！",
+    "pinyin": "nǐ de Zhōngwén hěn hǎo!",
+    "en": "Your Chinese is very good!",
+    "day": 30,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_modest"
+    ]
+  },
+  {
+    "id": "m_you_too",
+    "template": "谢谢，你也是！",
+    "pinyin": "xièxie, nǐ yě shì!",
+    "en": "Thanks, you too!",
+    "day": 30,
+    "group": "看病",
+    "speaker": "bot"
+  },
+  {
+    "id": "m_luck",
+    "template": "祝你一切顺利！",
+    "pinyin": "zhù nǐ yíqiè shùnlì!",
+    "en": "All the best!",
+    "day": 30,
+    "group": "看病",
+    "speaker": "customer",
+    "reply": [
+      "m_you_too"
+    ]
+  }
 ]

@@ -2,6 +2,7 @@
 // a couple of new sentences, brings more customers with bigger orders and faster, more varied speech, and
 // ends the day with a busy peak. Clearing a level (one star) opens the next one.
 
+import { openPatterns } from './content.ts';
 import type { Content, Day, LevelSpec } from './types.ts';
 
 export interface Level extends LevelSpec {
@@ -25,10 +26,10 @@ export function findLevel(content: Content, id: string): Level | undefined {
   return allLevels(content).find((l) => l.id === id);
 }
 
-/** Patterns open by the end of `level`: every earlier day's, plus this day's levels so far. */
+/** Patterns open by the end of `level`: what earlier days opened at this place, plus this day's levels so far. */
 export function allowedPatterns(content: Content, level: Level): string[] {
-  const earlier = content.patterns.filter((p) => p.day < level.day).map((p) => p.id);
   const day = content.days.find((d) => d.day === level.day)!;
+  const earlier = openPatterns(content, day).filter((id) => !day.newPatterns.includes(id));
   return [...earlier, ...day.levels.slice(0, level.index + 1).flatMap((l) => l.newPatterns)];
 }
 

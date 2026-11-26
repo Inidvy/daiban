@@ -29,6 +29,7 @@ export const SLOT_INFO: Record<SlotType, { pinyin: string; en: string; example: 
   量词: { pinyin: 'liàngcí', en: 'measure word', example: '碗', why: '量 measure + 词 word. Chinese needs one between a number and a thing: 两碗面.' },
   东西: { pinyin: 'dōngxi', en: 'thing', example: '牛肉面', why: '东 east + 西 west: "everything from east to west" = things. Any dish goes here.' },
   价钱: { pinyin: 'jiàqián', en: 'price', example: '三十六块', why: '价 value + 钱 money. The bot fills in the total of everything it made.' },
+  地方: { pinyin: 'dìfang', en: 'place', example: '机场', why: '地 ground + 方 side, direction: a spot on the ground. Any destination goes here.' },
 };
 
 /** Blocks open on `day`. With `allowed` (one level's patterns, see src/levels.ts), 听到 and 说 blocks are limited to those. */
@@ -44,6 +45,7 @@ export function paletteFor(content: Content, day: number, allowed?: readonly str
   );
   const doItems: [string, BlockTemplate, string, number][] = [
     ['做:order', { kind: 'do', action: { kind: '做', what: '[数量][量词][东西]', again: false } }, 'Make what they ordered', 1],
+    ['给:order', { kind: 'do', action: { kind: '做', what: '[数量][量词][东西]', again: false, verb: '给' } }, 'Give them what they asked for', 6],
     ['上菜', { kind: 'do', action: { kind: '上菜' } }, 'Serve the food', 1],
     ['做:不辣', { kind: 'do', action: { kind: '做', what: '不辣的', again: false } }, 'Make it not spicy', 3],
     ['做:微辣', { kind: 'do', action: { kind: '做', what: '微辣的', again: false } }, 'Make it mildly spicy', 3],
@@ -57,7 +59,14 @@ export function paletteFor(content: Content, day: number, allowed?: readonly str
     if (p.speaker !== 'bot') continue;
     items.push({ key: `say:${p.id}`, group: '说', template: { kind: 'do', action: { kind: '说', text: p.template } }, en: `Say: ${p.en}`, day: p.day });
   }
-  const open = (it: PaletteItem) => !allowed || !/^(hear|say):/.test(it.key) || allowed.includes(it.key.slice(it.key.indexOf(':') + 1));
+  // Noodle-shop actions need the noodle sentences they answer; 给 is for the other shops.
+  const NEEDS: Record<string, string> = { '做:order': 'p_enjoy', 上菜: 'p_enjoy', '做:不辣': 'p_no_spice', '做:微辣': 'p_mild', 打包: 'p_takeaway', 再做: 'p_again' };
+  const open = (it: PaletteItem) => {
+    if (!allowed) return true;
+    if (/^(hear|say):/.test(it.key)) return allowed.includes(it.key.slice(it.key.indexOf(':') + 1));
+    if (it.key === '给:order') return !allowed.includes('p_enjoy');
+    return !NEEDS[it.key] || allowed.includes(NEEDS[it.key]);
+  };
   return items.filter((it) => it.day <= day && open(it));
 }
 
@@ -82,7 +91,7 @@ export function spokenText(b: Block | BlockTemplate): string {
     case '说':
       return `说：${fill(a.text)}`;
     case '做':
-      return `${a.again ? '再' : ''}做${fill(a.what)}`;
+      return `${a.again ? '再' : ''}${a.verb ?? '做'}${fill(a.what)}`;
     case '收钱':
       return `收钱${a.method ?? ''}`;
     default:

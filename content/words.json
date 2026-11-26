@@ -1,201 +1,2182 @@
 [
-  { "hanzi": "牛肉面", "pinyin": "niúròumiàn", "en": "beef noodles", "day": 1, "slot": "东西", "price": 18, "measure": "碗", "spicy": true, "why": "牛 cow + 肉 meat + 面 noodles: literally 'cow-meat noodles'." },
-  { "hanzi": "鸡蛋面", "pinyin": "jīdànmiàn", "en": "egg noodles", "day": 2, "slot": "东西", "price": 12, "measure": "碗", "spicy": true, "why": "鸡 chicken + 蛋 egg + 面 noodles: 'chicken-egg noodles'." },
-  { "hanzi": "炸酱面", "pinyin": "zhájiàngmiàn", "en": "fried-sauce noodles", "day": 2, "slot": "东西", "price": 15, "measure": "碗", "spicy": true, "why": "炸 fry + 酱 sauce + 面 noodles. 炸 has 火 fire on the left." },
-  { "hanzi": "酸辣粉", "pinyin": "suānlàfěn", "en": "hot and sour glass noodles", "day": 3, "slot": "东西", "price": 10, "measure": "碗", "spicy": true, "why": "酸 sour + 辣 spicy + 粉 starch noodles. A Chengdu street classic." },
-  { "hanzi": "饺子", "pinyin": "jiǎozi", "en": "dumplings", "day": 3, "slot": "东西", "price": 20, "measure": "份", "spicy": false, "why": "饣 on the left means food." },
-  { "hanzi": "包子", "pinyin": "bāozi", "en": "steamed bun", "day": 4, "slot": "东西", "price": 3, "measure": "个", "spicy": false, "why": "包 = to wrap: filling wrapped in dough. Same 包 as in 打包." },
-  { "hanzi": "可乐", "pinyin": "kělè", "en": "cola", "day": 4, "slot": "东西", "price": 4, "measure": "瓶", "spicy": false, "why": "Sounds like 'cola' and means 'can be happy'." },
-  { "hanzi": "茶", "pinyin": "chá", "en": "tea", "day": 5, "slot": "东西", "price": 5, "measure": "杯", "spicy": false, "why": "艹 grass on top, 木 tree at the bottom, a person 人 in between: picking leaves." },
-  { "hanzi": "碗", "pinyin": "wǎn", "en": "bowl", "day": 1, "slot": "量词", "why": "石 stone on the left: the first bowls were stone." },
-  { "hanzi": "个", "pinyin": "gè", "en": "(general measure word)", "day": 4, "slot": "量词", "why": "The all-purpose measure word. If unsure, 个 is usually understood." },
-  { "hanzi": "份", "pinyin": "fèn", "en": "portion", "day": 3, "slot": "量词", "why": "亻 person + 分 divide: one share for each person." },
-  { "hanzi": "瓶", "pinyin": "píng", "en": "bottle", "day": 4, "slot": "量词", "why": "瓦 on the right means pottery: old bottles were clay." },
-  { "hanzi": "杯", "pinyin": "bēi", "en": "cup", "day": 5, "slot": "量词", "why": "木 wood on the left: old cups were wooden." },
-  { "hanzi": "一", "pinyin": "yī", "en": "one", "day": 1, "slot": "数量", "why": "One line." },
-  { "hanzi": "二", "pinyin": "èr", "en": "two", "day": 1, "slot": "数量", "why": "Two lines. Before a measure word, say 两 instead." },
-  { "hanzi": "两", "pinyin": "liǎng", "en": "two (before a measure word)", "day": 1, "slot": "数量", "why": "两碗, not 二碗: when counting things, two is 两." },
-  { "hanzi": "三", "pinyin": "sān", "en": "three", "day": 1, "slot": "数量", "why": "Three lines." },
-  { "hanzi": "四", "pinyin": "sì", "en": "four", "day": 1, "slot": "数量" },
-  { "hanzi": "五", "pinyin": "wǔ", "en": "five", "day": 1, "slot": "数量" },
-  { "hanzi": "六", "pinyin": "liù", "en": "six", "day": 1, "slot": "数量" },
-  { "hanzi": "七", "pinyin": "qī", "en": "seven", "day": 1, "slot": "数量" },
-  { "hanzi": "八", "pinyin": "bā", "en": "eight", "day": 1, "slot": "数量", "why": "Two strokes spreading apart. A lucky number: it sounds like 发 (get rich)." },
-  { "hanzi": "九", "pinyin": "jiǔ", "en": "nine", "day": 1, "slot": "数量" },
-  { "hanzi": "十", "pinyin": "shí", "en": "ten", "day": 1, "slot": "数量", "why": "A cross: 十五 = ten-five = 15, 二十 = two-ten = 20." },
-  { "hanzi": "百", "pinyin": "bǎi", "en": "hundred", "day": 4, "slot": "数量", "why": "一百二十 = one-hundred two-ten = 120." },
-  { "hanzi": "千", "pinyin": "qiān", "en": "thousand", "day": 4, "slot": "数量" },
-  { "hanzi": "零", "pinyin": "líng", "en": "zero", "day": 4, "slot": "数量", "why": "Fills a gap: 一百零五 = 105." },
-  { "hanzi": "我", "pinyin": "wǒ", "en": "I", "day": 1 },
-  { "hanzi": "你", "pinyin": "nǐ", "en": "you", "day": 1, "why": "亻 person on the left." },
-  { "hanzi": "您", "pinyin": "nín", "en": "you (polite)", "day": 3, "why": "你 with 心 heart underneath: 'you' said with respect." },
-  { "hanzi": "要", "pinyin": "yào", "en": "want", "day": 1, "why": "我要 = I want. The most useful word in any shop." },
-  { "hanzi": "来", "pinyin": "lái", "en": "come / bring", "day": 2, "why": "来一碗 = 'bring a bowl': the casual way to order." },
-  { "hanzi": "有", "pinyin": "yǒu", "en": "have", "day": 2 },
-  { "hanzi": "没有", "pinyin": "méiyǒu", "en": "don't have", "day": 2, "why": "没 negates 有. Use 没 (not 不) with 有." },
-  { "hanzi": "吗", "pinyin": "ma", "en": "(question word)", "day": 2, "why": "口 mouth + 马 horse (for the sound): a spoken question mark. Add it to any sentence to make a yes/no question." },
-  { "hanzi": "了", "pinyin": "le", "en": "(change / done)", "day": 2, "why": "没有了 = 'there is none any more': 了 marks that something changed." },
-  { "hanzi": "不", "pinyin": "bù", "en": "not", "day": 3, "why": "The general 'not'. 不要 = don't want." },
-  { "hanzi": "辣", "pinyin": "là", "en": "spicy", "day": 3 },
-  { "hanzi": "的", "pinyin": "de", "en": "(the …one)", "day": 3, "why": "不辣的 = the not-spicy one. 的 turns a description into a thing." },
-  { "hanzi": "微", "pinyin": "wēi", "en": "slightly", "day": 3, "why": "微辣 = slightly spicy. Same 微 as in 微信 (WeChat, 'micro message')." },
-  { "hanzi": "打包", "pinyin": "dǎbāo", "en": "to pack (takeaway)", "day": 3, "why": "打 do + 包 wrap: 'do the wrapping'." },
-  { "hanzi": "在", "pinyin": "zài", "en": "at / in", "day": 3, "why": "Something under a roof, so 'at / in'." },
-  { "hanzi": "这儿", "pinyin": "zhèr", "en": "here", "day": 3, "why": "这 this + 儿 (Beijing-style ending): 'this spot'." },
-  { "hanzi": "吃", "pinyin": "chī", "en": "eat", "day": 3, "why": "口 mouth on the left." },
-  { "hanzi": "多少", "pinyin": "duōshao", "en": "how much / how many", "day": 1, "why": "多 many + 少 few: 'many-few?' = how much?" },
-  { "hanzi": "钱", "pinyin": "qián", "en": "money", "day": 1, "why": "钅 metal on the left: money used to be metal coins." },
-  { "hanzi": "块", "pinyin": "kuài", "en": "yuan (spoken)", "day": 1, "why": "Literally 'a lump': 十块 = 10 yuan. Spoken form of 元." },
-  { "hanzi": "谢谢", "pinyin": "xièxie", "en": "thank you", "day": 1, "why": "讠 speech on the left." },
-  { "hanzi": "不客气", "pinyin": "búkèqi", "en": "you're welcome", "day": 1, "why": "不 not + 客气 polite: 'no need to be polite'." },
-  { "hanzi": "好的", "pinyin": "hǎode", "en": "OK", "day": 1, "why": "好 = 女 woman + 子 child: something good." },
-  { "hanzi": "请", "pinyin": "qǐng", "en": "please", "day": 1, "why": "讠 speech on the left: a polite word." },
-  { "hanzi": "慢用", "pinyin": "mànyòng", "en": "enjoy (eat slowly)", "day": 1, "why": "慢 slow + 用 use: 'take your time'. 请慢用 is what staff say when serving." },
-  { "hanzi": "老板", "pinyin": "lǎobǎn", "en": "boss (how you call the shop owner)", "day": 1, "why": "Customers call any shop owner 老板 to get attention." },
-  { "hanzi": "请问", "pinyin": "qǐngwèn", "en": "excuse me, may I ask", "day": 2, "why": "问 = a 口 mouth inside a 门 door: someone at the door asking." },
-  { "hanzi": "麻烦你", "pinyin": "máfan nǐ", "en": "sorry to trouble you", "day": 2, "why": "麻烦 = trouble: 'I'm troubling you'. A polite start to a request." },
-  { "hanzi": "那", "pinyin": "nà", "en": "then / in that case", "day": 2 },
-  { "hanzi": "还", "pinyin": "hái", "en": "still", "day": 2, "why": "还有吗 = is there still some?" },
-  { "hanzi": "给", "pinyin": "gěi", "en": "give / for", "day": 3, "why": "纟 silk on the left: giving a gift of silk." },
-  { "hanzi": "还是", "pinyin": "háishi", "en": "or (in questions)", "day": 3, "why": "A 还是 B? = A or B? Only for questions." },
-  { "hanzi": "扫码", "pinyin": "sǎomǎ", "en": "scan the QR code", "day": 4, "why": "扫 sweep + 码 code: you sweep your phone over the code." },
-  { "hanzi": "现金", "pinyin": "xiànjīn", "en": "cash", "day": 4, "why": "现 present + 金 gold: money right here." },
-  { "hanzi": "可以", "pinyin": "kěyǐ", "en": "can / may", "day": 4 },
-  { "hanzi": "一共", "pinyin": "yígòng", "en": "in total", "day": 4, "why": "一 one + 共 together: all together." },
-  { "hanzi": "吧", "pinyin": "ba", "en": "(suggestion)", "day": 4, "why": "Softens a sentence: 我扫码吧 = I'll scan, OK?" },
-  { "hanzi": "算了", "pinyin": "suànle", "en": "forget it", "day": 5, "why": "算 count + 了: 'it's counted, done'. Signals a change of mind." },
-  { "hanzi": "再", "pinyin": "zài", "en": "again / one more", "day": 5, "why": "再来一个 = bring one more. Not the same zài as 在." },
-  { "hanzi": "客人", "pinyin": "kèrén", "en": "customer, guest", "day": 1 },
-  { "hanzi": "说", "pinyin": "shuō", "en": "say", "day": 1, "why": "讠 speech on the left." },
-  { "hanzi": "听", "pinyin": "tīng", "en": "listen", "day": 1, "why": "口 mouth on the left: the sound you listen to." },
-  { "hanzi": "听到", "pinyin": "tīngdào", "en": "hear", "day": 1, "why": "听 listen + 到 arrive: the sound arrived." },
-  { "hanzi": "做", "pinyin": "zuò", "en": "make, do", "day": 1, "why": "亻 person on the left: a person making something." },
-  { "hanzi": "上菜", "pinyin": "shàngcài", "en": "serve the food", "day": 1, "why": "上 up + 菜 dish: bring the dish up to the table." },
-  { "hanzi": "先", "pinyin": "xiān", "en": "first", "day": 1 },
-  { "hanzi": "然后", "pinyin": "ránhòu", "en": "then, after that", "day": 1, "why": "后 = after. 先 A，然后 B = first A, then B." },
-  { "hanzi": "如果", "pinyin": "rúguǒ", "en": "if", "day": 1, "why": "如果 opens a condition; 就 brings the result." },
-  { "hanzi": "就", "pinyin": "jiù", "en": "then (right away)", "day": 1, "why": "The result follows at once: 如果下雨，就不去 = if it rains, (then) I won't go." },
-  { "hanzi": "不然", "pinyin": "bùrán", "en": "otherwise", "day": 3, "why": "不 not + 然 so: 'if not so'." },
-  { "hanzi": "收钱", "pinyin": "shōuqián", "en": "take the money", "day": 4, "why": "收 receive + 钱 money." },
-  { "hanzi": "早上", "pinyin": "zǎoshang", "en": "morning", "day": 0 },
-  { "hanzi": "中午", "pinyin": "zhōngwǔ", "en": "noon", "day": 0 },
-  { "hanzi": "傍晚", "pinyin": "bàngwǎn", "en": "early evening", "day": 0 },
-  { "hanzi": "晚上", "pinyin": "wǎnshang", "en": "evening, night", "day": 0 },
-  { "hanzi": "代班", "pinyin": "dàibān", "en": "to take someone's shift", "day": 0 },
-  { "hanzi": "面馆", "pinyin": "miànguǎn", "en": "noodle shop", "day": 0 },
-  { "hanzi": "拼音", "pinyin": "pīnyīn", "en": "pinyin (sound spelling)", "day": 0 },
-  { "hanzi": "第", "pinyin": "dì", "en": "(number) -th", "day": 0 },
-  { "hanzi": "天", "pinyin": "tiān", "en": "day", "day": 0 },
-  { "hanzi": "看", "pinyin": "kàn", "en": "look", "day": 0 },
-  { "hanzi": "例子", "pinyin": "lìzi", "en": "example", "day": 0 },
-  { "hanzi": "文本", "pinyin": "wénběn", "en": "text", "day": 0 },
-  { "hanzi": "开门", "pinyin": "kāimén", "en": "open the door (open the shop)", "day": 0 },
-  { "hanzi": "今天", "pinyin": "jīntiān", "en": "today", "day": 0 },
-  { "hanzi": "错", "pinyin": "cuò", "en": "mistake, wrong", "day": 0 },
-  { "hanzi": "用", "pinyin": "yòng", "en": "use", "day": 0 },
-  { "hanzi": "这个", "pinyin": "zhège", "en": "this one", "day": 0 },
-  { "hanzi": "改", "pinyin": "gǎi", "en": "change", "day": 0 },
-  { "hanzi": "规则", "pinyin": "guīzé", "en": "rule", "day": 0 },
-  { "hanzi": "继续", "pinyin": "jìxù", "en": "continue", "day": 0 },
-  { "hanzi": "上", "pinyin": "shàng", "en": "up", "day": 0 },
-  { "hanzi": "下", "pinyin": "xià", "en": "down", "day": 0 },
-  { "hanzi": "删", "pinyin": "shān", "en": "delete", "day": 0 },
-  { "hanzi": "新", "pinyin": "xīn", "en": "new", "day": 0 },
-  { "hanzi": "稳", "pinyin": "wěn", "en": "steady", "day": 0 },
-  { "hanzi": "会", "pinyin": "huì", "en": "can (have learned to)", "day": 0 },
-  { "hanzi": "不会", "pinyin": "búhuì", "en": "can't, don't know how", "day": 0 },
-  { "hanzi": "能", "pinyin": "néng", "en": "can, be able to", "day": 0 },
-  { "hanzi": "听懂", "pinyin": "tīngdǒng", "en": "understand (by listening)", "day": 0 },
-  { "hanzi": "菜单", "pinyin": "càidān", "en": "menu", "day": 0 },
-  { "hanzi": "答案", "pinyin": "dá'àn", "en": "answer", "day": 0 },
-  { "hanzi": "修理", "pinyin": "xiūlǐ", "en": "repair", "day": 0 },
-  { "hanzi": "查", "pinyin": "chá", "en": "check", "day": 0 },
-  { "hanzi": "放", "pinyin": "fàng", "en": "put", "day": 0 },
-  { "hanzi": "一块", "pinyin": "yí kuài", "en": "one piece (of)", "day": 0 },
-  { "hanzi": "机器人", "pinyin": "jīqìrén", "en": "robot", "day": 0 },
-  { "hanzi": "满意度", "pinyin": "mǎnyìdù", "en": "satisfaction", "day": 0 },
-  { "hanzi": "记录", "pinyin": "jìlù", "en": "record, log", "day": 0 },
-  { "hanzi": "中文", "pinyin": "Zhōngwén", "en": "Chinese (language)", "day": 0 },
-  { "hanzi": "简体", "pinyin": "jiǎntǐ", "en": "simplified (characters)", "day": 0 },
-  { "hanzi": "字", "pinyin": "zì", "en": "character, written text", "day": 0 },
-  { "hanzi": "回放", "pinyin": "huífàng", "en": "replay", "day": 0 },
-  { "hanzi": "好", "pinyin": "hǎo", "en": "good; very", "day": 0 },
-  { "hanzi": "好吃", "pinyin": "hǎochī", "en": "delicious", "day": 0 },
-  { "hanzi": "喂", "pinyin": "wèi", "en": "hey? hello? (getting attention)", "day": 0 },
-  { "hanzi": "啊", "pinyin": "a", "en": "ah (softens a sentence)", "day": 0 },
-  { "hanzi": "到底", "pinyin": "dàodǐ", "en": "…after all? (impatient)", "day": 0 },
-  { "hanzi": "饿", "pinyin": "è", "en": "hungry", "day": 0 },
-  { "hanzi": "这", "pinyin": "zhè", "en": "this", "day": 0 },
-  { "hanzi": "是", "pinyin": "shì", "en": "is, am, are", "day": 0 },
-  { "hanzi": "不是", "pinyin": "búshì", "en": "is not", "day": 0 },
-  { "hanzi": "太", "pinyin": "tài", "en": "too (much)", "day": 0 },
-  { "hanzi": "多", "pinyin": "duō", "en": "many, much", "day": 0 },
-  { "hanzi": "够", "pinyin": "gòu", "en": "enough", "day": 0 },
-  { "hanzi": "不够", "pinyin": "búgòu", "en": "not enough", "day": 0 },
-  { "hanzi": "味道", "pinyin": "wèidao", "en": "taste", "day": 0 },
-  { "hanzi": "对", "pinyin": "duì", "en": "right, correct", "day": 0 },
-  { "hanzi": "不对", "pinyin": "búduì", "en": "not right", "day": 0 },
-  { "hanzi": "怎么", "pinyin": "zěnme", "en": "how", "day": 0 },
-  { "hanzi": "付", "pinyin": "fù", "en": "pay", "day": 0 },
-  { "hanzi": "付钱", "pinyin": "fùqián", "en": "pay money", "day": 0 },
-  { "hanzi": "打烊", "pinyin": "dǎyàng", "en": "close the shop (for the day)", "day": 0 },
-  { "hanzi": "暂停", "pinyin": "zàntíng", "en": "pause", "day": 0 },
-  { "hanzi": "快", "pinyin": "kuài", "en": "fast", "day": 0 },
-  { "hanzi": "开始", "pinyin": "kāishǐ", "en": "start", "day": 0 },
-  { "hanzi": "还行", "pinyin": "háixíng", "en": "not bad, OK-ish", "day": 0 },
-  { "hanzi": "一行", "pinyin": "yì háng", "en": "one line", "day": 0 },
-  { "hanzi": "成功", "pinyin": "chénggōng", "en": "success", "day": 0 },
-  { "hanzi": "提示", "pinyin": "tíshì", "en": "hint", "day": 0 },
-  { "hanzi": "跳过", "pinyin": "tiàoguò", "en": "skip", "day": 0 },
-  { "hanzi": "汉字", "pinyin": "hànzì", "en": "Chinese characters", "day": 0 },
-  { "hanzi": "听着", "pinyin": "tīngzhe", "en": "listening", "day": 0 },
-  { "hanzi": "出来", "pinyin": "chūlai", "en": "out", "day": 0 },
-  { "hanzi": "测试", "pinyin": "cèshì", "en": "test", "day": 0 },
-  { "hanzi": "试玩", "pinyin": "shìwán", "en": "try out, playtest", "day": 0 },
-  { "hanzi": "说话", "pinyin": "shuōhuà", "en": "speak", "day": 0 },
-  { "hanzi": "时间", "pinyin": "shíjiān", "en": "time", "day": 0 },
-  { "hanzi": "导出", "pinyin": "dǎochū", "en": "export", "day": 0 },
-  { "hanzi": "声调", "pinyin": "shēngdiào", "en": "tone", "day": 0 },
-  { "hanzi": "镜子", "pinyin": "jìngzi", "en": "mirror", "day": 0 },
-  { "hanzi": "停", "pinyin": "tíng", "en": "stop", "day": 0 },
-  { "hanzi": "词", "pinyin": "cí", "en": "word", "day": 0 },
-  { "hanzi": "新词", "pinyin": "xīncí", "en": "new word", "day": 0 },
-  { "hanzi": "为什么", "pinyin": "wèishénme", "en": "why", "day": 0 },
-  { "hanzi": "下一个", "pinyin": "xià yí ge", "en": "next one", "day": 0 },
-  { "hanzi": "没", "pinyin": "méi", "en": "not (have)", "day": 0 },
-  { "hanzi": "什么", "pinyin": "shénme", "en": "what", "day": 0 },
-  { "hanzi": "数量", "pinyin": "shùliàng", "en": "amount", "day": 0 },
-  { "hanzi": "量词", "pinyin": "liàngcí", "en": "measure word", "day": 0 },
-  { "hanzi": "东西", "pinyin": "dōngxi", "en": "thing", "day": 0 },
-  { "hanzi": "价钱", "pinyin": "jiàqián", "en": "price", "day": 0 },
-  { "hanzi": "反应", "pinyin": "fǎnyìng", "en": "reaction", "day": 0 },
-  { "hanzi": "开业", "pinyin": "kāiyè", "en": "opening day (of a business)", "day": 0 },
-  { "hanzi": "王", "pinyin": "Wáng", "en": "Wang (family name)", "day": 0 },
-  { "hanzi": "老师", "pinyin": "lǎoshī", "en": "teacher", "day": 0 },
-  { "hanzi": "卖", "pinyin": "mài", "en": "sell", "day": 0 },
-  { "hanzi": "完", "pinyin": "wán", "en": "finished, all gone", "day": 0 },
-  { "hanzi": "李", "pinyin": "Lǐ", "en": "Li (family name)", "day": 0 },
-  { "hanzi": "奶奶", "pinyin": "nǎinai", "en": "grandma", "day": 0 },
-  { "hanzi": "口味", "pinyin": "kǒuwèi", "en": "flavour, taste", "day": 0 },
-  { "hanzi": "张", "pinyin": "Zhāng", "en": "Zhang (family name)", "day": 0 },
-  { "hanzi": "经理", "pinyin": "jīnglǐ", "en": "manager", "day": 0 },
-  { "hanzi": "小", "pinyin": "xiǎo", "en": "little; young", "day": 0 },
-  { "hanzi": "陈", "pinyin": "Chén", "en": "Chen (family name)", "day": 0 },
-  { "hanzi": "再来", "pinyin": "zàilái", "en": "again, once more", "day": 0 },
-  { "hanzi": "再说", "pinyin": "zàishuō", "en": "say again", "day": 0 },
-  { "hanzi": "再听", "pinyin": "zàitīng", "en": "listen again", "day": 0 },
-  { "hanzi": "数字", "pinyin": "shùzì", "en": "number, digit", "day": 0 },
-  { "hanzi": "菜", "pinyin": "cài", "en": "dish, food", "day": 0 },
-  { "hanzi": "和", "pinyin": "hé", "en": "and", "day": 0 },
-  { "hanzi": "跟我学", "pinyin": "gēn wǒ xué", "en": "learn with me", "day": 0 },
-  { "hanzi": "从零开始", "pinyin": "cóng líng kāishǐ", "en": "start from zero", "day": 0 },
-  { "hanzi": "关", "pinyin": "guān", "en": "level (in a game); also: to close", "day": 0 },
-  { "hanzi": "句子", "pinyin": "jùzi", "en": "sentence", "day": 0 },
-  { "hanzi": "下一关", "pinyin": "xià yì guān", "en": "next level", "day": 0 },
-  { "hanzi": "回答", "pinyin": "huídá", "en": "answer", "day": 0 },
-  { "hanzi": "高峰", "pinyin": "gāofēng", "en": "peak, rush hour", "day": 0 },
-  { "hanzi": "午饭", "pinyin": "wǔfàn", "en": "lunch", "day": 0 },
-  { "hanzi": "最后", "pinyin": "zuìhòu", "en": "last, final", "day": 0 },
-  { "hanzi": "第一", "pinyin": "dì-yī", "en": "first", "day": 0 },
-  { "hanzi": "位", "pinyin": "wèi", "en": "measure word for people (polite)", "day": 0 }
+  {
+    "hanzi": "牛肉面",
+    "pinyin": "niúròumiàn",
+    "en": "beef noodles",
+    "day": 1,
+    "slot": "东西",
+    "price": 18,
+    "measure": "碗",
+    "spicy": true,
+    "why": "牛 cow + 肉 meat + 面 noodles: literally 'cow-meat noodles'."
+  },
+  {
+    "hanzi": "鸡蛋面",
+    "pinyin": "jīdànmiàn",
+    "en": "egg noodles",
+    "day": 2,
+    "slot": "东西",
+    "price": 12,
+    "measure": "碗",
+    "spicy": true,
+    "why": "鸡 chicken + 蛋 egg + 面 noodles: 'chicken-egg noodles'."
+  },
+  {
+    "hanzi": "炸酱面",
+    "pinyin": "zhájiàngmiàn",
+    "en": "fried-sauce noodles",
+    "day": 2,
+    "slot": "东西",
+    "price": 15,
+    "measure": "碗",
+    "spicy": true,
+    "why": "炸 fry + 酱 sauce + 面 noodles. 炸 has 火 fire on the left."
+  },
+  {
+    "hanzi": "酸辣粉",
+    "pinyin": "suānlàfěn",
+    "en": "hot and sour glass noodles",
+    "day": 3,
+    "slot": "东西",
+    "price": 10,
+    "measure": "碗",
+    "spicy": true,
+    "why": "酸 sour + 辣 spicy + 粉 starch noodles. A Chengdu street classic."
+  },
+  {
+    "hanzi": "饺子",
+    "pinyin": "jiǎozi",
+    "en": "dumplings",
+    "day": 3,
+    "slot": "东西",
+    "price": 20,
+    "measure": "份",
+    "spicy": false,
+    "why": "饣 on the left means food."
+  },
+  {
+    "hanzi": "包子",
+    "pinyin": "bāozi",
+    "en": "steamed bun",
+    "day": 4,
+    "slot": "东西",
+    "price": 3,
+    "measure": "个",
+    "spicy": false,
+    "why": "包 = to wrap: filling wrapped in dough. Same 包 as in 打包."
+  },
+  {
+    "hanzi": "可乐",
+    "pinyin": "kělè",
+    "en": "cola",
+    "day": 4,
+    "slot": "东西",
+    "price": 4,
+    "measure": "瓶",
+    "spicy": false,
+    "why": "Sounds like 'cola' and means 'can be happy'."
+  },
+  {
+    "hanzi": "茶",
+    "pinyin": "chá",
+    "en": "tea",
+    "day": 5,
+    "slot": "东西",
+    "price": 5,
+    "measure": "杯",
+    "spicy": false,
+    "why": "艹 grass on top, 木 tree at the bottom, a person 人 in between: picking leaves."
+  },
+  {
+    "hanzi": "碗",
+    "pinyin": "wǎn",
+    "en": "bowl",
+    "day": 1,
+    "slot": "量词",
+    "why": "石 stone on the left: the first bowls were stone."
+  },
+  {
+    "hanzi": "个",
+    "pinyin": "gè",
+    "en": "(general measure word)",
+    "day": 4,
+    "slot": "量词",
+    "why": "The all-purpose measure word. If unsure, 个 is usually understood."
+  },
+  {
+    "hanzi": "份",
+    "pinyin": "fèn",
+    "en": "portion",
+    "day": 3,
+    "slot": "量词",
+    "why": "亻 person + 分 divide: one share for each person."
+  },
+  {
+    "hanzi": "瓶",
+    "pinyin": "píng",
+    "en": "bottle",
+    "day": 4,
+    "slot": "量词",
+    "why": "瓦 on the right means pottery: old bottles were clay."
+  },
+  {
+    "hanzi": "杯",
+    "pinyin": "bēi",
+    "en": "cup",
+    "day": 5,
+    "slot": "量词",
+    "why": "木 wood on the left: old cups were wooden."
+  },
+  {
+    "hanzi": "一",
+    "pinyin": "yī",
+    "en": "one",
+    "day": 1,
+    "slot": "数量",
+    "why": "One line."
+  },
+  {
+    "hanzi": "二",
+    "pinyin": "èr",
+    "en": "two",
+    "day": 1,
+    "slot": "数量",
+    "why": "Two lines. Before a measure word, say 两 instead."
+  },
+  {
+    "hanzi": "两",
+    "pinyin": "liǎng",
+    "en": "two (before a measure word)",
+    "day": 1,
+    "slot": "数量",
+    "why": "两碗, not 二碗: when counting things, two is 两."
+  },
+  {
+    "hanzi": "三",
+    "pinyin": "sān",
+    "en": "three",
+    "day": 1,
+    "slot": "数量",
+    "why": "Three lines."
+  },
+  {
+    "hanzi": "四",
+    "pinyin": "sì",
+    "en": "four",
+    "day": 1,
+    "slot": "数量"
+  },
+  {
+    "hanzi": "五",
+    "pinyin": "wǔ",
+    "en": "five",
+    "day": 1,
+    "slot": "数量"
+  },
+  {
+    "hanzi": "六",
+    "pinyin": "liù",
+    "en": "six",
+    "day": 1,
+    "slot": "数量"
+  },
+  {
+    "hanzi": "七",
+    "pinyin": "qī",
+    "en": "seven",
+    "day": 1,
+    "slot": "数量"
+  },
+  {
+    "hanzi": "八",
+    "pinyin": "bā",
+    "en": "eight",
+    "day": 1,
+    "slot": "数量",
+    "why": "Two strokes spreading apart. A lucky number: it sounds like 发 (get rich)."
+  },
+  {
+    "hanzi": "九",
+    "pinyin": "jiǔ",
+    "en": "nine",
+    "day": 1,
+    "slot": "数量"
+  },
+  {
+    "hanzi": "十",
+    "pinyin": "shí",
+    "en": "ten",
+    "day": 1,
+    "slot": "数量",
+    "why": "A cross: 十五 = ten-five = 15, 二十 = two-ten = 20."
+  },
+  {
+    "hanzi": "百",
+    "pinyin": "bǎi",
+    "en": "hundred",
+    "day": 4,
+    "slot": "数量",
+    "why": "一百二十 = one-hundred two-ten = 120."
+  },
+  {
+    "hanzi": "千",
+    "pinyin": "qiān",
+    "en": "thousand",
+    "day": 4,
+    "slot": "数量"
+  },
+  {
+    "hanzi": "零",
+    "pinyin": "líng",
+    "en": "zero",
+    "day": 4,
+    "slot": "数量",
+    "why": "Fills a gap: 一百零五 = 105."
+  },
+  {
+    "hanzi": "我",
+    "pinyin": "wǒ",
+    "en": "I",
+    "day": 1
+  },
+  {
+    "hanzi": "你",
+    "pinyin": "nǐ",
+    "en": "you",
+    "day": 1,
+    "why": "亻 person on the left."
+  },
+  {
+    "hanzi": "您",
+    "pinyin": "nín",
+    "en": "you (polite)",
+    "day": 3,
+    "why": "你 with 心 heart underneath: 'you' said with respect."
+  },
+  {
+    "hanzi": "要",
+    "pinyin": "yào",
+    "en": "want",
+    "day": 1,
+    "why": "我要 = I want. The most useful word in any shop."
+  },
+  {
+    "hanzi": "来",
+    "pinyin": "lái",
+    "en": "come / bring",
+    "day": 2,
+    "why": "来一碗 = 'bring a bowl': the casual way to order."
+  },
+  {
+    "hanzi": "有",
+    "pinyin": "yǒu",
+    "en": "have",
+    "day": 2
+  },
+  {
+    "hanzi": "没有",
+    "pinyin": "méiyǒu",
+    "en": "don't have",
+    "day": 2,
+    "why": "没 negates 有. Use 没 (not 不) with 有."
+  },
+  {
+    "hanzi": "吗",
+    "pinyin": "ma",
+    "en": "(question word)",
+    "day": 2,
+    "why": "口 mouth + 马 horse (for the sound): a spoken question mark. Add it to any sentence to make a yes/no question."
+  },
+  {
+    "hanzi": "了",
+    "pinyin": "le",
+    "en": "(change / done)",
+    "day": 2,
+    "why": "没有了 = 'there is none any more': 了 marks that something changed."
+  },
+  {
+    "hanzi": "不",
+    "pinyin": "bù",
+    "en": "not",
+    "day": 3,
+    "why": "The general 'not'. 不要 = don't want."
+  },
+  {
+    "hanzi": "辣",
+    "pinyin": "là",
+    "en": "spicy",
+    "day": 3
+  },
+  {
+    "hanzi": "的",
+    "pinyin": "de",
+    "en": "(the …one)",
+    "day": 3,
+    "why": "不辣的 = the not-spicy one. 的 turns a description into a thing."
+  },
+  {
+    "hanzi": "微",
+    "pinyin": "wēi",
+    "en": "slightly",
+    "day": 3,
+    "why": "微辣 = slightly spicy. Same 微 as in 微信 (WeChat, 'micro message')."
+  },
+  {
+    "hanzi": "打包",
+    "pinyin": "dǎbāo",
+    "en": "to pack (takeaway)",
+    "day": 3,
+    "why": "打 do + 包 wrap: 'do the wrapping'."
+  },
+  {
+    "hanzi": "在",
+    "pinyin": "zài",
+    "en": "at / in",
+    "day": 3,
+    "why": "Something under a roof, so 'at / in'."
+  },
+  {
+    "hanzi": "这儿",
+    "pinyin": "zhèr",
+    "en": "here",
+    "day": 3,
+    "why": "这 this + 儿 (Beijing-style ending): 'this spot'."
+  },
+  {
+    "hanzi": "吃",
+    "pinyin": "chī",
+    "en": "eat",
+    "day": 3,
+    "why": "口 mouth on the left."
+  },
+  {
+    "hanzi": "多少",
+    "pinyin": "duōshao",
+    "en": "how much / how many",
+    "day": 1,
+    "why": "多 many + 少 few: 'many-few?' = how much?"
+  },
+  {
+    "hanzi": "钱",
+    "pinyin": "qián",
+    "en": "money",
+    "day": 1,
+    "why": "钅 metal on the left: money used to be metal coins."
+  },
+  {
+    "hanzi": "块",
+    "pinyin": "kuài",
+    "en": "yuan (spoken)",
+    "day": 1,
+    "why": "Literally 'a lump': 十块 = 10 yuan. Spoken form of 元."
+  },
+  {
+    "hanzi": "谢谢",
+    "pinyin": "xièxie",
+    "en": "thank you",
+    "day": 1,
+    "why": "讠 speech on the left."
+  },
+  {
+    "hanzi": "不客气",
+    "pinyin": "búkèqi",
+    "en": "you're welcome",
+    "day": 1,
+    "why": "不 not + 客气 polite: 'no need to be polite'."
+  },
+  {
+    "hanzi": "好的",
+    "pinyin": "hǎode",
+    "en": "OK",
+    "day": 1,
+    "why": "好 = 女 woman + 子 child: something good."
+  },
+  {
+    "hanzi": "请",
+    "pinyin": "qǐng",
+    "en": "please",
+    "day": 1,
+    "why": "讠 speech on the left: a polite word."
+  },
+  {
+    "hanzi": "慢用",
+    "pinyin": "mànyòng",
+    "en": "enjoy (eat slowly)",
+    "day": 1,
+    "why": "慢 slow + 用 use: 'take your time'. 请慢用 is what staff say when serving."
+  },
+  {
+    "hanzi": "老板",
+    "pinyin": "lǎobǎn",
+    "en": "boss (how you call the shop owner)",
+    "day": 1,
+    "why": "Customers call any shop owner 老板 to get attention."
+  },
+  {
+    "hanzi": "请问",
+    "pinyin": "qǐngwèn",
+    "en": "excuse me, may I ask",
+    "day": 2,
+    "why": "问 = a 口 mouth inside a 门 door: someone at the door asking."
+  },
+  {
+    "hanzi": "麻烦你",
+    "pinyin": "máfan nǐ",
+    "en": "sorry to trouble you",
+    "day": 2,
+    "why": "麻烦 = trouble: 'I'm troubling you'. A polite start to a request."
+  },
+  {
+    "hanzi": "那",
+    "pinyin": "nà",
+    "en": "then / in that case",
+    "day": 2
+  },
+  {
+    "hanzi": "还",
+    "pinyin": "hái",
+    "en": "still",
+    "day": 2,
+    "why": "还有吗 = is there still some?"
+  },
+  {
+    "hanzi": "给",
+    "pinyin": "gěi",
+    "en": "give / for",
+    "day": 3,
+    "why": "纟 silk on the left: giving a gift of silk."
+  },
+  {
+    "hanzi": "还是",
+    "pinyin": "háishi",
+    "en": "or (in questions)",
+    "day": 3,
+    "why": "A 还是 B? = A or B? Only for questions."
+  },
+  {
+    "hanzi": "扫码",
+    "pinyin": "sǎomǎ",
+    "en": "scan the QR code",
+    "day": 4,
+    "why": "扫 sweep + 码 code: you sweep your phone over the code."
+  },
+  {
+    "hanzi": "现金",
+    "pinyin": "xiànjīn",
+    "en": "cash",
+    "day": 4,
+    "why": "现 present + 金 gold: money right here."
+  },
+  {
+    "hanzi": "可以",
+    "pinyin": "kěyǐ",
+    "en": "can / may",
+    "day": 4
+  },
+  {
+    "hanzi": "一共",
+    "pinyin": "yígòng",
+    "en": "in total",
+    "day": 4,
+    "why": "一 one + 共 together: all together."
+  },
+  {
+    "hanzi": "吧",
+    "pinyin": "ba",
+    "en": "(suggestion)",
+    "day": 4,
+    "why": "Softens a sentence: 我扫码吧 = I'll scan, OK?"
+  },
+  {
+    "hanzi": "算了",
+    "pinyin": "suànle",
+    "en": "forget it",
+    "day": 5,
+    "why": "算 count + 了: 'it's counted, done'. Signals a change of mind."
+  },
+  {
+    "hanzi": "再",
+    "pinyin": "zài",
+    "en": "again / one more",
+    "day": 5,
+    "why": "再来一个 = bring one more. Not the same zài as 在."
+  },
+  {
+    "hanzi": "客人",
+    "pinyin": "kèrén",
+    "en": "customer, guest",
+    "day": 1
+  },
+  {
+    "hanzi": "说",
+    "pinyin": "shuō",
+    "en": "say",
+    "day": 1,
+    "why": "讠 speech on the left."
+  },
+  {
+    "hanzi": "听",
+    "pinyin": "tīng",
+    "en": "listen",
+    "day": 1,
+    "why": "口 mouth on the left: the sound you listen to."
+  },
+  {
+    "hanzi": "听到",
+    "pinyin": "tīngdào",
+    "en": "hear",
+    "day": 1,
+    "why": "听 listen + 到 arrive: the sound arrived."
+  },
+  {
+    "hanzi": "做",
+    "pinyin": "zuò",
+    "en": "make, do",
+    "day": 1,
+    "why": "亻 person on the left: a person making something."
+  },
+  {
+    "hanzi": "上菜",
+    "pinyin": "shàngcài",
+    "en": "serve the food",
+    "day": 1,
+    "why": "上 up + 菜 dish: bring the dish up to the table."
+  },
+  {
+    "hanzi": "先",
+    "pinyin": "xiān",
+    "en": "first",
+    "day": 1
+  },
+  {
+    "hanzi": "然后",
+    "pinyin": "ránhòu",
+    "en": "then, after that",
+    "day": 1,
+    "why": "后 = after. 先 A，然后 B = first A, then B."
+  },
+  {
+    "hanzi": "如果",
+    "pinyin": "rúguǒ",
+    "en": "if",
+    "day": 1,
+    "why": "如果 opens a condition; 就 brings the result."
+  },
+  {
+    "hanzi": "就",
+    "pinyin": "jiù",
+    "en": "then (right away)",
+    "day": 1,
+    "why": "The result follows at once: 如果下雨，就不去 = if it rains, (then) I won't go."
+  },
+  {
+    "hanzi": "不然",
+    "pinyin": "bùrán",
+    "en": "otherwise",
+    "day": 3,
+    "why": "不 not + 然 so: 'if not so'."
+  },
+  {
+    "hanzi": "收钱",
+    "pinyin": "shōuqián",
+    "en": "take the money",
+    "day": 4,
+    "why": "收 receive + 钱 money."
+  },
+  {
+    "hanzi": "早上",
+    "pinyin": "zǎoshang",
+    "en": "morning",
+    "day": 0
+  },
+  {
+    "hanzi": "中午",
+    "pinyin": "zhōngwǔ",
+    "en": "noon",
+    "day": 0
+  },
+  {
+    "hanzi": "傍晚",
+    "pinyin": "bàngwǎn",
+    "en": "early evening",
+    "day": 0
+  },
+  {
+    "hanzi": "晚上",
+    "pinyin": "wǎnshang",
+    "en": "evening, night",
+    "day": 0
+  },
+  {
+    "hanzi": "代班",
+    "pinyin": "dàibān",
+    "en": "to take someone's shift",
+    "day": 0
+  },
+  {
+    "hanzi": "面馆",
+    "pinyin": "miànguǎn",
+    "en": "noodle shop",
+    "day": 0
+  },
+  {
+    "hanzi": "拼音",
+    "pinyin": "pīnyīn",
+    "en": "pinyin (sound spelling)",
+    "day": 0
+  },
+  {
+    "hanzi": "第",
+    "pinyin": "dì",
+    "en": "(number) -th",
+    "day": 0
+  },
+  {
+    "hanzi": "天",
+    "pinyin": "tiān",
+    "en": "day",
+    "day": 0
+  },
+  {
+    "hanzi": "例子",
+    "pinyin": "lìzi",
+    "en": "example",
+    "day": 0
+  },
+  {
+    "hanzi": "文本",
+    "pinyin": "wénběn",
+    "en": "text",
+    "day": 0
+  },
+  {
+    "hanzi": "开门",
+    "pinyin": "kāimén",
+    "en": "open the door (open the shop)",
+    "day": 0
+  },
+  {
+    "hanzi": "错",
+    "pinyin": "cuò",
+    "en": "mistake, wrong",
+    "day": 0
+  },
+  {
+    "hanzi": "用",
+    "pinyin": "yòng",
+    "en": "use",
+    "day": 0
+  },
+  {
+    "hanzi": "改",
+    "pinyin": "gǎi",
+    "en": "change",
+    "day": 0
+  },
+  {
+    "hanzi": "规则",
+    "pinyin": "guīzé",
+    "en": "rule",
+    "day": 0
+  },
+  {
+    "hanzi": "继续",
+    "pinyin": "jìxù",
+    "en": "continue",
+    "day": 0
+  },
+  {
+    "hanzi": "上",
+    "pinyin": "shàng",
+    "en": "up",
+    "day": 0
+  },
+  {
+    "hanzi": "下",
+    "pinyin": "xià",
+    "en": "down",
+    "day": 0
+  },
+  {
+    "hanzi": "删",
+    "pinyin": "shān",
+    "en": "delete",
+    "day": 0
+  },
+  {
+    "hanzi": "新",
+    "pinyin": "xīn",
+    "en": "new",
+    "day": 0
+  },
+  {
+    "hanzi": "稳",
+    "pinyin": "wěn",
+    "en": "steady",
+    "day": 0
+  },
+  {
+    "hanzi": "不会",
+    "pinyin": "búhuì",
+    "en": "can't, don't know how",
+    "day": 0
+  },
+  {
+    "hanzi": "能",
+    "pinyin": "néng",
+    "en": "can, be able to",
+    "day": 0
+  },
+  {
+    "hanzi": "听懂",
+    "pinyin": "tīngdǒng",
+    "en": "understand (by listening)",
+    "day": 0
+  },
+  {
+    "hanzi": "菜单",
+    "pinyin": "càidān",
+    "en": "menu",
+    "day": 0
+  },
+  {
+    "hanzi": "答案",
+    "pinyin": "dá'àn",
+    "en": "answer",
+    "day": 0
+  },
+  {
+    "hanzi": "修理",
+    "pinyin": "xiūlǐ",
+    "en": "repair",
+    "day": 0
+  },
+  {
+    "hanzi": "查",
+    "pinyin": "chá",
+    "en": "check",
+    "day": 0
+  },
+  {
+    "hanzi": "放",
+    "pinyin": "fàng",
+    "en": "put",
+    "day": 0
+  },
+  {
+    "hanzi": "一块",
+    "pinyin": "yí kuài",
+    "en": "one piece (of)",
+    "day": 0
+  },
+  {
+    "hanzi": "机器人",
+    "pinyin": "jīqìrén",
+    "en": "robot",
+    "day": 0
+  },
+  {
+    "hanzi": "满意度",
+    "pinyin": "mǎnyìdù",
+    "en": "satisfaction",
+    "day": 0
+  },
+  {
+    "hanzi": "记录",
+    "pinyin": "jìlù",
+    "en": "record, log",
+    "day": 0
+  },
+  {
+    "hanzi": "简体",
+    "pinyin": "jiǎntǐ",
+    "en": "simplified (characters)",
+    "day": 0
+  },
+  {
+    "hanzi": "字",
+    "pinyin": "zì",
+    "en": "character, written text",
+    "day": 0
+  },
+  {
+    "hanzi": "回放",
+    "pinyin": "huífàng",
+    "en": "replay",
+    "day": 0
+  },
+  {
+    "hanzi": "好吃",
+    "pinyin": "hǎochī",
+    "en": "delicious",
+    "day": 0
+  },
+  {
+    "hanzi": "喂",
+    "pinyin": "wèi",
+    "en": "hey? hello? (getting attention)",
+    "day": 0
+  },
+  {
+    "hanzi": "啊",
+    "pinyin": "a",
+    "en": "ah (softens a sentence)",
+    "day": 0
+  },
+  {
+    "hanzi": "到底",
+    "pinyin": "dàodǐ",
+    "en": "…after all? (impatient)",
+    "day": 0
+  },
+  {
+    "hanzi": "饿",
+    "pinyin": "è",
+    "en": "hungry",
+    "day": 0
+  },
+  {
+    "hanzi": "这",
+    "pinyin": "zhè",
+    "en": "this",
+    "day": 0
+  },
+  {
+    "hanzi": "是",
+    "pinyin": "shì",
+    "en": "is, am, are",
+    "day": 0
+  },
+  {
+    "hanzi": "不是",
+    "pinyin": "búshì",
+    "en": "is not",
+    "day": 0
+  },
+  {
+    "hanzi": "太",
+    "pinyin": "tài",
+    "en": "too (much)",
+    "day": 0
+  },
+  {
+    "hanzi": "多",
+    "pinyin": "duō",
+    "en": "many, much",
+    "day": 0
+  },
+  {
+    "hanzi": "够",
+    "pinyin": "gòu",
+    "en": "enough",
+    "day": 0
+  },
+  {
+    "hanzi": "不够",
+    "pinyin": "búgòu",
+    "en": "not enough",
+    "day": 0
+  },
+  {
+    "hanzi": "味道",
+    "pinyin": "wèidao",
+    "en": "taste",
+    "day": 0
+  },
+  {
+    "hanzi": "对",
+    "pinyin": "duì",
+    "en": "right, correct",
+    "day": 0
+  },
+  {
+    "hanzi": "不对",
+    "pinyin": "búduì",
+    "en": "not right",
+    "day": 0
+  },
+  {
+    "hanzi": "怎么",
+    "pinyin": "zěnme",
+    "en": "how",
+    "day": 0
+  },
+  {
+    "hanzi": "付",
+    "pinyin": "fù",
+    "en": "pay",
+    "day": 0
+  },
+  {
+    "hanzi": "付钱",
+    "pinyin": "fùqián",
+    "en": "pay money",
+    "day": 0
+  },
+  {
+    "hanzi": "打烊",
+    "pinyin": "dǎyàng",
+    "en": "close the shop (for the day)",
+    "day": 0
+  },
+  {
+    "hanzi": "暂停",
+    "pinyin": "zàntíng",
+    "en": "pause",
+    "day": 0
+  },
+  {
+    "hanzi": "快",
+    "pinyin": "kuài",
+    "en": "fast",
+    "day": 0
+  },
+  {
+    "hanzi": "开始",
+    "pinyin": "kāishǐ",
+    "en": "start",
+    "day": 0
+  },
+  {
+    "hanzi": "还行",
+    "pinyin": "háixíng",
+    "en": "not bad, OK-ish",
+    "day": 0
+  },
+  {
+    "hanzi": "一行",
+    "pinyin": "yì háng",
+    "en": "one line",
+    "day": 0
+  },
+  {
+    "hanzi": "成功",
+    "pinyin": "chénggōng",
+    "en": "success",
+    "day": 0
+  },
+  {
+    "hanzi": "提示",
+    "pinyin": "tíshì",
+    "en": "hint",
+    "day": 0
+  },
+  {
+    "hanzi": "跳过",
+    "pinyin": "tiàoguò",
+    "en": "skip",
+    "day": 0
+  },
+  {
+    "hanzi": "汉字",
+    "pinyin": "hànzì",
+    "en": "Chinese characters",
+    "day": 0
+  },
+  {
+    "hanzi": "听着",
+    "pinyin": "tīngzhe",
+    "en": "listening",
+    "day": 0
+  },
+  {
+    "hanzi": "出来",
+    "pinyin": "chūlai",
+    "en": "out",
+    "day": 0
+  },
+  {
+    "hanzi": "测试",
+    "pinyin": "cèshì",
+    "en": "test",
+    "day": 0
+  },
+  {
+    "hanzi": "试玩",
+    "pinyin": "shìwán",
+    "en": "try out, playtest",
+    "day": 0
+  },
+  {
+    "hanzi": "说话",
+    "pinyin": "shuōhuà",
+    "en": "speak",
+    "day": 0
+  },
+  {
+    "hanzi": "时间",
+    "pinyin": "shíjiān",
+    "en": "time",
+    "day": 0
+  },
+  {
+    "hanzi": "导出",
+    "pinyin": "dǎochū",
+    "en": "export",
+    "day": 0
+  },
+  {
+    "hanzi": "声调",
+    "pinyin": "shēngdiào",
+    "en": "tone",
+    "day": 0
+  },
+  {
+    "hanzi": "镜子",
+    "pinyin": "jìngzi",
+    "en": "mirror",
+    "day": 0
+  },
+  {
+    "hanzi": "词",
+    "pinyin": "cí",
+    "en": "word",
+    "day": 0
+  },
+  {
+    "hanzi": "新词",
+    "pinyin": "xīncí",
+    "en": "new word",
+    "day": 0
+  },
+  {
+    "hanzi": "为什么",
+    "pinyin": "wèishénme",
+    "en": "why",
+    "day": 0
+  },
+  {
+    "hanzi": "下一个",
+    "pinyin": "xià yí ge",
+    "en": "next one",
+    "day": 0
+  },
+  {
+    "hanzi": "没",
+    "pinyin": "méi",
+    "en": "not (have)",
+    "day": 0
+  },
+  {
+    "hanzi": "数量",
+    "pinyin": "shùliàng",
+    "en": "amount",
+    "day": 0
+  },
+  {
+    "hanzi": "量词",
+    "pinyin": "liàngcí",
+    "en": "measure word",
+    "day": 0
+  },
+  {
+    "hanzi": "东西",
+    "pinyin": "dōngxi",
+    "en": "thing",
+    "day": 0
+  },
+  {
+    "hanzi": "价钱",
+    "pinyin": "jiàqián",
+    "en": "price",
+    "day": 0
+  },
+  {
+    "hanzi": "反应",
+    "pinyin": "fǎnyìng",
+    "en": "reaction",
+    "day": 0
+  },
+  {
+    "hanzi": "开业",
+    "pinyin": "kāiyè",
+    "en": "opening day (of a business)",
+    "day": 0
+  },
+  {
+    "hanzi": "王",
+    "pinyin": "Wáng",
+    "en": "Wang (family name)",
+    "day": 0
+  },
+  {
+    "hanzi": "老师",
+    "pinyin": "lǎoshī",
+    "en": "teacher",
+    "day": 0
+  },
+  {
+    "hanzi": "卖",
+    "pinyin": "mài",
+    "en": "sell",
+    "day": 0
+  },
+  {
+    "hanzi": "完",
+    "pinyin": "wán",
+    "en": "finished, all gone",
+    "day": 0
+  },
+  {
+    "hanzi": "李",
+    "pinyin": "Lǐ",
+    "en": "Li (family name)",
+    "day": 0
+  },
+  {
+    "hanzi": "奶奶",
+    "pinyin": "nǎinai",
+    "en": "grandma",
+    "day": 0
+  },
+  {
+    "hanzi": "口味",
+    "pinyin": "kǒuwèi",
+    "en": "flavour, taste",
+    "day": 0
+  },
+  {
+    "hanzi": "张",
+    "pinyin": "Zhāng",
+    "en": "Zhang (family name)",
+    "day": 0
+  },
+  {
+    "hanzi": "经理",
+    "pinyin": "jīnglǐ",
+    "en": "manager",
+    "day": 0
+  },
+  {
+    "hanzi": "小",
+    "pinyin": "xiǎo",
+    "en": "little; young",
+    "day": 0
+  },
+  {
+    "hanzi": "陈",
+    "pinyin": "Chén",
+    "en": "Chen (family name)",
+    "day": 0
+  },
+  {
+    "hanzi": "再来",
+    "pinyin": "zàilái",
+    "en": "again, once more",
+    "day": 0
+  },
+  {
+    "hanzi": "再说",
+    "pinyin": "zàishuō",
+    "en": "say again",
+    "day": 0
+  },
+  {
+    "hanzi": "再听",
+    "pinyin": "zàitīng",
+    "en": "listen again",
+    "day": 0
+  },
+  {
+    "hanzi": "数字",
+    "pinyin": "shùzì",
+    "en": "number, digit",
+    "day": 0
+  },
+  {
+    "hanzi": "菜",
+    "pinyin": "cài",
+    "en": "dish, food",
+    "day": 0
+  },
+  {
+    "hanzi": "和",
+    "pinyin": "hé",
+    "en": "and",
+    "day": 0
+  },
+  {
+    "hanzi": "跟我学",
+    "pinyin": "gēn wǒ xué",
+    "en": "learn with me",
+    "day": 0
+  },
+  {
+    "hanzi": "从零开始",
+    "pinyin": "cóng líng kāishǐ",
+    "en": "start from zero",
+    "day": 0
+  },
+  {
+    "hanzi": "关",
+    "pinyin": "guān",
+    "en": "level (in a game); also: to close",
+    "day": 0
+  },
+  {
+    "hanzi": "句子",
+    "pinyin": "jùzi",
+    "en": "sentence",
+    "day": 0
+  },
+  {
+    "hanzi": "下一关",
+    "pinyin": "xià yì guān",
+    "en": "next level",
+    "day": 0
+  },
+  {
+    "hanzi": "回答",
+    "pinyin": "huídá",
+    "en": "answer",
+    "day": 0
+  },
+  {
+    "hanzi": "高峰",
+    "pinyin": "gāofēng",
+    "en": "peak, rush hour",
+    "day": 0
+  },
+  {
+    "hanzi": "午饭",
+    "pinyin": "wǔfàn",
+    "en": "lunch",
+    "day": 0
+  },
+  {
+    "hanzi": "最后",
+    "pinyin": "zuìhòu",
+    "en": "last, final",
+    "day": 0
+  },
+  {
+    "hanzi": "第一",
+    "pinyin": "dì-yī",
+    "en": "first",
+    "day": 0
+  },
+  {
+    "hanzi": "位",
+    "pinyin": "wèi",
+    "en": "measure word for people (polite)",
+    "day": 0
+  },
+  {
+    "hanzi": "斤",
+    "pinyin": "jīn",
+    "en": "jin (half a kilo)",
+    "day": 0,
+    "slot": "量词"
+  },
+  {
+    "hanzi": "盒",
+    "pinyin": "hé",
+    "en": "box",
+    "day": 0,
+    "slot": "量词"
+  },
+  {
+    "hanzi": "间",
+    "pinyin": "jiān",
+    "en": "measure word for rooms",
+    "day": 0,
+    "slot": "量词"
+  },
+  {
+    "hanzi": "水果店",
+    "pinyin": "shuǐguǒdiàn",
+    "en": "fruit shop",
+    "day": 0
+  },
+  {
+    "hanzi": "咖啡馆",
+    "pinyin": "kāfēiguǎn",
+    "en": "café",
+    "day": 0
+  },
+  {
+    "hanzi": "药店",
+    "pinyin": "yàodiàn",
+    "en": "pharmacy",
+    "day": 0
+  },
+  {
+    "hanzi": "讲价",
+    "pinyin": "jiǎngjià",
+    "en": "to bargain",
+    "day": 0
+  },
+  {
+    "hanzi": "聊天",
+    "pinyin": "liáotiān",
+    "en": "to chat",
+    "day": 0
+  },
+  {
+    "hanzi": "认识",
+    "pinyin": "rènshi",
+    "en": "to get to know",
+    "day": 0
+  },
+  {
+    "hanzi": "停车",
+    "pinyin": "tíngchē",
+    "en": "to stop the car",
+    "day": 0
+  },
+  {
+    "hanzi": "左",
+    "pinyin": "zuǒ",
+    "en": "left",
+    "day": 0
+  },
+  {
+    "hanzi": "右",
+    "pinyin": "yòu",
+    "en": "right",
+    "day": 0
+  },
+  {
+    "hanzi": "服务",
+    "pinyin": "fúwù",
+    "en": "service",
+    "day": 0
+  },
+  {
+    "hanzi": "舒服",
+    "pinyin": "shūfu",
+    "en": "comfortable, well",
+    "day": 0
+  },
+  {
+    "hanzi": "约",
+    "pinyin": "yuē",
+    "en": "to arrange (to meet)",
+    "day": 0
+  },
+  {
+    "hanzi": "毕业",
+    "pinyin": "bìyè",
+    "en": "to graduate",
+    "day": 0
+  },
+  {
+    "hanzi": "吃药",
+    "pinyin": "chī yào",
+    "en": "to take medicine",
+    "day": 0
+  },
+  {
+    "hanzi": "问题",
+    "pinyin": "wèntí",
+    "en": "problem, question",
+    "day": 0
+  },
+  {
+    "hanzi": "苹果",
+    "pinyin": "píngguǒ",
+    "en": "apples",
+    "day": 6,
+    "slot": "东西",
+    "price": 8,
+    "measure": "斤"
+  },
+  {
+    "hanzi": "香蕉",
+    "pinyin": "xiāngjiāo",
+    "en": "bananas",
+    "day": 6,
+    "slot": "东西",
+    "price": 6,
+    "measure": "斤"
+  },
+  {
+    "hanzi": "西瓜",
+    "pinyin": "xīguā",
+    "en": "watermelon",
+    "day": 6,
+    "slot": "东西",
+    "price": 20,
+    "measure": "个"
+  },
+  {
+    "hanzi": "葡萄",
+    "pinyin": "pútao",
+    "en": "grapes",
+    "day": 7,
+    "slot": "东西",
+    "price": 15,
+    "measure": "斤"
+  },
+  {
+    "hanzi": "橙子",
+    "pinyin": "chéngzi",
+    "en": "oranges",
+    "day": 8,
+    "slot": "东西",
+    "price": 7,
+    "measure": "斤"
+  },
+  {
+    "hanzi": "草莓",
+    "pinyin": "cǎoméi",
+    "en": "strawberries",
+    "day": 9,
+    "slot": "东西",
+    "price": 25,
+    "measure": "盒"
+  },
+  {
+    "hanzi": "咖啡",
+    "pinyin": "kāfēi",
+    "en": "coffee",
+    "day": 11,
+    "slot": "东西",
+    "price": 20,
+    "measure": "杯"
+  },
+  {
+    "hanzi": "奶茶",
+    "pinyin": "nǎichá",
+    "en": "milk tea",
+    "day": 11,
+    "slot": "东西",
+    "price": 15,
+    "measure": "杯"
+  },
+  {
+    "hanzi": "果汁",
+    "pinyin": "guǒzhī",
+    "en": "juice",
+    "day": 11,
+    "slot": "东西",
+    "price": 12,
+    "measure": "杯"
+  },
+  {
+    "hanzi": "蛋糕",
+    "pinyin": "dàngāo",
+    "en": "cake",
+    "day": 13,
+    "slot": "东西",
+    "price": 18,
+    "measure": "个"
+  },
+  {
+    "hanzi": "水",
+    "pinyin": "shuǐ",
+    "en": "water",
+    "day": 14,
+    "slot": "东西",
+    "price": 3,
+    "measure": "瓶"
+  },
+  {
+    "hanzi": "单人间",
+    "pinyin": "dānrénjiān",
+    "en": "single room",
+    "day": 21,
+    "slot": "东西",
+    "price": 200,
+    "measure": "间"
+  },
+  {
+    "hanzi": "双人间",
+    "pinyin": "shuāngrénjiān",
+    "en": "double room",
+    "day": 21,
+    "slot": "东西",
+    "price": 300,
+    "measure": "间"
+  },
+  {
+    "hanzi": "早饭",
+    "pinyin": "zǎofàn",
+    "en": "breakfast",
+    "day": 22,
+    "slot": "东西",
+    "price": 30,
+    "measure": "份"
+  },
+  {
+    "hanzi": "感冒药",
+    "pinyin": "gǎnmàoyào",
+    "en": "cold medicine",
+    "day": 26,
+    "slot": "东西",
+    "price": 25,
+    "measure": "盒"
+  },
+  {
+    "hanzi": "创可贴",
+    "pinyin": "chuàngkětiē",
+    "en": "plasters",
+    "day": 26,
+    "slot": "东西",
+    "price": 10,
+    "measure": "盒"
+  },
+  {
+    "hanzi": "口罩",
+    "pinyin": "kǒuzhào",
+    "en": "face masks",
+    "day": 27,
+    "slot": "东西",
+    "price": 2,
+    "measure": "个"
+  },
+  {
+    "hanzi": "机场",
+    "pinyin": "jīchǎng",
+    "en": "the airport",
+    "day": 16,
+    "slot": "地方"
+  },
+  {
+    "hanzi": "火车站",
+    "pinyin": "huǒchēzhàn",
+    "en": "the train station",
+    "day": 16,
+    "slot": "地方"
+  },
+  {
+    "hanzi": "大学",
+    "pinyin": "dàxué",
+    "en": "the university",
+    "day": 16,
+    "slot": "地方"
+  },
+  {
+    "hanzi": "医院",
+    "pinyin": "yīyuàn",
+    "en": "the hospital",
+    "day": 17,
+    "slot": "地方"
+  },
+  {
+    "hanzi": "酒店",
+    "pinyin": "jiǔdiàn",
+    "en": "the hotel",
+    "day": 18,
+    "slot": "地方"
+  },
+  {
+    "hanzi": "公园",
+    "pinyin": "gōngyuán",
+    "en": "the park",
+    "day": 19,
+    "slot": "地方"
+  },
+  {
+    "hanzi": "出租车",
+    "pinyin": "chūzūchē",
+    "en": "taxi",
+    "day": 25
+  },
+  {
+    "hanzi": "新鲜",
+    "pinyin": "xīnxiān",
+    "en": "fresh",
+    "day": 6
+  },
+  {
+    "hanzi": "很",
+    "pinyin": "hěn",
+    "en": "very",
+    "day": 6
+  },
+  {
+    "hanzi": "甜",
+    "pinyin": "tián",
+    "en": "sweet",
+    "day": 6
+  },
+  {
+    "hanzi": "贵",
+    "pinyin": "guì",
+    "en": "expensive",
+    "day": 7
+  },
+  {
+    "hanzi": "便宜",
+    "pinyin": "piányi",
+    "en": "cheap",
+    "day": 7
+  },
+  {
+    "hanzi": "一点",
+    "pinyin": "yìdiǎn",
+    "en": "a bit",
+    "day": 7
+  },
+  {
+    "hanzi": "一点儿",
+    "pinyin": "yìdiǎnr",
+    "en": "a little",
+    "day": 13
+  },
+  {
+    "hanzi": "好吧",
+    "pinyin": "hǎo ba",
+    "en": "OK then",
+    "day": 7
+  },
+  {
+    "hanzi": "尝",
+    "pinyin": "cháng",
+    "en": "to taste",
+    "day": 8
+  },
+  {
+    "hanzi": "一下",
+    "pinyin": "yíxià",
+    "en": "a moment, once",
+    "day": 8
+  },
+  {
+    "hanzi": "尝尝",
+    "pinyin": "chángchang",
+    "en": "have a taste",
+    "day": 8
+  },
+  {
+    "hanzi": "袋子",
+    "pinyin": "dàizi",
+    "en": "bag",
+    "day": 8
+  },
+  {
+    "hanzi": "今天",
+    "pinyin": "jīntiān",
+    "en": "today",
+    "day": 9
+  },
+  {
+    "hanzi": "好",
+    "pinyin": "hǎo",
+    "en": "good; very",
+    "day": 9
+  },
+  {
+    "hanzi": "热",
+    "pinyin": "rè",
+    "en": "hot",
+    "day": 9
+  },
+  {
+    "hanzi": "是啊",
+    "pinyin": "shì a",
+    "en": "yes indeed",
+    "day": 9
+  },
+  {
+    "hanzi": "忙",
+    "pinyin": "máng",
+    "en": "busy",
+    "day": 9
+  },
+  {
+    "hanzi": "明天",
+    "pinyin": "míngtiān",
+    "en": "tomorrow",
+    "day": 10
+  },
+  {
+    "hanzi": "开",
+    "pinyin": "kāi",
+    "en": "to open; to drive",
+    "day": 10
+  },
+  {
+    "hanzi": "点",
+    "pinyin": "diǎn",
+    "en": "o'clock",
+    "day": 10
+  },
+  {
+    "hanzi": "再见",
+    "pinyin": "zàijiàn",
+    "en": "goodbye",
+    "day": 10
+  },
+  {
+    "hanzi": "慢走",
+    "pinyin": "màn zǒu",
+    "en": "take care (to someone leaving)",
+    "day": 10
+  },
+  {
+    "hanzi": "见",
+    "pinyin": "jiàn",
+    "en": "to see, to meet",
+    "day": 29
+  },
+  {
+    "hanzi": "大杯",
+    "pinyin": "dà bēi",
+    "en": "large (cup)",
+    "day": 11
+  },
+  {
+    "hanzi": "冰",
+    "pinyin": "bīng",
+    "en": "ice, iced",
+    "day": 11
+  },
+  {
+    "hanzi": "你好",
+    "pinyin": "nǐ hǎo",
+    "en": "hello",
+    "day": 12
+  },
+  {
+    "hanzi": "欢迎光临",
+    "pinyin": "huānyíng guānglín",
+    "en": "welcome (to the shop)",
+    "day": 12
+  },
+  {
+    "hanzi": "叫",
+    "pinyin": "jiào",
+    "en": "to be called; to call",
+    "day": 12
+  },
+  {
+    "hanzi": "什么",
+    "pinyin": "shénme",
+    "en": "what",
+    "day": 12
+  },
+  {
+    "hanzi": "名字",
+    "pinyin": "míngzi",
+    "en": "name",
+    "day": 12
+  },
+  {
+    "hanzi": "小代",
+    "pinyin": "Xiǎo Dài",
+    "en": "Xiao Dai (the robot)",
+    "day": 12
+  },
+  {
+    "hanzi": "哪国人",
+    "pinyin": "nǎ guó rén",
+    "en": "which nationality",
+    "day": 13
+  },
+  {
+    "hanzi": "中国人",
+    "pinyin": "Zhōngguó rén",
+    "en": "Chinese (person)",
+    "day": 13
+  },
+  {
+    "hanzi": "会",
+    "pinyin": "huì",
+    "en": "can (a skill)",
+    "day": 13
+  },
+  {
+    "hanzi": "英语",
+    "pinyin": "Yīngyǔ",
+    "en": "English",
+    "day": 13
+  },
+  {
+    "hanzi": "学生",
+    "pinyin": "xuésheng",
+    "en": "student",
+    "day": 14
+  },
+  {
+    "hanzi": "工作",
+    "pinyin": "gōngzuò",
+    "en": "to work; job",
+    "day": 14
+  },
+  {
+    "hanzi": "几",
+    "pinyin": "jǐ",
+    "en": "how many, which",
+    "day": 14
+  },
+  {
+    "hanzi": "下班",
+    "pinyin": "xiàbān",
+    "en": "to finish work",
+    "day": 14
+  },
+  {
+    "hanzi": "周末",
+    "pinyin": "zhōumò",
+    "en": "weekend",
+    "day": 15
+  },
+  {
+    "hanzi": "一起",
+    "pinyin": "yìqǐ",
+    "en": "together",
+    "day": 15
+  },
+  {
+    "hanzi": "喝",
+    "pinyin": "hē",
+    "en": "to drink",
+    "day": 15
+  },
+  {
+    "hanzi": "好啊",
+    "pinyin": "hǎo a",
+    "en": "sure!",
+    "day": 15
+  },
+  {
+    "hanzi": "微信",
+    "pinyin": "Wēixìn",
+    "en": "WeChat",
+    "day": 15
+  },
+  {
+    "hanzi": "扫",
+    "pinyin": "sǎo",
+    "en": "to scan",
+    "day": 15
+  },
+  {
+    "hanzi": "去",
+    "pinyin": "qù",
+    "en": "to go",
+    "day": 16
+  },
+  {
+    "hanzi": "哪儿",
+    "pinyin": "nǎr",
+    "en": "where",
+    "day": 16
+  },
+  {
+    "hanzi": "师傅",
+    "pinyin": "shīfu",
+    "en": "driver, master (polite)",
+    "day": 16
+  },
+  {
+    "hanzi": "远",
+    "pinyin": "yuǎn",
+    "en": "far",
+    "day": 17
+  },
+  {
+    "hanzi": "多长时间",
+    "pinyin": "duō cháng shíjiān",
+    "en": "how long (time)",
+    "day": 17
+  },
+  {
+    "hanzi": "分钟",
+    "pinyin": "fēnzhōng",
+    "en": "minute",
+    "day": 17
+  },
+  {
+    "hanzi": "前面",
+    "pinyin": "qiánmiàn",
+    "en": "ahead, in front",
+    "day": 18
+  },
+  {
+    "hanzi": "左转",
+    "pinyin": "zuǒ zhuǎn",
+    "en": "turn left",
+    "day": 18
+  },
+  {
+    "hanzi": "右转",
+    "pinyin": "yòu zhuǎn",
+    "en": "turn right",
+    "day": 18
+  },
+  {
+    "hanzi": "停",
+    "pinyin": "tíng",
+    "en": "to stop",
+    "day": 19
+  },
+  {
+    "hanzi": "到了",
+    "pinyin": "dào le",
+    "en": "we're here, arrived",
+    "day": 19
+  },
+  {
+    "hanzi": "慢",
+    "pinyin": "màn",
+    "en": "slow",
+    "day": 19
+  },
+  {
+    "hanzi": "空调",
+    "pinyin": "kōngtiáo",
+    "en": "air conditioning",
+    "day": 20
+  },
+  {
+    "hanzi": "订",
+    "pinyin": "dìng",
+    "en": "to book",
+    "day": 21
+  },
+  {
+    "hanzi": "房间",
+    "pinyin": "fángjiān",
+    "en": "room",
+    "day": 21
+  },
+  {
+    "hanzi": "看",
+    "pinyin": "kàn",
+    "en": "to look",
+    "day": 21
+  },
+  {
+    "hanzi": "护照",
+    "pinyin": "hùzhào",
+    "en": "passport",
+    "day": 21
+  },
+  {
+    "hanzi": "楼",
+    "pinyin": "lóu",
+    "en": "floor",
+    "day": 21
+  },
+  {
+    "hanzi": "到",
+    "pinyin": "dào",
+    "en": "to; until; arrive",
+    "day": 22
+  },
+  {
+    "hanzi": "坏",
+    "pinyin": "huài",
+    "en": "broken, bad",
+    "day": 23
+  },
+  {
+    "hanzi": "对不起",
+    "pinyin": "duìbuqǐ",
+    "en": "sorry",
+    "day": 23
+  },
+  {
+    "hanzi": "马上",
+    "pinyin": "mǎshàng",
+    "en": "right away",
+    "day": 23
+  },
+  {
+    "hanzi": "看看",
+    "pinyin": "kànkan",
+    "en": "have a look",
+    "day": 23
+  },
+  {
+    "hanzi": "热水",
+    "pinyin": "rè shuǐ",
+    "en": "hot water",
+    "day": 23
+  },
+  {
+    "hanzi": "条",
+    "pinyin": "tiáo",
+    "en": "measure word for long things",
+    "day": 24
+  },
+  {
+    "hanzi": "毛巾",
+    "pinyin": "máojīn",
+    "en": "towel",
+    "day": 24
+  },
+  {
+    "hanzi": "送",
+    "pinyin": "sòng",
+    "en": "to bring, deliver",
+    "day": 24
+  },
+  {
+    "hanzi": "附近",
+    "pinyin": "fùjìn",
+    "en": "nearby",
+    "day": 24
+  },
+  {
+    "hanzi": "饭馆",
+    "pinyin": "fànguǎn",
+    "en": "restaurant",
+    "day": 24
+  },
+  {
+    "hanzi": "出门",
+    "pinyin": "chūmén",
+    "en": "go out the door",
+    "day": 24
+  },
+  {
+    "hanzi": "退房",
+    "pinyin": "tuìfáng",
+    "en": "to check out",
+    "day": 25
+  },
+  {
+    "hanzi": "房卡",
+    "pinyin": "fángkǎ",
+    "en": "room card",
+    "day": 25
+  },
+  {
+    "hanzi": "帮",
+    "pinyin": "bāng",
+    "en": "to help",
+    "day": 25
+  },
+  {
+    "hanzi": "等",
+    "pinyin": "děng",
+    "en": "to wait",
+    "day": 25
+  },
+  {
+    "hanzi": "感冒",
+    "pinyin": "gǎnmào",
+    "en": "a cold; to catch a cold",
+    "day": 26
+  },
+  {
+    "hanzi": "发烧",
+    "pinyin": "fāshāo",
+    "en": "to have a fever",
+    "day": 26
+  },
+  {
+    "hanzi": "头疼",
+    "pinyin": "tóu téng",
+    "en": "headache",
+    "day": 26
+  },
+  {
+    "hanzi": "休息",
+    "pinyin": "xiūxi",
+    "en": "to rest",
+    "day": 26
+  },
+  {
+    "hanzi": "这个",
+    "pinyin": "zhège",
+    "en": "this",
+    "day": 27
+  },
+  {
+    "hanzi": "药",
+    "pinyin": "yào",
+    "en": "medicine",
+    "day": 27
+  },
+  {
+    "hanzi": "次",
+    "pinyin": "cì",
+    "en": "times",
+    "day": 27
+  },
+  {
+    "hanzi": "片",
+    "pinyin": "piàn",
+    "en": "tablet, slice",
+    "day": 27
+  },
+  {
+    "hanzi": "饭前",
+    "pinyin": "fàn qián",
+    "en": "before meals",
+    "day": 27
+  },
+  {
+    "hanzi": "饭后",
+    "pinyin": "fàn hòu",
+    "en": "after meals",
+    "day": 27
+  },
+  {
+    "hanzi": "肚子",
+    "pinyin": "dùzi",
+    "en": "belly, stomach",
+    "day": 28
+  },
+  {
+    "hanzi": "疼",
+    "pinyin": "téng",
+    "en": "to hurt",
+    "day": 28
+  },
+  {
+    "hanzi": "咳嗽",
+    "pinyin": "késou",
+    "en": "to cough",
+    "day": 28
+  },
+  {
+    "hanzi": "有空",
+    "pinyin": "yǒu kòng",
+    "en": "to be free",
+    "day": 29
+  },
+  {
+    "hanzi": "我们",
+    "pinyin": "wǒmen",
+    "en": "we",
+    "day": 29
+  },
+  {
+    "hanzi": "下午",
+    "pinyin": "xiàwǔ",
+    "en": "afternoon",
+    "day": 29
+  },
+  {
+    "hanzi": "中文",
+    "pinyin": "Zhōngwén",
+    "en": "Chinese (language)",
+    "day": 30
+  },
+  {
+    "hanzi": "哪里哪里",
+    "pinyin": "nǎli nǎli",
+    "en": "not at all (modest reply to praise)",
+    "day": 30
+  },
+  {
+    "hanzi": "祝",
+    "pinyin": "zhù",
+    "en": "to wish",
+    "day": 30
+  },
+  {
+    "hanzi": "一切",
+    "pinyin": "yíqiè",
+    "en": "everything",
+    "day": 30
+  },
+  {
+    "hanzi": "顺利",
+    "pinyin": "shùnlì",
+    "en": "smooth, going well",
+    "day": 30
+  },
+  {
+    "hanzi": "也",
+    "pinyin": "yě",
+    "en": "also",
+    "day": 30
+  }
 ]

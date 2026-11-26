@@ -12,7 +12,7 @@ export function printCondition(c: Condition): string {
 export function printAction(a: Action): string {
   switch (a.kind) {
     case '做':
-      return `${a.again ? '再 ' : ''}做 ${a.what}`;
+      return `${a.again ? '再 ' : ''}${a.verb ?? '做'} ${a.what}`;
     case '说':
       return `说 "${a.text}"`;
     case '收钱':

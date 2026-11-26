@@ -3,7 +3,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { validateContent } from './content.ts';
-import type { Content, CustomerType, Day, Pattern, Word } from './types.ts';
+import type { Content, CustomerType, Day, Pattern, Place, Word } from './types.ts';
 
 const CONTENT_DIR = new URL('../content/', import.meta.url);
 
@@ -21,6 +21,7 @@ export function loadContent(): Content {
     patterns: readJson<Pattern[]>('patterns.json'),
     customerTypes: readJson<CustomerType[]>('customers.json'),
     days: readJson<Day[]>('days.json'),
+    places: readJson<Place[]>('places.json'),
   };
   const errors = validateContent(content);
   for (const d of content.days) {

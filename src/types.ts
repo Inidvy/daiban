@@ -1,7 +1,7 @@
 // Shapes of the JSON content files in content/ (see docs/design.md, "Data model").
 
-export type SlotType = '数量' | '量词' | '东西' | '价钱';
-export const SLOT_TYPES: readonly SlotType[] = ['数量', '量词', '东西', '价钱'];
+export type SlotType = '数量' | '量词' | '东西' | '价钱' | '地方';
+export const SLOT_TYPES: readonly SlotType[] = ['数量', '量词', '东西', '价钱', '地方'];
 
 export type Spice = '辣' | '微辣' | '不辣';
 export type PayMethod = '扫码' | '现金';
@@ -32,6 +32,23 @@ export interface Pattern {
   group: string;
   speaker: 'customer' | 'bot';
   why?: string;
+  /** Usable at every place from its day on (ordering, prices, paying, thanks). Others stay at the place that taught them. */
+  general?: boolean;
+  /**
+   * Customer questions and remarks that need an answer: the bot patterns that count as one. Customers
+   * say these on their own, not as part of an order (e.g. 你叫什么名字？ → 我叫小代。).
+   */
+  reply?: string[];
+}
+
+/** A business in the city: each has its own script, goods and sentences. */
+export interface Place {
+  id: string;
+  /** Shop sign, e.g. 面馆. */
+  sign: string;
+  name: string;
+  /** Scene decoration. */
+  emoji: string;
 }
 
 export interface Dials {
@@ -58,6 +75,8 @@ export interface CustomerType {
 
 export interface Day {
   day: number;
+  /** Place id (content/places.json). */
+  place: string;
   title: string;
   twist: string;
   newPatterns: string[];
@@ -98,6 +117,7 @@ export interface Content {
   patterns: Pattern[];
   customerTypes: CustomerType[];
   days: Day[];
+  places: Place[];
 }
 
 /** One exchange in the 代班 shift: the customer speaks, the player answers with one of the expected patterns. */

@@ -1,5 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { segment } from '../src/content.ts';
+import { buildLexicon, findMatch, normalize } from '../src/matcher.ts';
 import { allLevels, isLevelOpen, levelDay, migrateDayStars, nextLevel } from '../src/levels.ts';
 import { loadContent, readSampleScript } from '../src/load-content.ts';
 import { paletteFor } from '../src/palette.ts';
@@ -71,4 +73,28 @@ test('old per-day stars carry over to that day’s levels', () => {
   assert.equal(stars['1-1'], 2);
   assert.equal(stars['1-4'], 2);
   assert.equal(stars['2-1'], undefined);
+});
+
+test('every Chinese word in sentences, shifts and day titles has pinyin', () => {
+  const texts = [
+    ...content.patterns.map((p) => p.template),
+    ...content.days.flatMap((d) => [d.title, ...d.vip.turns.flatMap((t) => [t.says, t.model])]),
+    ...content.places.map((p) => p.sign),
+  ];
+  for (const text of texts) {
+    for (const t of segment(text.replace(/\[[^\]]*\]/g, ' '), content.words)) {
+      if (/\p{Script=Han}/u.test(t.text)) assert.ok(t.word, `no pinyin for ${t.text} in ${text}`);
+    }
+  }
+});
+
+test('a question at one place never sets off another question’s rule there', () => {
+  for (const place of content.places) {
+    const asked = content.patterns.filter((p) => p.reply && content.days.find((d) => d.day === p.day)?.place === place.id);
+    for (const a of asked) {
+      for (const b of asked) {
+        if (a !== b) assert.ok(!findMatch(a.template, normalize(b.template), buildLexicon(content.words)), `${a.id} matches ${b.id}`);
+      }
+    }
+  }
 });

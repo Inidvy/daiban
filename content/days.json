@@ -1,6 +1,7 @@
 [
   {
     "day": 1,
+    "place": "noodles",
     "title": "开业 Opening day",
     "twist": "Only one dish. Learn 碗 and the numbers 1–5.",
     "newPatterns": [
@@ -103,6 +104,7 @@
   },
   {
     "day": 2,
+    "place": "noodles",
     "title": "卖完了 Sold out",
     "twist": "A dish sells out. First 如果…就… rule: check 有 before you cook.",
     "newPatterns": [
@@ -205,6 +207,7 @@
   },
   {
     "day": 3,
+    "place": "noodles",
     "title": "口味 Taste",
     "twist": "Preferences: spice and takeaway. 不然 becomes the default branch.",
     "newPatterns": [
@@ -314,6 +317,7 @@
   },
   {
     "day": 4,
+    "place": "noodles",
     "title": "付钱 Paying",
     "twist": "Customers pay by 扫码 or 现金. Bigger orders, bigger numbers.",
     "newPatterns": [
@@ -413,6 +417,7 @@
   },
   {
     "day": 5,
+    "place": "noodles",
     "title": "算了 Change of mind",
     "twist": "Customers change their minds and ask for one more. Day 1–4 patterns return.",
     "newPatterns": [
@@ -505,6 +510,2410 @@
         "newPatterns": [],
         "customers": 12,
         "maxQty": 9,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 6,
+    "place": "fruit",
+    "title": "水果店 Fruit shop",
+    "twist": "A new shop! Fruit is sold by the 斤 (jīn, half a kilo). Your noodle rules for ordering and paying work here too: start a new script.",
+    "newPatterns": [
+      "f_sweet_q",
+      "f_fresh_q",
+      "f_fresh",
+      "f_sweet"
+    ],
+    "menu": [
+      "苹果",
+      "香蕉",
+      "西瓜"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 15,
+    "sampleScript": "scripts/day6.txt",
+    "vip": {
+      "name": "李奶奶 (Grandma Li)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "新鲜吗？",
+          "en": "Is it fresh?",
+          "expect": [
+            "f_fresh"
+          ],
+          "model": "很新鲜。",
+          "modelEn": "Very fresh."
+        },
+        {
+          "says": "甜不甜？",
+          "en": "Is it sweet?",
+          "expect": [
+            "f_sweet"
+          ],
+          "model": "很甜。",
+          "modelEn": "Very sweet."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "新鲜吗 Is it fresh?",
+        "newPatterns": [
+          "f_fresh_q",
+          "f_fresh"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "甜不甜 Is it sweet?",
+        "newPatterns": [
+          "f_sweet_q",
+          "f_sweet"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 7,
+    "place": "fruit",
+    "title": "讲价 Bargaining",
+    "twist": "Customers haggle. Stay friendly and give a little.",
+    "newPatterns": [
+      "f_discount_q",
+      "f_expensive",
+      "f_cheap",
+      "f_discount"
+    ],
+    "menu": [
+      "苹果",
+      "香蕉",
+      "西瓜",
+      "葡萄"
+    ],
+    "soldOut": [
+      "西瓜"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 17,
+    "sampleScript": "scripts/day7.txt",
+    "vip": {
+      "name": "张经理 (Manager Zhang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "太贵了！",
+          "en": "Too expensive!",
+          "expect": [
+            "f_cheap"
+          ],
+          "model": "不贵，很便宜。",
+          "modelEn": "It's not expensive, it's cheap."
+        },
+        {
+          "says": "便宜一点吧。",
+          "en": "A bit cheaper, please.",
+          "expect": [
+            "f_discount"
+          ],
+          "model": "好吧，便宜一点。",
+          "modelEn": "OK, a bit cheaper."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "太贵了 Too expensive!",
+        "newPatterns": [
+          "f_expensive",
+          "f_cheap"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "便宜一点吧 A bit cheaper, please.",
+        "newPatterns": [
+          "f_discount_q",
+          "f_discount"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 8,
+    "place": "fruit",
+    "title": "尝一下 Try it",
+    "twist": "Customers want to taste first and need a bag.",
+    "newPatterns": [
+      "f_bag_q",
+      "f_taste_q",
+      "f_taste",
+      "f_bag"
+    ],
+    "menu": [
+      "苹果",
+      "香蕉",
+      "西瓜",
+      "葡萄",
+      "橙子"
+    ],
+    "soldOut": [
+      "香蕉"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 19,
+    "sampleScript": "scripts/day8.txt",
+    "vip": {
+      "name": "小陈 (Xiao Chen)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "可以尝一下吗？",
+          "en": "Can I try one?",
+          "expect": [
+            "f_taste"
+          ],
+          "model": "可以，尝尝吧。",
+          "modelEn": "Sure, have a taste."
+        },
+        {
+          "says": "有袋子吗？",
+          "en": "Do you have a bag?",
+          "expect": [
+            "f_bag"
+          ],
+          "model": "有，给你。",
+          "modelEn": "Yes, here you go."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "可以尝一下吗 Can I try one?",
+        "newPatterns": [
+          "f_taste_q",
+          "f_taste"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "有袋子吗 Do you have a bag?",
+        "newPatterns": [
+          "f_bag_q",
+          "f_bag"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 9,
+    "place": "fruit",
+    "title": "聊天 Small talk",
+    "twist": "Regulars chat about the weather and your day.",
+    "newPatterns": [
+      "f_busy_q",
+      "f_hot",
+      "f_hot_reply",
+      "f_busy"
+    ],
+    "menu": [
+      "苹果",
+      "香蕉",
+      "西瓜",
+      "葡萄",
+      "橙子",
+      "草莓"
+    ],
+    "soldOut": [
+      "葡萄"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 21,
+    "sampleScript": "scripts/day9.txt",
+    "vip": {
+      "name": "王老师 (Teacher Wang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "今天好热啊！",
+          "en": "It's so hot today!",
+          "expect": [
+            "f_hot_reply"
+          ],
+          "model": "是啊，太热了。",
+          "modelEn": "Yes, far too hot."
+        },
+        {
+          "says": "你忙吗？",
+          "en": "Are you busy?",
+          "expect": [
+            "f_busy"
+          ],
+          "model": "不忙。",
+          "modelEn": "Not busy."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "今天好热啊 It's so hot today!",
+        "newPatterns": [
+          "f_hot",
+          "f_hot_reply"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "你忙吗 Are you busy?",
+        "newPatterns": [
+          "f_busy_q",
+          "f_busy"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 10,
+    "place": "fruit",
+    "title": "明天见 See you tomorrow",
+    "twist": "Opening hours and goodbyes. Everything from this week comes back.",
+    "newPatterns": [
+      "f_bye",
+      "f_open_q",
+      "f_open",
+      "f_bye_reply"
+    ],
+    "menu": [
+      "苹果",
+      "香蕉",
+      "西瓜",
+      "葡萄",
+      "橙子",
+      "草莓"
+    ],
+    "soldOut": [
+      "草莓"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 23,
+    "sampleScript": "scripts/day10.txt",
+    "vip": {
+      "name": "李奶奶 (Grandma Li)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "明天开门吗？",
+          "en": "Are you open tomorrow?",
+          "expect": [
+            "f_open"
+          ],
+          "model": "开，早上八点开门。",
+          "modelEn": "Yes, we open at 8 am."
+        },
+        {
+          "says": "再见！",
+          "en": "Goodbye!",
+          "expect": [
+            "f_bye_reply"
+          ],
+          "model": "再见，慢走！",
+          "modelEn": "Bye, take care!"
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "明天开门吗 Are you open tomorrow?",
+        "newPatterns": [
+          "f_open_q",
+          "f_open"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "再见 Goodbye!",
+        "newPatterns": [
+          "f_bye",
+          "f_bye_reply"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "最后的高峰 Final rush",
+        "newPatterns": [],
+        "customers": 12,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 11,
+    "place": "cafe",
+    "title": "咖啡馆 Café",
+    "twist": "A new café, a new script. Drinks come by the 杯 (cup). Customers say how they want them.",
+    "newPatterns": [
+      "c_iced",
+      "c_large",
+      "c_large_ok",
+      "c_iced_ok"
+    ],
+    "menu": [
+      "咖啡",
+      "奶茶",
+      "果汁"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 15,
+    "sampleScript": "scripts/day11.txt",
+    "vip": {
+      "name": "小陈 (Xiao Chen)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "要大杯的。",
+          "en": "A large one.",
+          "expect": [
+            "c_large_ok"
+          ],
+          "model": "好的，大杯。",
+          "modelEn": "OK, large."
+        },
+        {
+          "says": "要冰的。",
+          "en": "Iced, please.",
+          "expect": [
+            "c_iced_ok"
+          ],
+          "model": "好的，冰的。",
+          "modelEn": "OK, iced."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "要大杯的 A large one.",
+        "newPatterns": [
+          "c_large",
+          "c_large_ok"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "要冰的 Iced, please.",
+        "newPatterns": [
+          "c_iced",
+          "c_iced_ok"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 12,
+    "place": "cafe",
+    "title": "认识你 Meeting people",
+    "twist": "Customers say hello and ask your name. The robot is called 小代 (Xiǎo Dài).",
+    "newPatterns": [
+      "c_name_q",
+      "c_hello",
+      "c_hello_reply",
+      "c_name"
+    ],
+    "menu": [
+      "咖啡",
+      "奶茶",
+      "果汁",
+      "茶"
+    ],
+    "soldOut": [
+      "茶"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 17,
+    "sampleScript": "scripts/day12.txt",
+    "vip": {
+      "name": "王老师 (Teacher Wang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "你好！",
+          "en": "Hello!",
+          "expect": [
+            "c_hello_reply"
+          ],
+          "model": "你好！欢迎光临！",
+          "modelEn": "Hello! Welcome!"
+        },
+        {
+          "says": "你叫什么名字？",
+          "en": "What's your name?",
+          "expect": [
+            "c_name"
+          ],
+          "model": "我叫小代。",
+          "modelEn": "I'm Xiao Dai."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "你好 Hello!",
+        "newPatterns": [
+          "c_hello",
+          "c_hello_reply"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "你叫什么名字 What's your name?",
+        "newPatterns": [
+          "c_name_q",
+          "c_name"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 13,
+    "place": "cafe",
+    "title": "哪国人 Where are you from?",
+    "twist": "Where people are from, and what languages they speak.",
+    "newPatterns": [
+      "c_english_q",
+      "c_country_q",
+      "c_country",
+      "c_english"
+    ],
+    "menu": [
+      "咖啡",
+      "奶茶",
+      "果汁",
+      "茶",
+      "蛋糕"
+    ],
+    "soldOut": [
+      "果汁"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 19,
+    "sampleScript": "scripts/day13.txt",
+    "vip": {
+      "name": "张经理 (Manager Zhang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "你是哪国人？",
+          "en": "Where are you from?",
+          "expect": [
+            "c_country"
+          ],
+          "model": "我是中国人。",
+          "modelEn": "I'm Chinese."
+        },
+        {
+          "says": "你会说英语吗？",
+          "en": "Do you speak English?",
+          "expect": [
+            "c_english"
+          ],
+          "model": "会一点儿。",
+          "modelEn": "A little."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "你是哪国人 Where are you from?",
+        "newPatterns": [
+          "c_country_q",
+          "c_country"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "你会说英语吗 Do you speak English?",
+        "newPatterns": [
+          "c_english_q",
+          "c_english"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 14,
+    "place": "cafe",
+    "title": "工作 Work and study",
+    "twist": "Customers ask about your job and your hours.",
+    "newPatterns": [
+      "c_off_q",
+      "c_student_q",
+      "c_student",
+      "c_off"
+    ],
+    "menu": [
+      "咖啡",
+      "奶茶",
+      "果汁",
+      "茶",
+      "蛋糕",
+      "水"
+    ],
+    "soldOut": [
+      "奶茶"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 21,
+    "sampleScript": "scripts/day14.txt",
+    "vip": {
+      "name": "李奶奶 (Grandma Li)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "你是学生吗？",
+          "en": "Are you a student?",
+          "expect": [
+            "c_student"
+          ],
+          "model": "不是，我在这儿工作。",
+          "modelEn": "No, I work here."
+        },
+        {
+          "says": "你几点下班？",
+          "en": "When do you finish work?",
+          "expect": [
+            "c_off"
+          ],
+          "model": "晚上六点下班。",
+          "modelEn": "At 6 in the evening."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "你是学生吗 Are you a student?",
+        "newPatterns": [
+          "c_student_q",
+          "c_student"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "你几点下班 When do you finish work?",
+        "newPatterns": [
+          "c_off_q",
+          "c_off"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 15,
+    "place": "cafe",
+    "title": "周末 Weekend plans",
+    "twist": "Regulars want to meet up. Everything from this week comes back.",
+    "newPatterns": [
+      "c_wechat_q",
+      "c_weekend",
+      "c_weekend_reply",
+      "c_wechat"
+    ],
+    "menu": [
+      "咖啡",
+      "奶茶",
+      "果汁",
+      "茶",
+      "蛋糕",
+      "水"
+    ],
+    "soldOut": [
+      "蛋糕"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 23,
+    "sampleScript": "scripts/day15.txt",
+    "vip": {
+      "name": "小陈 (Xiao Chen)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "周末一起喝咖啡吧！",
+          "en": "Let's have coffee this weekend!",
+          "expect": [
+            "c_weekend_reply"
+          ],
+          "model": "好啊！",
+          "modelEn": "Sure!"
+        },
+        {
+          "says": "你的微信是多少？",
+          "en": "What's your WeChat?",
+          "expect": [
+            "c_wechat"
+          ],
+          "model": "我扫你吧。",
+          "modelEn": "I'll scan yours."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "周末一起喝咖啡吧 Let's have coffee this weekend!",
+        "newPatterns": [
+          "c_weekend",
+          "c_weekend_reply"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "你的微信是多少 What's your WeChat?",
+        "newPatterns": [
+          "c_wechat_q",
+          "c_wechat"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "最后的高峰 Final rush",
+        "newPatterns": [],
+        "customers": 12,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 16,
+    "place": "taxi",
+    "title": "出租车 Taxi",
+    "twist": "Now you drive a taxi. Passengers order nothing: they tell you where to go. [地方] is a new slot for places.",
+    "newPatterns": [
+      "t_hello",
+      "t_go",
+      "t_go_ok",
+      "t_where"
+    ],
+    "menu": [
+      "机场",
+      "火车站",
+      "大学"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 5,
+    "sampleScript": "scripts/day16.txt",
+    "vip": {
+      "name": "张经理 (Manager Zhang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "我去机场。",
+          "en": "I'm going to the airport.",
+          "expect": [
+            "t_go_ok"
+          ],
+          "model": "好的，去机场。",
+          "modelEn": "OK, to the airport."
+        },
+        {
+          "says": "师傅，你好！",
+          "en": "Hello, driver!",
+          "expect": [
+            "t_where"
+          ],
+          "model": "你好！去哪儿？",
+          "modelEn": "Hello! Where to?"
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "我去… I'm going to…",
+        "newPatterns": [
+          "t_go",
+          "t_go_ok"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "师傅，你好 Hello, driver!",
+        "newPatterns": [
+          "t_hello",
+          "t_where"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 17,
+    "place": "taxi",
+    "title": "远吗 Is it far?",
+    "twist": "Passengers ask how far and how long.",
+    "newPatterns": [
+      "t_time_q",
+      "t_far_q",
+      "t_far",
+      "t_time"
+    ],
+    "menu": [
+      "机场",
+      "火车站",
+      "大学",
+      "医院"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 7,
+    "sampleScript": "scripts/day17.txt",
+    "vip": {
+      "name": "王老师 (Teacher Wang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "远吗？",
+          "en": "Is it far?",
+          "expect": [
+            "t_far"
+          ],
+          "model": "不远。",
+          "modelEn": "Not far."
+        },
+        {
+          "says": "要多长时间？",
+          "en": "How long will it take?",
+          "expect": [
+            "t_time"
+          ],
+          "model": "二十分钟。",
+          "modelEn": "Twenty minutes."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "远吗 Is it far?",
+        "newPatterns": [
+          "t_far_q",
+          "t_far"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "要多长时间 How long will it take?",
+        "newPatterns": [
+          "t_time_q",
+          "t_time"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 18,
+    "place": "taxi",
+    "title": "左转右转 Directions",
+    "twist": "Passengers give directions on the way.",
+    "newPatterns": [
+      "t_right",
+      "t_left",
+      "t_left_ok",
+      "t_right_ok"
+    ],
+    "menu": [
+      "机场",
+      "火车站",
+      "大学",
+      "医院",
+      "酒店"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 9,
+    "sampleScript": "scripts/day18.txt",
+    "vip": {
+      "name": "小陈 (Xiao Chen)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "前面左转。",
+          "en": "Turn left ahead.",
+          "expect": [
+            "t_left_ok"
+          ],
+          "model": "好的，左转。",
+          "modelEn": "OK, left."
+        },
+        {
+          "says": "前面右转。",
+          "en": "Turn right ahead.",
+          "expect": [
+            "t_right_ok"
+          ],
+          "model": "好的，右转。",
+          "modelEn": "OK, right."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "前面左转 Turn left ahead.",
+        "newPatterns": [
+          "t_left",
+          "t_left_ok"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "前面右转 Turn right ahead.",
+        "newPatterns": [
+          "t_right",
+          "t_right_ok"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 19,
+    "place": "taxi",
+    "title": "停车 Stopping",
+    "twist": "Where to stop, and nervous passengers.",
+    "newPatterns": [
+      "t_slow",
+      "t_stop",
+      "t_stop_ok",
+      "t_slow_ok"
+    ],
+    "menu": [
+      "机场",
+      "火车站",
+      "大学",
+      "医院",
+      "酒店",
+      "公园"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 11,
+    "sampleScript": "scripts/day19.txt",
+    "vip": {
+      "name": "李奶奶 (Grandma Li)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "在这儿停吧。",
+          "en": "Stop here, please.",
+          "expect": [
+            "t_stop_ok"
+          ],
+          "model": "好的，到了。",
+          "modelEn": "OK, we're here."
+        },
+        {
+          "says": "开慢一点儿！",
+          "en": "Drive a bit slower!",
+          "expect": [
+            "t_slow_ok"
+          ],
+          "model": "好的，慢一点儿。",
+          "modelEn": "OK, slower."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "在这儿停吧 Stop here, please.",
+        "newPatterns": [
+          "t_stop",
+          "t_stop_ok"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "开慢一点儿 Drive a bit slower!",
+        "newPatterns": [
+          "t_slow",
+          "t_slow_ok"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 20,
+    "place": "taxi",
+    "title": "到了 Arriving",
+    "twist": "Are we there yet? Everything from this week comes back.",
+    "newPatterns": [
+      "t_ac_q",
+      "t_there_q",
+      "t_almost",
+      "t_ac"
+    ],
+    "menu": [
+      "机场",
+      "火车站",
+      "大学",
+      "医院",
+      "酒店",
+      "公园"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 13,
+    "sampleScript": "scripts/day20.txt",
+    "vip": {
+      "name": "张经理 (Manager Zhang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "到了吗？",
+          "en": "Are we there yet?",
+          "expect": [
+            "t_almost"
+          ],
+          "model": "快到了。",
+          "modelEn": "Almost there."
+        },
+        {
+          "says": "可以开空调吗？",
+          "en": "Can you turn on the AC?",
+          "expect": [
+            "t_ac"
+          ],
+          "model": "可以。",
+          "modelEn": "Sure."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "到了吗 Are we there yet?",
+        "newPatterns": [
+          "t_there_q",
+          "t_almost"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "可以开空调吗 Can you turn on the AC?",
+        "newPatterns": [
+          "t_ac_q",
+          "t_ac"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "最后的高峰 Final rush",
+        "newPatterns": [],
+        "customers": 12,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 21,
+    "place": "hotel",
+    "title": "酒店 Hotel check-in",
+    "twist": "You run a hotel front desk. Rooms come by the 间 (jiān).",
+    "newPatterns": [
+      "h_floor_q",
+      "h_booked",
+      "h_passport",
+      "h_floor"
+    ],
+    "menu": [
+      "单人间",
+      "双人间"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 15,
+    "sampleScript": "scripts/day21.txt",
+    "vip": {
+      "name": "王老师 (Teacher Wang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "我订了房间。",
+          "en": "I booked a room.",
+          "expect": [
+            "h_passport"
+          ],
+          "model": "请给我看一下护照。",
+          "modelEn": "Please show me your passport."
+        },
+        {
+          "says": "几楼？",
+          "en": "Which floor?",
+          "expect": [
+            "h_floor"
+          ],
+          "model": "五楼。",
+          "modelEn": "The fifth floor."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "我订了房间 I booked a room.",
+        "newPatterns": [
+          "h_booked",
+          "h_passport"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "几楼 Which floor?",
+        "newPatterns": [
+          "h_floor_q",
+          "h_floor"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 22,
+    "place": "hotel",
+    "title": "早饭 Breakfast",
+    "twist": "Guests ask about breakfast.",
+    "newPatterns": [
+      "h_where_q",
+      "h_breakfast_q",
+      "h_breakfast",
+      "h_where"
+    ],
+    "menu": [
+      "单人间",
+      "双人间",
+      "早饭"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 17,
+    "sampleScript": "scripts/day22.txt",
+    "vip": {
+      "name": "小陈 (Xiao Chen)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "早饭几点？",
+          "en": "What time is breakfast?",
+          "expect": [
+            "h_breakfast"
+          ],
+          "model": "早上七点到九点。",
+          "modelEn": "From 7 to 9 am."
+        },
+        {
+          "says": "早饭在哪儿？",
+          "en": "Where is breakfast?",
+          "expect": [
+            "h_where"
+          ],
+          "model": "在二楼。",
+          "modelEn": "On the second floor."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "早饭几点 What time is breakfast?",
+        "newPatterns": [
+          "h_breakfast_q",
+          "h_breakfast"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "早饭在哪儿 Where is breakfast?",
+        "newPatterns": [
+          "h_where_q",
+          "h_where"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 23,
+    "place": "hotel",
+    "title": "坏了 Problems",
+    "twist": "Things break. Say sorry and go and look.",
+    "newPatterns": [
+      "h_water",
+      "h_ac",
+      "h_fix"
+    ],
+    "menu": [
+      "单人间",
+      "双人间",
+      "早饭"
+    ],
+    "soldOut": [
+      "单人间"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 19,
+    "sampleScript": "scripts/day23.txt",
+    "vip": {
+      "name": "李奶奶 (Grandma Li)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "空调坏了。",
+          "en": "The AC is broken.",
+          "expect": [
+            "h_fix"
+          ],
+          "model": "对不起，我马上去看看。",
+          "modelEn": "Sorry, I'll come and look right away."
+        },
+        {
+          "says": "没有热水。",
+          "en": "There's no hot water.",
+          "expect": [
+            "h_fix"
+          ],
+          "model": "对不起，我马上去看看。",
+          "modelEn": "Sorry, I'll come and look right away."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "空调坏了 The AC is broken.",
+        "newPatterns": [
+          "h_ac",
+          "h_fix"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "没有热水 There's no hot water.",
+        "newPatterns": [
+          "h_water"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 24,
+    "place": "hotel",
+    "title": "服务 Service",
+    "twist": "Guests need things and ask for tips nearby.",
+    "newPatterns": [
+      "h_food_q",
+      "h_towel_q",
+      "h_towel",
+      "h_food"
+    ],
+    "menu": [
+      "单人间",
+      "双人间",
+      "早饭"
+    ],
+    "soldOut": [
+      "双人间"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 21,
+    "sampleScript": "scripts/day24.txt",
+    "vip": {
+      "name": "张经理 (Manager Zhang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "可以多给我一条毛巾吗？",
+          "en": "Could I have an extra towel?",
+          "expect": [
+            "h_towel"
+          ],
+          "model": "可以，马上给您送。",
+          "modelEn": "Sure, I'll bring it right away."
+        },
+        {
+          "says": "附近有饭馆吗？",
+          "en": "Is there a restaurant nearby?",
+          "expect": [
+            "h_food"
+          ],
+          "model": "有，出门右转。",
+          "modelEn": "Yes, turn right out the door."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "可以多给我一条毛巾吗 Could I have an extra towel?",
+        "newPatterns": [
+          "h_towel_q",
+          "h_towel"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "附近有饭馆吗 Is there a restaurant nearby?",
+        "newPatterns": [
+          "h_food_q",
+          "h_food"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 25,
+    "place": "hotel",
+    "title": "退房 Check-out",
+    "twist": "Guests leave. Everything from this week comes back.",
+    "newPatterns": [
+      "h_taxi_q",
+      "h_checkout",
+      "h_card",
+      "h_wait"
+    ],
+    "menu": [
+      "单人间",
+      "双人间",
+      "早饭"
+    ],
+    "soldOut": [
+      "单人间"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 23,
+    "sampleScript": "scripts/day25.txt",
+    "vip": {
+      "name": "小陈 (Xiao Chen)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "我要退房。",
+          "en": "I'd like to check out.",
+          "expect": [
+            "h_card"
+          ],
+          "model": "好的，请给我房卡。",
+          "modelEn": "OK, the room card please."
+        },
+        {
+          "says": "可以帮我叫出租车吗？",
+          "en": "Can you call me a taxi?",
+          "expect": [
+            "h_wait"
+          ],
+          "model": "可以，请等一下。",
+          "modelEn": "Sure, please wait a moment."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "我要退房 I'd like to check out.",
+        "newPatterns": [
+          "h_checkout",
+          "h_card"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "可以帮我叫出租车吗 Can you call me a taxi?",
+        "newPatterns": [
+          "h_taxi_q",
+          "h_wait"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "最后的高峰 Final rush",
+        "newPatterns": [],
+        "customers": 12,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 26,
+    "place": "pharmacy",
+    "title": "药店 Pharmacy",
+    "twist": "Last place: a pharmacy. People tell you what hurts.",
+    "newPatterns": [
+      "m_head",
+      "m_cold",
+      "m_fever_q",
+      "m_rest"
+    ],
+    "menu": [
+      "感冒药",
+      "创可贴"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 15,
+    "sampleScript": "scripts/day26.txt",
+    "vip": {
+      "name": "李奶奶 (Grandma Li)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "我感冒了。",
+          "en": "I have a cold.",
+          "expect": [
+            "m_fever_q"
+          ],
+          "model": "你发烧吗？",
+          "modelEn": "Do you have a fever?"
+        },
+        {
+          "says": "我头疼。",
+          "en": "I have a headache.",
+          "expect": [
+            "m_rest"
+          ],
+          "model": "多喝水，多休息。",
+          "modelEn": "Drink lots of water and rest."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "我感冒了 I have a cold.",
+        "newPatterns": [
+          "m_cold",
+          "m_fever_q"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "我头疼 I have a headache.",
+        "newPatterns": [
+          "m_head",
+          "m_rest"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 27,
+    "place": "pharmacy",
+    "title": "吃药 Taking medicine",
+    "twist": "How and when to take medicine.",
+    "newPatterns": [
+      "m_meal_q",
+      "m_how_q",
+      "m_how",
+      "m_meal"
+    ],
+    "menu": [
+      "感冒药",
+      "创可贴",
+      "口罩"
+    ],
+    "soldOut": [],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 17,
+    "sampleScript": "scripts/day27.txt",
+    "vip": {
+      "name": "王老师 (Teacher Wang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "这个药怎么吃？",
+          "en": "How do I take this medicine?",
+          "expect": [
+            "m_how"
+          ],
+          "model": "一天三次，一次两片。",
+          "modelEn": "Three times a day, two tablets each time."
+        },
+        {
+          "says": "饭前吃还是饭后吃？",
+          "en": "Before or after meals?",
+          "expect": [
+            "m_meal"
+          ],
+          "model": "饭后吃。",
+          "modelEn": "After meals."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "这个药怎么吃 How do I take this medicine?",
+        "newPatterns": [
+          "m_how_q",
+          "m_how"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "饭前吃还是饭后吃 Before or after meals?",
+        "newPatterns": [
+          "m_meal_q",
+          "m_meal"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 28,
+    "place": "pharmacy",
+    "title": "不舒服 Feeling ill",
+    "twist": "More aches, more advice.",
+    "newPatterns": [
+      "m_cough",
+      "m_stomach",
+      "m_ate_q",
+      "m_hot_water"
+    ],
+    "menu": [
+      "感冒药",
+      "创可贴",
+      "口罩",
+      "水"
+    ],
+    "soldOut": [
+      "口罩"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 19,
+    "sampleScript": "scripts/day28.txt",
+    "vip": {
+      "name": "张经理 (Manager Zhang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "我肚子疼。",
+          "en": "My stomach hurts.",
+          "expect": [
+            "m_ate_q"
+          ],
+          "model": "你吃什么了？",
+          "modelEn": "What did you eat?"
+        },
+        {
+          "says": "我咳嗽。",
+          "en": "I'm coughing.",
+          "expect": [
+            "m_hot_water"
+          ],
+          "model": "多喝热水。",
+          "modelEn": "Drink lots of hot water."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "我肚子疼 My stomach hurts.",
+        "newPatterns": [
+          "m_stomach",
+          "m_ate_q"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "我咳嗽 I'm coughing.",
+        "newPatterns": [
+          "m_cough",
+          "m_hot_water"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 29,
+    "place": "pharmacy",
+    "title": "约时间 Making plans",
+    "twist": "A friend drops by to make plans.",
+    "newPatterns": [
+      "m_meet_q",
+      "m_free_q",
+      "m_free",
+      "m_meet"
+    ],
+    "menu": [
+      "感冒药",
+      "创可贴",
+      "口罩",
+      "水"
+    ],
+    "soldOut": [
+      "创可贴"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 21,
+    "sampleScript": "scripts/day29.txt",
+    "vip": {
+      "name": "小陈 (Xiao Chen)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "明天你有空吗？",
+          "en": "Are you free tomorrow?",
+          "expect": [
+            "m_free"
+          ],
+          "model": "有空。",
+          "modelEn": "I'm free."
+        },
+        {
+          "says": "我们几点见？",
+          "en": "What time shall we meet?",
+          "expect": [
+            "m_meet"
+          ],
+          "model": "下午三点吧。",
+          "modelEn": "Let's say 3 pm."
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "明天你有空吗 Are you free tomorrow?",
+        "newPatterns": [
+          "m_free_q",
+          "m_free"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "我们几点见 What time shall we meet?",
+        "newPatterns": [
+          "m_meet_q",
+          "m_meet"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "高峰 Peak",
+        "newPatterns": [],
+        "customers": 9,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
+  },
+  {
+    "day": 30,
+    "place": "pharmacy",
+    "title": "毕业 Graduation",
+    "twist": "Day 30! Everyone you met comes back to say goodbye.",
+    "newPatterns": [
+      "m_luck",
+      "m_good",
+      "m_modest",
+      "m_you_too"
+    ],
+    "menu": [
+      "感冒药",
+      "创可贴",
+      "口罩",
+      "水"
+    ],
+    "soldOut": [
+      "感冒药"
+    ],
+    "maxQty": 5,
+    "customerTypes": [
+      "student",
+      "office",
+      "grandma",
+      "tourist"
+    ],
+    "starThresholds": [
+      0.6,
+      0.8,
+      0.95
+    ],
+    "targetRules": 23,
+    "sampleScript": "scripts/day30.txt",
+    "vip": {
+      "name": "王老师 (Teacher Wang)",
+      "situation": "A regular who wants to talk to you, not the robot.",
+      "turns": [
+        {
+          "says": "你的中文很好！",
+          "en": "Your Chinese is very good!",
+          "expect": [
+            "m_modest"
+          ],
+          "model": "哪里哪里，谢谢！",
+          "modelEn": "Not at all, thank you!"
+        },
+        {
+          "says": "祝你一切顺利！",
+          "en": "All the best!",
+          "expect": [
+            "m_you_too"
+          ],
+          "model": "谢谢，你也是！",
+          "modelEn": "Thanks, you too!"
+        },
+        {
+          "says": "谢谢！",
+          "en": "Thank you!",
+          "expect": [
+            "p_welcome"
+          ],
+          "model": "不客气。",
+          "modelEn": "You're welcome."
+        }
+      ]
+    },
+    "levels": [
+      {
+        "title": "你的中文很好 Your Chinese is very good!",
+        "newPatterns": [
+          "m_good",
+          "m_modest"
+        ],
+        "customers": 4,
+        "maxQty": 2,
+        "heat": 0.2
+      },
+      {
+        "title": "祝你一切顺利 All the best!",
+        "newPatterns": [
+          "m_luck",
+          "m_you_too"
+        ],
+        "customers": 6,
+        "maxQty": 3,
+        "heat": 0.5
+      },
+      {
+        "title": "最后的高峰 Final rush",
+        "newPatterns": [],
+        "customers": 12,
+        "maxQty": 5,
         "heat": 1
       }
     ]

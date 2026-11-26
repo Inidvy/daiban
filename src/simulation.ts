@@ -3,8 +3,8 @@
 
 import { inStock, newBotState, runTurn } from './interpreter.ts';
 import type { BotState, Kitchen, MadeItem } from './interpreter.ts';
-import { kitchenFor, toPinyin } from './content.ts';
-import { normalize } from './matcher.ts';
+import { kitchenFor, openPatterns, toPinyin } from './content.ts';
+import { findMatch, normalize } from './matcher.ts';
 import { priceWord, quantityWord } from './numbers.ts';
 import { chance, createRng, pick } from './rng.ts';
 import type { Rng } from './rng.ts';
@@ -39,6 +39,8 @@ export interface Customer {
   asksPrice: boolean;
   pay: PayMethod | null;
   changedMind: boolean;
+  /** False for customers who only talk (a taxi passenger orders nothing). */
+  orders: boolean;
   queue: Utterance[];
   /** Said only after the bot says 没有了 (their first choice is sold out). */
   afterSoldOut: Utterance[] | null;
@@ -52,7 +54,7 @@ export interface Turn {
 /** What went wrong, so the scene can play the matching reaction. */
 export type FailureKind =
   | 'ignored' | 'confused' | 'stuck' | 'false-sold-out' | 'made-sold-out' | 'nothing' | 'wrong-dish'
-  | 'too-much' | 'too-little' | 'spice' | 'takeaway' | 'price' | 'pay';
+  | 'too-much' | 'too-little' | 'spice' | 'takeaway' | 'price' | 'pay' | 'no-answer';
 
 export interface Failure {
   kind: FailureKind;
@@ -119,7 +121,7 @@ class CustomerFactory {
     this.kitchen = kitchen;
     this.rng = rng;
     this.patterns = new Map(content.patterns.map((p) => [p.id, p]));
-    this.allowed = new Set(day.allowed ?? content.patterns.filter((p) => p.day <= day.day).map((p) => p.id));
+    this.allowed = new Set(day.allowed ?? openPatterns(content, day));
   }
 
   /** Customers only say what the level has opened (src/levels.ts). */
@@ -168,15 +170,44 @@ class CustomerFactory {
     });
   }
 
+  /** A question or remark that needs an answer (pattern.reply), with any [东西]/[地方] slot filled. */
+  private exchange(id: string, politeness: number): Utterance {
+    const p = this.patterns.get(id)!;
+    const fills: Partial<Record<SlotType, string>> = {};
+    const text = p.template.replace(/\[([^\]]*)\]/g, (_, slot: SlotType) => {
+      const options = slot === '东西' ? this.goods() : this.day.menu.filter((m) => this.content.words.find((w) => w.hanzi === m)?.slot === slot);
+      const pickd = options.length ? pick(this.rng, options) : slot;
+      fills[slot] = this.content.words.find((w) => w.hanzi === pickd)?.en ?? pickd;
+      return pickd;
+    });
+    const polite = text.endsWith('？') && chance(this.rng, politeness * 0.5);
+    return this.say([this.part(id, (polite ? '请问，' : '') + text.replace(/\s+/g, ''), fills)]);
+  }
+
+  /** Goods on the menu that are in stock (a taxi has none). */
+  private goods(): string[] {
+    return this.day.menu.filter((dish) => this.kitchen.dishes.has(dish) && inStock(this.kitchen, dish));
+  }
+
   create(id: number): Customer {
     const { rng, day, kitchen } = this;
     const type = this.heated(pick(rng, day.customerTypes.map((t) => this.content.customerTypes.find((c) => c.id === t)!)));
     const d = type.dials;
-    const available = day.menu.filter((dish) => inStock(kitchen, dish));
+    const available = this.goods();
+    const orders = available.length > 0 && this.has('p_order');
+    // Questions and remarks open here; this day's new ones come up more often.
+    const exchanges = [...this.allowed].filter((p) => this.patterns.get(p)?.reply);
+    const fresh = exchanges.filter((p) => day.newPatterns.includes(p));
+    const chats: Utterance[] = [];
+    const chatCount = exchanges.length === 0 ? 0 : orders ? (chance(rng, 0.6) ? 1 : 0) : 1 + (chance(rng, 0.5) ? 1 : 0);
+    for (let i = 0; i < chatCount; i++) {
+      const id = fresh.length && chance(rng, 0.6) ? pick(rng, fresh) : pick(rng, exchanges);
+      if (!chats.some((u) => u.patternIds.includes(id))) chats.push(this.exchange(id, d.politeness));
+    }
 
-    const soldOutFirst = day.soldOut.length > 0 && this.has('p_sold_out') && chance(rng, 0.35);
-    const firstChoice = soldOutFirst ? pick(rng, day.soldOut) : pick(rng, available);
-    const dish = soldOutFirst ? pick(rng, available) : firstChoice;
+    const soldOutFirst = orders && day.soldOut.length > 0 && this.has('p_sold_out') && chance(rng, 0.35);
+    const firstChoice = !orders ? '' : soldOutFirst ? pick(rng, day.soldOut) : pick(rng, available);
+    const dish = !orders ? '' : soldOutFirst ? pick(rng, available) : firstChoice;
     const qty = 1 + Math.floor(rng() * day.maxQty);
 
     let spice: Spice = '辣';
@@ -185,25 +216,27 @@ class CustomerFactory {
       spice = r < 0.3 ? '不辣' : r < 0.5 ? '微辣' : '辣';
     }
     let takeaway: boolean | null = null;
-    const canTakeaway = this.has('p_takeaway', 'p_eat_here');
+    const canTakeaway = orders && this.has('p_takeaway', 'p_eat_here');
     // Customers wait to be asked "here or to go?" only once the shop can ask it.
     const canAsk = canTakeaway && this.has('p_here_or_go');
     if (canTakeaway) {
       const r = rng();
       takeaway = r < 0.3 ? true : r < 0.6 || !canAsk ? false : null;
     }
-    const asksStock = this.has('p_have_q') && chance(rng, soldOutFirst ? 0.5 : 0.3);
-    const asksPrice = this.has('p_price_q') && chance(rng, 0.5);
+    const asksStock = orders && this.has('p_have_q') && chance(rng, soldOutFirst ? 0.5 : 0.3);
+    const asksPrice = orders && this.has('p_price_q') && chance(rng, 0.5);
     const pay: PayMethod | null = this.has('p_scan', 'p_cash') ? (chance(rng, 0.5) ? '扫码' : '现金') : null;
-    const changedMind = this.has('p_change') && available.length > 1 && chance(rng, d.mindChange * 0.5);
-    const again = this.has('p_again') && chance(rng, 0.3);
+    const changedMind = orders && this.has('p_change') && available.length > 1 && chance(rng, d.mindChange * 0.5);
+    const again = orders && this.has('p_again') && chance(rng, 0.3);
     const thanks = this.has('p_thanks') && chance(rng, 0.5);
     const verb = this.has('p_bring') && chance(rng, Math.max(d.variation, 0.3)) ? 'p_bring' : 'p_order';
 
     const polite = (options: string[]): Part[] => (chance(rng, d.politeness) ? [this.word(pick(rng, options))] : []);
 
     const orderParts = polite(['老板', '麻烦你']);
-    if (changedMind) {
+    if (!orders) {
+      // nothing to order: they only talk (and maybe pay and say thanks)
+    } else if (changedMind) {
       const other = pick(rng, available.filter((x) => x !== dish));
       orderParts.push(this.order(verb, 1 + Math.floor(rng() * day.maxQty), other), this.order('p_change', qty, dish));
     } else {
@@ -238,14 +271,17 @@ class CustomerFactory {
         }),
       ]);
 
-    const order = this.say(orderParts);
+    // A chat comes before the order (a greeting, a question) or after it, at random.
+    const before = chats.filter(() => chance(rng, 0.5));
+    const after = chats.filter((u) => !before.includes(u));
+    const order = orders ? [this.say(orderParts)] : [];
     let queue: Utterance[];
     let afterSoldOut: Utterance[] | null = null;
     if (soldOutFirst) {
-      queue = [asksStock ? askStock(firstChoice) : this.say([...polite(['老板']), this.order(verb, qty, firstChoice)])];
-      afterSoldOut = [order, ...extras];
+      queue = [...before, asksStock ? askStock(firstChoice) : this.say([...polite(['老板']), this.order(verb, qty, firstChoice)])];
+      afterSoldOut = [...order, ...after, ...extras];
     } else {
-      queue = [...(asksStock ? [askStock(firstChoice)] : []), order, ...extras];
+      queue = [...before, ...(asksStock ? [askStock(firstChoice)] : []), ...order, ...after, ...extras];
     }
 
     let takeawayAnswer: Customer['takeawayAnswer'] = null;
@@ -267,6 +303,7 @@ class CustomerFactory {
       asksPrice,
       pay,
       changedMind,
+      orders,
       queue,
       afterSoldOut,
     };
@@ -291,7 +328,37 @@ function findUtterance(c: Customer, patternId: string): Utterance | undefined {
   return allUtterances(c).find((u) => u.patternIds.includes(patternId));
 }
 
-export function serveCustomer(script: Script, customer: Customer, kitchen: Kitchen): CustomerResult {
+/**
+ * Questions and remarks (pattern.reply) the bot heard but answered wrongly. One it didn't hear at all is
+ * already an 'ignored' failure.
+ */
+function unanswered(steps: readonly Step[], kitchen: Kitchen, patterns: ReadonlyMap<string, Pattern>): Failure[] {
+  const out: Failure[] = [];
+  for (const step of steps) {
+    if (!step.heard) continue;
+    const said = normalize(step.said.join(''));
+    for (const id of step.utterance.patternIds) {
+      const p = patterns.get(id);
+      if (!p?.reply) continue;
+      // The answer may echo a slot: 我去机场 → 好的，去机场.
+      const bindings = findMatch(p.template, step.utterance.text, kitchen.lexicon)?.bindings ?? {};
+      const answers = p.reply.map((r) =>
+        normalize((patterns.get(r)?.template ?? '').replace(/\[([^\]]*)\]/g, (_, slot: SlotType) => bindings[slot]?.text ?? '')),
+      );
+      if (!answers.some((a) => a && said.includes(a))) {
+        const model = (patterns.get(p.reply[0])?.template ?? '').replace(/\[([^\]]*)\]/g, (_, slot: SlotType) => bindings[slot]?.text ?? slot);
+        out.push({
+          kind: 'no-answer',
+          reason: said ? `said “${step.utterance.text}” and got “${step.said.join('')}” instead of “${model}”` : `said “${step.utterance.text}” and got no answer (try “${model}”)`,
+          utterance: step.utterance,
+        });
+      }
+    }
+  }
+  return out;
+}
+
+export function serveCustomer(script: Script, customer: Customer, kitchen: Kitchen, patterns: ReadonlyMap<string, Pattern> = new Map()): CustomerResult {
   const state = newBotState();
   const transcript: Turn[] = [];
   const steps: Step[] = [];
@@ -331,6 +398,7 @@ export function serveCustomer(script: Script, customer: Customer, kitchen: Kitch
   }
 
   const failures = judge(customer, state, kitchen, { ignored, saidSoldOut, stuck: held !== null, takeaway });
+  failures.push(...unanswered(steps, kitchen, patterns));
   return { customer, steps, transcript, state, failures };
 }
 
@@ -357,6 +425,10 @@ function judge(
     if (item.soldOut) fail('made-sold-out', `got ${describe(kitchen, item)}, but ${item.dish} is sold out: the kitchen had none`, c.queue[0]);
   }
   if (seen.stuck) return failures;
+  if (!c.orders) {
+    if (state.made.length) fail('too-much', `didn't order anything but got ${state.made.map((m) => describe(kitchen, m)).join(' + ')}`);
+    return payFailures(c, state, failures);
+  }
 
   // The order itself.
   const made = new Map<string, { dish: string; qty: number; spice: Spice }>();
@@ -414,10 +486,14 @@ function judge(
     }
   }
 
+  return payFailures(c, state, failures);
+}
+
+function payFailures(c: Customer, state: BotState, failures: Failure[]): Failure[] {
   if (c.pay) {
     const u = findUtterance(c, c.pay === '扫码' ? 'p_scan' : 'p_cash');
-    if (state.paid === null) fail('pay', `wanted to pay by ${c.pay}, but nobody took the money`, u);
-    else if (state.paid !== 'any' && state.paid !== c.pay) fail('pay', `wanted to pay by ${c.pay}, but the bot charged ${state.paid}`, u);
+    if (state.paid === null) failures.push({ kind: 'pay', reason: `wanted to pay by ${c.pay}, but nobody took the money`, utterance: u });
+    else if (state.paid !== 'any' && state.paid !== c.pay) failures.push({ kind: 'pay', reason: `wanted to pay by ${c.pay}, but the bot charged ${state.paid}`, utterance: u });
   }
   return failures;
 }
@@ -440,7 +516,8 @@ export function generateCustomers(content: Content, day: Day, count: number, see
 
 export function serveAll(content: Content, day: Day, script: Script, customers: readonly Customer[]): CustomerResult[] {
   const kitchen = kitchenFor(content, day);
-  return customers.map((c) => serveCustomer(script, c, kitchen));
+  const patterns = new Map(content.patterns.map((p) => [p.id, p]));
+  return customers.map((c) => serveCustomer(script, c, kitchen, patterns));
 }
 
 export function summarize(day: Day, script: Script, results: CustomerResult[]): DayResult {

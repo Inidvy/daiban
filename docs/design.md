@@ -203,6 +203,7 @@ The MVP is one noodle shop over 5 days: about 15 sentence patterns, about 60 wor
 - [x] M3: Visible simulation scene with funny failures, the menu board and a night-review replay.
 - [x] M4: Voice input for script lines and the 代班 shift, with the hint ladder.
 - [x] M5: Tone mirror, spaced-review scheduler, star scoring and visible-progress messages.
+- [x] M7: Levels inside each day, 30 days at six everyday places (noodle shop, fruit shop, café, taxi, hotel, pharmacy), installable on a phone, GitHub Pages deploy.
 - [ ] M6: Playtest with 5 learners; measure recall of Day 1 patterns after 7 days. (In-app speaking-time stats, 7-day recall check and JSON export are built; the playtest itself is still to run.)
 
 **Success criteria for the MVP:**
