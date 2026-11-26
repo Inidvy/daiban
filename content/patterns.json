@@ -203,7 +203,7 @@
     "day": 5,
     "group": "点菜",
     "speaker": "customer",
-    "why": "算了 cancels what came before. Only what follows counts."
+    "why": "算了 cancels what came before: only what follows counts. In your script, a 听到 \"我要…\" rule also hears this sentence, so put the 算了 rule first and the plain 我要 rule under its 不然. Then only one of them runs."
   },
   {
     "id": "p_again",
@@ -1178,7 +1178,7 @@
     "pinyin": "yǒu kòng.",
     "en": "I'm free.",
     "day": 29,
-    "group": "看病",
+    "group": "约时间",
     "speaker": "bot"
   },
   {
@@ -1187,7 +1187,7 @@
     "pinyin": "míngtiān nǐ yǒu kòng ma?",
     "en": "Are you free tomorrow?",
     "day": 29,
-    "group": "看病",
+    "group": "约时间",
     "speaker": "customer",
     "reply": [
       "m_free"
@@ -1199,7 +1199,7 @@
     "pinyin": "xiàwǔ sān diǎn ba.",
     "en": "Let's say 3 pm.",
     "day": 29,
-    "group": "看病",
+    "group": "约时间",
     "speaker": "bot"
   },
   {
@@ -1208,7 +1208,7 @@
     "pinyin": "wǒmen jǐ diǎn jiàn?",
     "en": "What time shall we meet?",
     "day": 29,
-    "group": "看病",
+    "group": "约时间",
     "speaker": "customer",
     "reply": [
       "m_meet"
@@ -1220,7 +1220,7 @@
     "pinyin": "nǎli nǎli, xièxie!",
     "en": "Not at all, thank you!",
     "day": 30,
-    "group": "看病",
+    "group": "客气",
     "speaker": "bot"
   },
   {
@@ -1229,7 +1229,7 @@
     "pinyin": "nǐ de Zhōngwén hěn hǎo!",
     "en": "Your Chinese is very good!",
     "day": 30,
-    "group": "看病",
+    "group": "客气",
     "speaker": "customer",
     "reply": [
       "m_modest"
@@ -1241,7 +1241,7 @@
     "pinyin": "xièxie, nǐ yě shì!",
     "en": "Thanks, you too!",
     "day": 30,
-    "group": "看病",
+    "group": "客气",
     "speaker": "bot"
   },
   {
@@ -1250,7 +1250,7 @@
     "pinyin": "zhù nǐ yíqiè shùnlì!",
     "en": "All the best!",
     "day": 30,
-    "group": "看病",
+    "group": "客气",
     "speaker": "customer",
     "reply": [
       "m_you_too"

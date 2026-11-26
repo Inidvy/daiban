@@ -98,3 +98,17 @@ test('a question at one place never sets off another question’s rule there', (
     }
   }
 });
+
+test('every word in a course sentence is introduced on some day (none hide among the day-0 UI words)', () => {
+  const hidden = new Set<string>();
+  for (const d of content.days) {
+    const texts = [
+      ...d.newPatterns.map((id) => content.patterns.find((p) => p.id === id)!.template),
+      ...(d.vip?.turns ?? []).flatMap((t) => [t.says, t.model]),
+    ];
+    for (const t of texts)
+      for (const tok of segment(t.replace(/\[[^\]]*\]/g, ''), content.words))
+        if (tok.word && tok.word.day === 0) hidden.add(tok.word.hanzi);
+  }
+  assert.deepEqual([...hidden], []);
+});

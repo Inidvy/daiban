@@ -80,10 +80,10 @@ const PLACES = [
   {
     place: 'fruit', group: '买水果', goods: ['苹果', '香蕉', '西瓜', '葡萄', '橙子', '草莓'],
     days: [
-      { title: '水果店 Fruit shop', twist: 'A new shop! Fruit is sold by the 斤 (jīn, half a kilo). Your noodle rules for ordering and paying work here too: start a new script.', menu: 3, soldOut: [], vip: '李奶奶 (Grandma Li)',
+      { title: '水果店 Fruit shop', twist: 'A new shop! Fruit is sold by the 斤 (jīn, half a kilo), a watermelon by the 个. Your noodle rules for ordering and paying work here too, but in a shop you 给 (give) instead of 做 (cook). Start a new script.', menu: 3, soldOut: [], vip: '李奶奶 (Grandma Li)',
         ex: [['f_fresh_q', '新鲜吗？', 'xīnxiān ma?', 'Is it fresh?', 'f_fresh', '很新鲜。', 'hěn xīnxiān.', 'Very fresh.'],
              ['f_sweet_q', '甜不甜？', 'tián bu tián?', 'Is it sweet?', 'f_sweet', '很甜。', 'hěn tián.', 'Very sweet.']] },
-      { title: '讲价 Bargaining', twist: 'Customers haggle. Stay friendly and give a little.', menu: 4, soldOut: ['西瓜'], vip: '张经理 (Manager Zhang)',
+      { title: '讲价 Bargaining', twist: 'Customers haggle. Stay friendly: it is already cheap, the price stays. And 西瓜 is sold out today, so check 有 before you give.', menu: 4, soldOut: ['西瓜'], vip: '张经理 (Manager Zhang)',
         ex: [['f_expensive', '太贵了！', 'tài guì le!', 'Too expensive!', 'f_cheap', '不贵，很便宜。', 'bú guì, hěn piányi.', "It's not expensive, it's cheap."],
              ['f_discount_q', '便宜一点吧。', 'piányi yìdiǎn ba.', 'A bit cheaper, please.', 'f_discount', '好吧，便宜一点。', 'hǎo ba, piányi yìdiǎn.', 'OK, a bit cheaper.']] },
       { title: '尝一下 Try it', twist: 'Customers want to taste first and need a bag.', menu: 5, soldOut: ['香蕉'], vip: '小陈 (Xiao Chen)',
@@ -169,10 +169,10 @@ const PLACES = [
       { title: '不舒服 Feeling ill', twist: 'More aches, more advice.', menu: 4, soldOut: ['口罩'], vip: '张经理 (Manager Zhang)',
         ex: [['m_stomach', '我肚子疼。', 'wǒ dùzi téng.', 'My stomach hurts.', 'm_ate_q', '你吃什么了？', 'nǐ chī shénme le?', 'What did you eat?'],
              ['m_cough', '我咳嗽。', 'wǒ késou.', "I'm coughing.", 'm_hot_water', '多喝热水。', 'duō hē rè shuǐ.', 'Drink lots of hot water.']] },
-      { title: '约时间 Making plans', twist: 'A friend drops by to make plans.', menu: 4, soldOut: ['创可贴'], vip: '小陈 (Xiao Chen)',
+      { title: '约时间 Making plans', twist: 'A friend drops by to make plans.', group: '约时间', menu: 4, soldOut: ['创可贴'], vip: '小陈 (Xiao Chen)',
         ex: [['m_free_q', '明天你有空吗？', 'míngtiān nǐ yǒu kòng ma?', 'Are you free tomorrow?', 'm_free', '有空。', 'yǒu kòng.', "I'm free."],
              ['m_meet_q', '我们几点见？', 'wǒmen jǐ diǎn jiàn?', 'What time shall we meet?', 'm_meet', '下午三点吧。', 'xiàwǔ sān diǎn ba.', "Let's say 3 pm."]] },
-      { title: '毕业 Graduation', twist: 'Day 30! Everyone you met comes back to say goodbye.', menu: 4, soldOut: ['感冒药'], vip: '王老师 (Teacher Wang)',
+      { title: '毕业 Graduation', twist: 'Day 30! Your regulars come by to say goodbye, and every sentence from this week comes back.', group: '客气', menu: 4, soldOut: ['感冒药'], vip: '王老师 (Teacher Wang)',
         ex: [['m_good', '你的中文很好！', 'nǐ de Zhōngwén hěn hǎo!', 'Your Chinese is very good!', 'm_modest', '哪里哪里，谢谢！', 'nǎli nǎli, xièxie!', 'Not at all, thank you!'],
              ['m_luck', '祝你一切顺利！', 'zhù nǐ yíqiè shùnlì!', 'All the best!', 'm_you_too', '谢谢，你也是！', 'xièxie, nǐ yě shì!', 'Thanks, you too!']] },
     ],
@@ -207,10 +207,10 @@ for (const place of PLACES) {
     const dayPatterns = [];
     for (const [id, text, pinyin, en, replyId, rText, rPinyin, rEn] of spec.ex) {
       if (rText && !newPatterns.some((p) => p.id === replyId)) {
-        newPatterns.push({ id: replyId, template: rText.replace(/\[地方\]/g, '[地方]'), pinyin: rPinyin, en: rEn, day, group: place.group, speaker: 'bot' });
+        newPatterns.push({ id: replyId, template: rText.replace(/\[地方\]/g, '[地方]'), pinyin: rPinyin, en: rEn, day, group: spec.group ?? place.group, speaker: 'bot' });
         dayPatterns.push(replyId);
       }
-      newPatterns.push({ id, template: text, pinyin, en, day, group: place.group, speaker: 'customer', reply: [replyId] });
+      newPatterns.push({ id, template: text, pinyin, en, day, group: spec.group ?? place.group, speaker: 'customer', reply: [replyId] });
       dayPatterns.unshift(id);
       placeExchanges.push({ id, text, en, replyId });
     }

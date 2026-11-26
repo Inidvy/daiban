@@ -27,3 +27,11 @@ test('uses 两 before measure words and prices', () => {
   assert.equal(priceWord(2), '两块');
   assert.equal(priceWord(36), '三十六块');
 });
+
+test('hundreds and thousands start with 两 when spoken', () => {
+  assert.equal(priceWord(200), '两百块');
+  assert.equal(priceWord(2000), '两千块');
+  assert.equal(priceWord(1200), '一千二百块');
+  assert.equal(quantityWord(12), '十二');
+  assert.equal(parseChineseNumber('两百'), 200);
+});

@@ -70,7 +70,7 @@ export function toChineseNumber(n: number): string {
 
 /** Number before a measure word: 2 → 两 (两碗, not 二碗). */
 export function quantityWord(n: number): string {
-  return n === 2 ? '两' : toChineseNumber(n);
+  return n === 2 ? '两' : toChineseNumber(n).replace(/^二(?=[百千万])/, '两');
 }
 
 /** Spoken price: 36 → 三十六块, 2 → 两块. */

@@ -83,7 +83,7 @@ function readQuoted(text: string, line: number): { value: string; rest: string }
   const open = text[0];
   if (!open || !QUOTE_OPEN.includes(open)) throw new ScriptError(line, `expected "…" here: ${text || '(nothing)'}`);
   const close = text.indexOf(QUOTE_CLOSE[open], 1);
-  if (close < 0) throw new ScriptError(line, 'missing closing quote');
+  if (close < 0) throw new ScriptError(line, `missing closing quote: add ${QUOTE_CLOSE[open]} at the end of ${text}`);
   return { value: text.slice(1, close), rest: text.slice(close + 1).trim() };
 }
 
@@ -117,6 +117,16 @@ function splitActions(text: string): string[] {
     .filter((p) => p.length > 0);
 }
 
+/** Slots in an action must be real slots with both brackets: `说 "你好 [名字]"` fails here, not mid-rush. */
+function checkSlots(text: string, line: number): void {
+  if (!/[[\]]/.test(text)) return;
+  try {
+    parseTemplate(text);
+  } catch (e) {
+    throw new ScriptError(line, (e as Error).message);
+  }
+}
+
 function parseAction(piece: string, line: number): Action {
   let text = piece;
   let again = false;
@@ -129,17 +139,20 @@ function parseAction(piece: string, line: number): Action {
   if (text.startsWith('做')) {
     const what = rest('做');
     if (!what) throw new ScriptError(line, '做 what? e.g. 做 [数量][量词][东西]');
+    checkSlots(what, line);
     return { kind: '做', what, again };
   }
   if (text.startsWith('给') && !again) {
     const what = rest('给');
     if (!what) throw new ScriptError(line, '给 what? e.g. 给 [数量][量词][东西]');
+    checkSlots(what, line);
     return { kind: '做', what, again, verb: '给' };
   }
   if (again) throw new ScriptError(line, '再 only works with 做 (再 做 一个)');
   if (text.startsWith('说') || text.startsWith('问')) {
     const { value, rest: after } = readQuoted(rest(text[0]), line);
     if (after) throw new ScriptError(line, `unexpected text after the quote: ${after}`);
+    checkSlots(value, line);
     return { kind: '说', text: value };
   }
   if (text.startsWith('收钱')) {

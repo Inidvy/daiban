@@ -57,7 +57,10 @@ function fill(text: string, bindings: Bindings, state: BotState, kitchen: Kitche
     const slot = raw.trim() as keyof Bindings;
     const bound = bindings[slot];
     if (bound) return bound.text;
-    if (slot === '价钱') return priceWord(orderTotal(state.made, kitchen));
+    if (slot === '价钱') {
+      if (state.made.length === 0) throw new Confused('[价钱]: nothing has been given yet, so there is no total');
+      return priceWord(orderTotal(state.made, kitchen));
+    }
     throw new Confused(`[${slot}] is empty here: no 听到 pattern above filled it`);
   });
 }

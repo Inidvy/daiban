@@ -45,6 +45,8 @@ export function parseTemplate(template: string): Segment[] {
   const slotRe = /\[([^\]]*)\]/g;
   let last = 0;
   const pushText = (raw: string) => {
+    if (raw.includes('[')) throw new Error('missing ] after [');
+    if (raw.includes(']')) throw new Error('] without a [ before it');
     const text = normalize(raw);
     if (text) segments.push({ kind: 'text', text });
   };

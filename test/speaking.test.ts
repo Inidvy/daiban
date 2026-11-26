@@ -106,3 +106,11 @@ test('recall and review checks', async () => {
   assert.ok(saidSentence('老板，我要两碗牛肉面。', ['我要两碗牛肉面']));
   assert.equal(saidSentence('在这儿吃还是打包', ['打包']), null);
 });
+
+test('a taxi 代班 answer must name the place the customer asked for', () => {
+  const taxi = kitchenFor(content, getDay(content, 16)).lexicon;
+  const turn = getDay(content, 16).vip!.turns.find((t) => t.says.includes('机场'))!;
+  const check = (...alts: string[]) => checkAnswer(turn, alts, content.patterns, taxi, content.words).kind;
+  assert.equal(check('好的，去机场。'), 'ok');
+  assert.equal(check('好的，去火车站。'), 'near');
+});

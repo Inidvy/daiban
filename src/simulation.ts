@@ -197,7 +197,10 @@ class CustomerFactory {
     const orders = available.length > 0 && this.has('p_order');
     // Questions and remarks open here; this day's new ones come up more often.
     const exchanges = [...this.allowed].filter((p) => this.patterns.get(p)?.reply);
-    const fresh = exchanges.filter((p) => day.newPatterns.includes(p));
+    // The newest level opened in this day (a peak level adds none: then everything the day opened).
+    const newest = day.allowed ? day.levels.filter((l) => l.newPatterns.length && l.newPatterns.every((p) => day.allowed!.includes(p))).at(-1) : undefined;
+    const opened = newest && day.levels.some((l) => l.newPatterns.length && !l.newPatterns.every((p) => day.allowed!.includes(p))) ? newest.newPatterns : day.newPatterns;
+    const fresh = exchanges.filter((p) => opened.includes(p));
     const chats: Utterance[] = [];
     const chatCount = exchanges.length === 0 ? 0 : orders ? (chance(rng, 0.6) ? 1 : 0) : 1 + (chance(rng, 0.5) ? 1 : 0);
     for (let i = 0; i < chatCount; i++) {
@@ -479,9 +482,11 @@ function judge(
     fail('takeaway', 'wanted to eat here (在这儿吃), got it packed in a bag', findUtterance(c, 'p_eat_here'));
   }
 
-  if (c.asksPrice) {
+  const orderWrong = failures.some((f) => ['nothing', 'wrong-dish', 'too-much', 'too-little'].includes(f.kind));
+  if (c.asksPrice && !orderWrong) {
     const expected = priceWord((kitchen.dishes.get(c.want.dish)?.price ?? 0) * c.want.qty);
-    if (!state.said.some((s) => normalize(s).includes(expected))) {
+    const prices = (s: string) => normalize(s).match(/[零一二两三四五六七八九十百千万]+块/g) ?? [];
+    if (!state.said.some((s) => prices(s).includes(expected))) {
       fail('price', `asked 多少钱 but didn't hear the right price (${expected})`, findUtterance(c, 'p_price_q'));
     }
   }

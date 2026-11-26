@@ -518,7 +518,7 @@
     "day": 6,
     "place": "fruit",
     "title": "水果店 Fruit shop",
-    "twist": "A new shop! Fruit is sold by the 斤 (jīn, half a kilo). Your noodle rules for ordering and paying work here too: start a new script.",
+    "twist": "A new shop! Fruit is sold by the 斤 (jīn, half a kilo), a watermelon by the 个. Your noodle rules for ordering and paying work here too, but in a shop you 给 (give) instead of 做 (cook). Start a new script.",
     "newPatterns": [
       "f_sweet_q",
       "f_fresh_q",
@@ -612,7 +612,7 @@
     "day": 7,
     "place": "fruit",
     "title": "讲价 Bargaining",
-    "twist": "Customers haggle. Stay friendly and give a little.",
+    "twist": "Customers haggle. Stay friendly: it is already cheap, the price stays. And 西瓜 is sold out today, so check 有 before you give.",
     "newPatterns": [
       "f_discount_q",
       "f_expensive",
@@ -2825,7 +2825,7 @@
     "day": 30,
     "place": "pharmacy",
     "title": "毕业 Graduation",
-    "twist": "Day 30! Everyone you met comes back to say goodbye.",
+    "twist": "Day 30! Your regulars come by to say goodbye, and every sentence from this week comes back.",
     "newPatterns": [
       "m_luck",
       "m_good",

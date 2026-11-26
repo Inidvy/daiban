@@ -68,3 +68,13 @@ test('reports errors with line numbers', () => {
     );
   }
 });
+
+test('broken slots in rules and actions are errors when the script is read, not mid-rush', () => {
+  const bad = [
+    '如果 听到 "我要 [数量"\n    就 做 一个',
+    '如果 听到 "你好"\n    就 说 "你好 [名字]"',
+    '如果 听到 "你好"\n    就 做 [名字]',
+    '如果 听到 "你好"\n    就 说 "你好 数量]"',
+  ];
+  for (const src of bad) assert.throws(() => parseScript(src), ScriptError, src);
+});

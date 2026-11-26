@@ -45,6 +45,12 @@ export function checkAnswer(
     for (const p of expected) {
       const m = findMatch(p.template, text, lexicon);
       if (!m) continue;
+      const place = m.bindings.地方?.text;
+      const named = lexicon.地方.find((w) => turn.says.includes(w));
+      if (place && named && place !== named) {
+        near ??= { kind: 'near', patternId: p.id, heard: alt, clarify: { text: `${place}？不对，我去${named}。`, en: `${place}? No, I'm going to ${named}.` } };
+        continue;
+      }
       const price = m.bindings.价钱?.value;
       if (turn.price === undefined || price === turn.price) return { kind: 'ok', patternId: p.id, heard: alt };
       near ??= { kind: 'near', patternId: p.id, heard: alt, clarify: { text: `${m.bindings.价钱?.text}？不对吧。`, en: `${price}? That can't be right. Count again.` } };

@@ -55,6 +55,7 @@ export function SayAnyLine({ items, onPlaced }: { items: PaletteItem[]; onPlaced
   const [wrong, setWrong] = useState<string | null>(null);
   return (
     <div className="say-any">
+      <p className="hint">Say (or type) one of the blocks below, and it is placed for you.</p>
       <SpeakInput
         label="说一行 Say a line"
         onAnswer={(alts) => {
@@ -63,7 +64,11 @@ export function SayAnyLine({ items, onPlaced }: { items: PaletteItem[]; onPlaced
           else setWrong(alts[0]);
         }}
       />
-      {wrong !== null && <p className="hint warn-text">No block matches “{wrong}”. Try e.g. “如果听到多少钱”.</p>}
+      {wrong !== null && (
+        <p className="hint warn-text">
+          No block below says “{wrong}”. Say a whole block, e.g. “{items[0] ? spokenText(items[0].template) : '如果听到多少钱'}”.
+        </p>
+      )}
     </div>
   );
 }

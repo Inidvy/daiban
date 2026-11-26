@@ -117,7 +117,7 @@
     "en": "bottle",
     "day": 4,
     "slot": "量词",
-    "why": "瓦 on the right means pottery: old bottles were clay."
+    "why": "瓦 on the left means pottery: old bottles were clay."
   },
   {
     "hanzi": "杯",
@@ -333,7 +333,7 @@
     "pinyin": "zài",
     "en": "at / in",
     "day": 3,
-    "why": "Something under a roof, so 'at / in'."
+    "why": "土 (earth) at the bottom: something sitting on the ground, so \"at / in\"."
   },
   {
     "hanzi": "这儿",
@@ -587,7 +587,7 @@
     "hanzi": "早上",
     "pinyin": "zǎoshang",
     "en": "morning",
-    "day": 0
+    "day": 10
   },
   {
     "hanzi": "中午",
@@ -605,7 +605,7 @@
     "hanzi": "晚上",
     "pinyin": "wǎnshang",
     "en": "evening, night",
-    "day": 0
+    "day": 14
   },
   {
     "hanzi": "代班",
@@ -635,7 +635,7 @@
     "hanzi": "天",
     "pinyin": "tiān",
     "en": "day",
-    "day": 0
+    "day": 27
   },
   {
     "hanzi": "例子",
@@ -653,7 +653,7 @@
     "hanzi": "开门",
     "pinyin": "kāimén",
     "en": "open the door (open the shop)",
-    "day": 0
+    "day": 10
   },
   {
     "hanzi": "错",
@@ -821,7 +821,7 @@
     "hanzi": "啊",
     "pinyin": "a",
     "en": "ah (softens a sentence)",
-    "day": 0
+    "day": 9
   },
   {
     "hanzi": "到底",
@@ -845,25 +845,25 @@
     "hanzi": "是",
     "pinyin": "shì",
     "en": "is, am, are",
-    "day": 0
+    "day": 13
   },
   {
     "hanzi": "不是",
     "pinyin": "búshì",
     "en": "is not",
-    "day": 0
+    "day": 14
   },
   {
     "hanzi": "太",
     "pinyin": "tài",
     "en": "too (much)",
-    "day": 0
+    "day": 7
   },
   {
     "hanzi": "多",
     "pinyin": "duō",
     "en": "many, much",
-    "day": 0
+    "day": 24
   },
   {
     "hanzi": "够",
@@ -899,13 +899,13 @@
     "hanzi": "怎么",
     "pinyin": "zěnme",
     "en": "how",
-    "day": 0
+    "day": 27
   },
   {
     "hanzi": "付",
     "pinyin": "fù",
     "en": "pay",
-    "day": 0
+    "day": 4
   },
   {
     "hanzi": "付钱",
@@ -929,7 +929,7 @@
     "hanzi": "快",
     "pinyin": "kuài",
     "en": "fast",
-    "day": 0
+    "day": 20
   },
   {
     "hanzi": "开始",
@@ -1163,7 +1163,7 @@
     "hanzi": "再来",
     "pinyin": "zàilái",
     "en": "again, once more",
-    "day": 0
+    "day": 5
   },
   {
     "hanzi": "再说",

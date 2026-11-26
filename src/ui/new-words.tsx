@@ -66,6 +66,7 @@ export function NewLines({ level }: { level: Level }) {
               en: p.en.replace(/\[([^\]]*)\]/g, (_, slot: string) => EXAMPLE_EN[slot] ?? slot),
             }}
           />
+          {p.why && <p className="hint">{p.why}</p>}
         </div>
       ))}
     </section>
