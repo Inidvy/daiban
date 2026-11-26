@@ -111,6 +111,7 @@ class CustomerFactory {
   private day: Day;
   private kitchen: Kitchen;
   private rng: Rng;
+  private allowed: Set<string>;
 
   constructor(content: Content, day: Day, kitchen: Kitchen, rng: Rng) {
     this.content = content;
@@ -118,6 +119,19 @@ class CustomerFactory {
     this.kitchen = kitchen;
     this.rng = rng;
     this.patterns = new Map(content.patterns.map((p) => [p.id, p]));
+    this.allowed = new Set(day.allowed ?? content.patterns.filter((p) => p.day <= day.day).map((p) => p.id));
+  }
+
+  /** Customers only say what the level has opened (src/levels.ts). */
+  private has(...ids: string[]): boolean {
+    return ids.every((id) => this.allowed.has(id));
+  }
+
+  /** Low heat = slow, plain customers; heat 1 = their full dials. */
+  private heated(type: CustomerType): CustomerType {
+    const k = 0.3 + 0.7 * (this.day.heat ?? 1);
+    const d = type.dials;
+    return { ...type, dials: { ...d, variation: d.variation * k, politeness: d.politeness * k, speed: d.speed * k } };
   }
 
   private say(parts: Part[], optional = false): Utterance {
@@ -156,32 +170,35 @@ class CustomerFactory {
 
   create(id: number): Customer {
     const { rng, day, kitchen } = this;
-    const type = pick(rng, day.customerTypes.map((t) => this.content.customerTypes.find((c) => c.id === t)!));
+    const type = this.heated(pick(rng, day.customerTypes.map((t) => this.content.customerTypes.find((c) => c.id === t)!)));
     const d = type.dials;
     const available = day.menu.filter((dish) => inStock(kitchen, dish));
 
-    const soldOutFirst = day.soldOut.length > 0 && chance(rng, 0.35);
+    const soldOutFirst = day.soldOut.length > 0 && this.has('p_sold_out') && chance(rng, 0.35);
     const firstChoice = soldOutFirst ? pick(rng, day.soldOut) : pick(rng, available);
     const dish = soldOutFirst ? pick(rng, available) : firstChoice;
     const qty = 1 + Math.floor(rng() * day.maxQty);
 
     let spice: Spice = '辣';
-    if (day.day >= 3 && kitchen.dishes.get(dish)?.spicy) {
+    if (this.has('p_no_spice', 'p_mild') && kitchen.dishes.get(dish)?.spicy) {
       const r = rng();
       spice = r < 0.3 ? '不辣' : r < 0.5 ? '微辣' : '辣';
     }
     let takeaway: boolean | null = null;
-    if (day.day >= 3) {
+    const canTakeaway = this.has('p_takeaway', 'p_eat_here');
+    // Customers wait to be asked "here or to go?" only once the shop can ask it.
+    const canAsk = canTakeaway && this.has('p_here_or_go');
+    if (canTakeaway) {
       const r = rng();
-      takeaway = r < 0.3 ? true : r < 0.6 ? false : null;
+      takeaway = r < 0.3 ? true : r < 0.6 || !canAsk ? false : null;
     }
-    const asksStock = day.day >= 2 && chance(rng, soldOutFirst ? 0.5 : 0.3);
-    const asksPrice = chance(rng, 0.5);
-    const pay: PayMethod | null = day.day >= 4 ? (chance(rng, 0.5) ? '扫码' : '现金') : null;
-    const changedMind = day.day >= 5 && available.length > 1 && chance(rng, d.mindChange * 0.5);
-    const again = day.day >= 5 && chance(rng, 0.3);
-    const thanks = chance(rng, 0.5);
-    const verb = day.day >= 2 && chance(rng, d.variation) ? 'p_bring' : 'p_order';
+    const asksStock = this.has('p_have_q') && chance(rng, soldOutFirst ? 0.5 : 0.3);
+    const asksPrice = this.has('p_price_q') && chance(rng, 0.5);
+    const pay: PayMethod | null = this.has('p_scan', 'p_cash') ? (chance(rng, 0.5) ? '扫码' : '现金') : null;
+    const changedMind = this.has('p_change') && available.length > 1 && chance(rng, d.mindChange * 0.5);
+    const again = this.has('p_again') && chance(rng, 0.3);
+    const thanks = this.has('p_thanks') && chance(rng, 0.5);
+    const verb = this.has('p_bring') && chance(rng, Math.max(d.variation, 0.3)) ? 'p_bring' : 'p_order';
 
     const polite = (options: string[]): Part[] => (chance(rng, d.politeness) ? [this.word(pick(rng, options))] : []);
 
@@ -232,7 +249,7 @@ class CustomerFactory {
     }
 
     let takeawayAnswer: Customer['takeawayAnswer'] = null;
-    if (takeaway === null && day.day >= 3) {
+    if (takeaway === null && canAsk) {
       const answer = chance(rng, 0.5);
       takeawayAnswer = {
         takeaway: answer,

@@ -57,6 +57,17 @@ export function validateContent(c: Content): string[] {
     if (d.soldOut.length >= d.menu.length) errors.push(`Day ${d.day}: everything is sold out`);
     for (const t of d.customerTypes) if (!types.has(t)) errors.push(`Day ${d.day}: unknown customer type ${t}`);
     if (!d.vip.turns.length) errors.push(`Day ${d.day}: the 代班 shift has no turns`);
+    // Levels must introduce the day's patterns exactly once between them (src/levels.ts).
+    if (!d.levels?.length) errors.push(`Day ${d.day}: no levels`);
+    const introduced = (d.levels ?? []).flatMap((l) => l.newPatterns);
+    for (const id of introduced) if (!d.newPatterns.includes(id)) errors.push(`Day ${d.day}: a level adds ${id}, which is not new that day`);
+    for (const id of d.newPatterns) {
+      const n = introduced.filter((x) => x === id).length;
+      if (n !== 1) errors.push(`Day ${d.day}: ${id} is added by ${n} levels (needs exactly 1)`);
+    }
+    for (const [i, l] of (d.levels ?? []).entries()) {
+      if (l.customers < 1 || l.maxQty < 1 || l.heat < 0 || l.heat > 1) errors.push(`Day ${d.day} level ${i + 1}: customers, maxQty or heat out of range`);
+    }
     for (const turn of d.vip.turns) {
       for (const id of turn.expect) {
         const p = patterns.get(id);

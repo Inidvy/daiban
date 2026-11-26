@@ -188,5 +188,14 @@
   { "hanzi": "菜", "pinyin": "cài", "en": "dish, food", "day": 0 },
   { "hanzi": "和", "pinyin": "hé", "en": "and", "day": 0 },
   { "hanzi": "跟我学", "pinyin": "gēn wǒ xué", "en": "learn with me", "day": 0 },
-  { "hanzi": "从零开始", "pinyin": "cóng líng kāishǐ", "en": "start from zero", "day": 0 }
+  { "hanzi": "从零开始", "pinyin": "cóng líng kāishǐ", "en": "start from zero", "day": 0 },
+  { "hanzi": "关", "pinyin": "guān", "en": "level (in a game); also: to close", "day": 0 },
+  { "hanzi": "句子", "pinyin": "jùzi", "en": "sentence", "day": 0 },
+  { "hanzi": "下一关", "pinyin": "xià yì guān", "en": "next level", "day": 0 },
+  { "hanzi": "回答", "pinyin": "huídá", "en": "answer", "day": 0 },
+  { "hanzi": "高峰", "pinyin": "gāofēng", "en": "peak, rush hour", "day": 0 },
+  { "hanzi": "午饭", "pinyin": "wǔfàn", "en": "lunch", "day": 0 },
+  { "hanzi": "最后", "pinyin": "zuìhòu", "en": "last, final", "day": 0 },
+  { "hanzi": "第一", "pinyin": "dì-yī", "en": "first", "day": 0 },
+  { "hanzi": "位", "pinyin": "wèi", "en": "measure word for people (polite)", "day": 0 }
 ]

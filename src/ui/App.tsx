@@ -6,14 +6,14 @@ import type { Block, Place } from '../editor.ts';
 import { blockText, paletteFor } from '../palette.ts';
 import type { PaletteItem } from '../palette.ts';
 import { printScript } from '../print.ts';
-import { dueIds, GRADE, isUnlocked, rate, rushGrades, speakingGrade, starsWithShift } from '../progress.ts';
+import { dueIds, GRADE, rate, rushGrades, speakingGrade } from '../progress.ts';
 import type { Cards, Grade } from '../progress.ts';
 import { countRules, parseScript } from '../script.ts';
 import { generateCustomers, serveAll, summarize } from '../simulation.ts';
 import type { Customer, CustomerResult } from '../simulation.ts';
 import { SPEAK_AFTER } from '../voice.ts';
-import { FIRST_LESSON } from '../lesson.ts';
-import { CoachCard, TodaysWords } from './coach.tsx';
+import { findLevel, isLevelOpen, levelDay, levelsOf, migrateDayStars, nextLevel } from '../levels.ts';
+import { NewLines, TodaysWords } from './new-words.tsx';
 import { content, sampleScript } from './content.ts';
 import { ScriptEditor } from './editor-view.tsx';
 import { MenuBoard, ProgressLine, RepairJobs } from './menu-board.tsx';
@@ -38,7 +38,6 @@ const TABS: { id: Tab; hanzi: string; en: string }[] = [
   { id: 'shift', hanzi: '傍晚', en: '代班 Shift' },
   { id: 'review', hanzi: '晚上', en: 'Review' },
 ];
-const CUSTOMERS_PER_RUSH = 8;
 
 interface Rush {
   customers: Customer[];
@@ -71,26 +70,25 @@ function useActiveTime() {
 
 export function App() {
   useActiveTime();
-  const [rushStars, setRushStars] = useState<Record<number, number>>(() => load('rushStars', {}));
   const [shiftPassed, setShiftPassed] = useState<Record<number, boolean>>(() => load('shiftPassed', {}));
-  const bestStars = useMemo(() => {
-    const out: Record<number, number> = {};
-    for (const [d, n] of Object.entries(rushStars)) out[Number(d)] = starsWithShift(n, !!shiftPassed[Number(d)]);
-    return out;
-  }, [rushStars, shiftPassed]);
-
-  const [dayNumber, setDayNumber] = useState(() => load('day', 1));
-  const [blocks, setBlocksState] = useState<Block[]>(() => load(SCRIPT_KEY, []));
-  // The guided first lesson: starts by itself for a brand-new player (empty script, no stars yet).
-  const [lesson, setLessonState] = useState<number | null>(() => {
-    const saved = load<number | null | undefined>('lesson', undefined);
-    if (saved !== undefined) return saved;
-    return load<Block[]>(SCRIPT_KEY, []).length === 0 && Object.keys(load('rushStars', {})).length === 0 ? 0 : null;
+  // Stars per level ("1-2"). Saves from before levels kept stars per day.
+  const [levelStars, setLevelStars] = useState<Record<string, number>>(
+    () => load<Record<string, number> | null>('levelStars', null) ?? migrateDayStars(content, load('rushStars', {})),
+  );
+  const [levelId, setLevelId] = useState(() => {
+    const saved = load<string | null>('level', null);
+    return saved && findLevel(content, saved) ? saved : '1-1';
   });
-  const setLesson = (n: number | null) => {
-    setLessonState(n);
-    save('lesson', n);
-  };
+  const level = findLevel(content, levelId)!;
+  const dayNumber = level.day;
+  // A day's pill shows its weakest level, once every level has a star.
+  const dayStars = useMemo(() => {
+    const out: Record<number, number> = {};
+    for (const d of content.days) out[d.day] = Math.min(...levelsOf(d).map((l) => levelStars[l.id] ?? 0));
+    return out;
+  }, [levelStars]);
+
+  const [blocks, setBlocksState] = useState<Block[]>(() => load(SCRIPT_KEY, []));
   const [tab, setTab] = useState<Tab>('program');
   const [paletteAt, setPaletteAt] = useState<Place | null>(null);
   const [speakItem, setSpeakItem] = useState<PaletteItem | null>(null);
@@ -105,8 +103,8 @@ export function App() {
   const [cards, setCards] = useState<Cards>(() => load('cards', {}));
   const [tips, setTips] = useState(() => load('tips', 0));
 
-  const day = getDay(content, dayNumber);
-  const palette = useMemo(() => paletteFor(content, dayNumber), [dayNumber]);
+  const day = useMemo(() => levelDay(content, level), [levelId]);
+  const palette = useMemo(() => paletteFor(content, dayNumber, day.allowed), [day]);
 
   // Ratings arrive from several places; chain them so none overwrites another.
   const cardsRef = useRef(cards);
@@ -130,11 +128,17 @@ export function App() {
     setBlocksState(next);
     save(SCRIPT_KEY, next);
   };
-  const chooseDay = (n: number) => {
-    setDayNumber(n);
-    save('day', n);
+  const chooseLevel = (id: string) => {
+    setLevelId(id);
+    save('level', id);
     setRush(null);
     setTab('program');
+  };
+  // A day opens at its first level without a star (or its last open level once all have one).
+  const chooseDay = (n: number) => {
+    const ls = levelsOf(getDay(content, n));
+    const open = ls.filter((l) => isLevelOpen(content, l.id, levelStars));
+    chooseLevel((open.find((l) => !levelStars[l.id]) ?? open.at(-1) ?? ls[0]).id);
   };
   const togglePinyin = () => {
     setShowPinyin(!showPinyin);
@@ -144,34 +148,6 @@ export function App() {
   const openWhy = useCallback((t: WhyTarget) => setWhyQueue([t]), []);
 
   const mustSpeak = (item: PaletteItem) => (placed[item.key] ?? 0) >= SPEAK_AFTER;
-
-  const lessonStep = lesson !== null && dayNumber === 1 ? FIRST_LESSON[lesson] : undefined;
-  const nextLessonStep = () => setLesson(lesson !== null && lesson + 1 < FIRST_LESSON.length ? lesson + 1 : null);
-  // A build step finishes as soon as the script has the block it asked for.
-  useEffect(() => {
-    if (lessonStep?.kind === 'place' && lessonStep.done(blocks)) nextLessonStep();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blocks, lessonStep]);
-  // While a build step is open, the palette only offers the blocks it asks for.
-  const shownPalette = lessonStep?.kind === 'place' ? palette.filter((i) => lessonStep.paletteKeys.includes(i.key)) : palette;
-  const startLesson = () => {
-    if (blocks.length && !window.confirm('Start the guided lesson from zero? Your current script will be cleared.')) return;
-    setBlocks([]);
-    setRush(null);
-    if (dayNumber !== 1) chooseDay(1);
-    setLesson(0);
-    setTab('program');
-  };
-  const coach = lessonStep && lesson !== null && (
-    <CoachCard
-      step={lessonStep}
-      index={lesson}
-      total={FIRST_LESSON.length}
-      onNext={nextLessonStep}
-      onSkip={() => setLesson(null)}
-      onGoToScript={tab !== 'program' ? () => setTab('program') : undefined}
-    />
-  );
 
   // Why cards appear the first time a word is used (docs/design.md).
   const place = (item: PaletteItem, spoken = false) => {
@@ -199,8 +175,7 @@ export function App() {
 
   const run = () => {
     if (dayNumber === 1) markFirstPlayed();
-    const count = lessonStep?.kind === 'run' ? lessonStep.customers : CUSTOMERS_PER_RUSH;
-    const customers = generateCustomers(content, day, count, Math.floor(Math.random() * 1e6));
+    const customers = generateCustomers(content, day, level.customers, Math.floor(Math.random() * 1e6));
     setRush({ customers, results: serveAll(content, day, toScript(blocks), customers), startAt: 0, done: false });
     setTab('rush');
     window.scrollTo({ top: 0 });
@@ -215,21 +190,20 @@ export function App() {
   };
 
   const result = useMemo(() => (rush ? summarize(day, toScript(blocks), rush.results) : null), [rush, day, blocks]);
-  const shownResult = useMemo(() => (result ? { ...result, stars: starsWithShift(result.stars, !!shiftPassed[dayNumber]) } : null), [result, shiftPassed, dayNumber]);
 
   const rushDone = () => {
     setRush((r) => (r ? { ...r, done: true } : r));
-    if (lessonStep?.kind === 'run') nextLessonStep();
     if (!result) return;
     applyGrades(rushGrades(result.results));
     addTips(result.results.filter((r) => r.failures.length === 0).length);
-    if (result.stars > (rushStars[dayNumber] ?? 0)) {
-      const next = { ...rushStars, [dayNumber]: result.stars };
-      setRushStars(next);
-      save('rushStars', next);
+    if (result.stars > (levelStars[levelId] ?? 0)) {
+      const next = { ...levelStars, [levelId]: result.stars };
+      setLevelStars(next);
+      save('levelStars', next);
     }
   };
 
+  const next = nextLevel(content, levelId);
   const sample = useMemo(() => parseScript(sampleScript(day)), [day]);
   const empties = emptyRules(blocks).length;
   const missedToday = useMemo(() => new Set(rush?.done && result ? result.review.flatMap((r) => r.patternIds) : []), [rush, result]);
@@ -258,12 +232,26 @@ export function App() {
 
         <nav className="days" aria-label="Day">
           {content.days.map((d) => {
-            const open = isUnlocked(d.day, bestStars);
+            const open = isLevelOpen(content, `${d.day}-1`, levelStars);
             return (
               <button key={d.day} type="button" className={d.day === dayNumber ? 'active' : ''} onClick={() => chooseDay(d.day)} disabled={!open}
-                title={open ? undefined : `Get a star on Day ${d.day - 1} first`}>
+                title={open ? undefined : `Clear Day ${d.day - 1} first`}>
                 {!open && <Lock size={12} />} <Zh text={`第${d.day}天`} />
-                {(bestStars[d.day] ?? 0) > 0 && <small className="pill-stars">{'★'.repeat(bestStars[d.day])}</small>}
+                {dayStars[d.day] > 0 && <small className="pill-stars">{'★'.repeat(dayStars[d.day])}</small>}
+              </button>
+            );
+          })}
+        </nav>
+
+        <nav className="levels" aria-label="Level">
+          {levelsOf(getDay(content, dayNumber)).map((l) => {
+            const open = isLevelOpen(content, l.id, levelStars);
+            const n = levelStars[l.id] ?? 0;
+            return (
+              <button key={l.id} type="button" className={l.id === levelId ? 'active' : ''} onClick={() => chooseLevel(l.id)} disabled={!open}
+                title={open ? l.title : 'Get a star on the level before'}>
+                {!open && <Lock size={12} />} {l.id}
+                {n > 0 && <small className="pill-stars">{'★'.repeat(n)}</small>}
               </button>
             );
           })}
@@ -279,12 +267,18 @@ export function App() {
         </nav>
 
         <main>
-          {(tab === 'program' || tab === 'rush') && coach}
           {tab === 'program' && (
             <>
               <section className="day-card">
-                <h1><Zh text={day.title} /></h1>
-                <p><Zh text={day.twist} /></p>
+                <p className="level-label">
+                  <Zh text={`第${level.day}天 · ${day.title}`} />
+                </p>
+                <h1>
+                  <Zh text={`第${level.index + 1}关 ${level.title}`} />
+                </h1>
+                <p>
+                  <Zh text={day.twist} /> {level.customers} customers.
+                </p>
                 <div className="menu">
                   {day.menu.map((dish) => (
                     <span key={dish} className={`dish ${day.soldOut.includes(dish) ? 'sold-out' : ''}`}>
@@ -294,12 +288,8 @@ export function App() {
                   ))}
                 </div>
                 <ProgressLine day={dayNumber} cards={cards} />
-                {dayNumber === 1 && lesson === null && (
-                  <button type="button" className="btn small ghost" onClick={startLesson}>
-                    <Zh text="从零开始" /> Start from zero (guided)
-                  </button>
-                )}
               </section>
+              <NewLines level={level} />
               <section className="day-words">
                 <TodaysWords day={dayNumber} />
               </section>
@@ -322,9 +312,9 @@ export function App() {
           )}
 
           {tab === 'rush' &&
-            (rush && shownResult ? (
+            (rush && result ? (
               <RushView
-                result={shownResult}
+                result={result}
                 startAt={rush.startAt}
                 done={rush.done}
                 onDone={rushDone}
@@ -334,10 +324,12 @@ export function App() {
                 }}
                 onBackToScript={() => setTab('program')}
                 summaryExtra={
-                  result && result.stars === 3 && !shiftPassed[dayNumber] ? (
-                    <button type="button" className="btn small primary star-gate" onClick={() => setTab('shift')}>
-                      <Zh text="★3 needs tonight's 代班 shift →" />
+                  !rush.done || !result ? null : result.stars >= 1 && next ? (
+                    <button type="button" className="btn small primary" onClick={() => chooseLevel(next.id)}>
+                      <Zh text="下一关" /> Next level {next.id} →
                     </button>
+                  ) : result.stars === 0 ? (
+                    <p className="hint">One ★ opens the next level. Fix a rule and run it again.</p>
                   ) : null
                 }
               />
@@ -388,12 +380,12 @@ export function App() {
 
         {paletteAt && !speakItem && (
           <PaletteSheet
-            items={shownPalette}
+            items={palette}
             day={dayNumber}
             onPick={(item) => place(item)}
             onClose={() => setPaletteAt(null)}
             mustSpeak={mustSpeak}
-            header={lessonStep ? undefined : <SayAnyLine items={palette} onPlaced={(item) => place(item, true)} />}
+            header={<SayAnyLine items={palette} onPlaced={(item) => place(item, true)} />}
           />
         )}
         {paletteAt && speakItem && (
@@ -418,7 +410,7 @@ export function App() {
             <ScriptEditor blocks={fromScript(sample)} day={dayNumber} onChange={() => {}} onAddAt={() => {}} readOnly />
             <div className="row-end">
               <span className="muted">
-                <Stars n={3} /> with this script and the 代班 shift
+                <Stars n={3} /> with this script
               </span>
               <button
                 type="button"

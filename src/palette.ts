@@ -31,7 +31,8 @@ export const SLOT_INFO: Record<SlotType, { pinyin: string; en: string; example: 
   价钱: { pinyin: 'jiàqián', en: 'price', example: '三十六块', why: '价 value + 钱 money. The bot fills in the total of everything it made.' },
 };
 
-export function paletteFor(content: Content, day: number): PaletteItem[] {
+/** Blocks open on `day`. With `allowed` (one level's patterns, see src/levels.ts), 听到 and 说 blocks are limited to those. */
+export function paletteFor(content: Content, day: number, allowed?: readonly string[]): PaletteItem[] {
   const items: PaletteItem[] = [];
   for (const p of content.patterns) {
     if (p.speaker !== 'customer') continue;
@@ -56,7 +57,8 @@ export function paletteFor(content: Content, day: number): PaletteItem[] {
     if (p.speaker !== 'bot') continue;
     items.push({ key: `say:${p.id}`, group: '说', template: { kind: 'do', action: { kind: '说', text: p.template } }, en: `Say: ${p.en}`, day: p.day });
   }
-  return items.filter((it) => it.day <= day);
+  const open = (it: PaletteItem) => !allowed || !/^(hear|say):/.test(it.key) || allowed.includes(it.key.slice(it.key.indexOf(':') + 1));
+  return items.filter((it) => it.day <= day && open(it));
 }
 
 /** 不然 unlocks on Day 3 (design doc, MVP days). */

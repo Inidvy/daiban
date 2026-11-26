@@ -1,11 +1,12 @@
-// Beginner support: the guided first lesson's coach card, word-by-word line breakdowns, and the
-// "today's words" overview on the day card (everything new today, at once, with pinyin and meaning).
+// New words and sentences, shown where they come up in play: the sentences a level adds (word by word,
+// with pinyin and meaning) and the "today's words" overview on the day card.
 
 import { useState } from 'react';
-import { ArrowRight, GraduationCap, Volume2 } from 'lucide-react';
+import { Sparkles, Volume2 } from 'lucide-react';
 import { segment } from '../content.ts';
-import type { LessonLine, LessonStep } from '../lesson.ts';
-import type { Word } from '../types.ts';
+import type { Level } from '../levels.ts';
+import { SLOT_INFO } from '../palette.ts';
+import type { SlotType, Word } from '../types.ts';
 import { content, wordByHanzi } from './content.ts';
 import { speaker, TEACHER_VOICE } from './speech.ts';
 import { load, save } from './storage.ts';
@@ -22,7 +23,7 @@ function WordTile({ word }: { word: Word }) {
 }
 
 /** A sentence, then each of its words with pinyin and meaning. */
-export function LineBreakdown({ line }: { line: LessonLine }) {
+export function LineBreakdown({ line }: { line: { text: string; en: string } }) {
   const words = segment(line.text, content.words).flatMap((t) => (t.word ? [t.word] : []));
   return (
     <div className="line-breakdown">
@@ -44,52 +45,29 @@ export function LineBreakdown({ line }: { line: LessonLine }) {
   );
 }
 
-export function CoachCard({ step, index, total, onNext, onSkip, onGoToScript }: {
-  step: LessonStep;
-  index: number;
-  total: number;
-  onNext: () => void;
-  onSkip: () => void;
-  /** Shown on the lunch tab when the next step is building rules. */
-  onGoToScript?: () => void;
-}) {
-  const last = index === total - 1;
+const EXAMPLE_EN: Record<string, string> = { 数量: 'two', 量词: 'bowls', 东西: 'beef noodles', 价钱: '36 yuan' };
+
+/** The sentences a level adds, with slots filled by examples, so a new line is never a surprise. */
+export function NewLines({ level }: { level: Level }) {
+  const patterns = level.newPatterns.flatMap((id) => content.patterns.filter((p) => p.id === id));
+  if (patterns.length === 0) return null;
   return (
-    <section className="coach" aria-live="polite">
-      <header className="coach-head">
-        <GraduationCap size={18} />
-        <span>
-          <Zh text="跟我学" /> Guided start · {index + 1}/{total}
-        </span>
-        <button type="button" className="link-btn" onClick={onSkip}>
-          Skip
-        </button>
-      </header>
-      <h2><Zh text={step.title} /></h2>
-      <p><Zh text={step.body} /></p>
-      {step.lines?.map((l) => (
-        <LineBreakdown key={l.text} line={l} />
-      ))}
-      {step.tiles && (
-        <div className="tiles">
-          {step.tiles.map((h) => {
-            const w = wordByHanzi.get(h);
-            return w ? <WordTile key={h} word={w} /> : null;
-          })}
+    <section className="new-lines">
+      <h3>
+        <Sparkles size={16} /> <Zh text="新句子" /> New in level {level.id}
+      </h3>
+      {patterns.map((p) => (
+        <div key={p.id} className="new-line">
+          <small className="muted">{p.speaker === 'customer' ? <Zh text="客人说 Customers say" /> : <Zh text="你的回答 Your answer" />}</small>
+          <LineBreakdown
+            line={{
+              // follows the slot examples of spokenText in src/palette.ts
+              text: p.template.replace(/\[([^\]]*)\]/g, (_, slot: SlotType) => SLOT_INFO[slot]?.example ?? slot).replace(/\s+/g, ''),
+              en: p.en.replace(/\[([^\]]*)\]/g, (_, slot: string) => EXAMPLE_EN[slot] ?? slot),
+            }}
+          />
         </div>
-      )}
-      {step.kind === 'read' && (
-        <button type="button" className="btn primary" onClick={onNext}>
-          {last ? 'Finish' : 'Next'} <ArrowRight size={16} />
-        </button>
-      )}
-      {step.kind === 'place' && onGoToScript && (
-        <button type="button" className="btn primary" onClick={onGoToScript}>
-          <Zh text="改规则" /> Go to the script <ArrowRight size={16} />
-        </button>
-      )}
-      {step.kind === 'place' && !onGoToScript && <p className="coach-status">Waiting for the block…</p>}
-      {step.kind === 'run' && <p className="coach-status">Waiting for the lunch rush to finish…</p>}
+      ))}
     </section>
   );
 }

@@ -349,13 +349,6 @@ ruby rt { font-size: 0.6rem; color: var(--muted); font-family: system-ui, sans-s
 .bubble { line-height: 1.9; }
 
 /* Guided start and today's words */
-.coach { border: 2px solid var(--green); background: var(--surface); border-radius: var(--radius); padding: 14px; margin-bottom: 14px; }
-.coach-head { display: flex; align-items: center; gap: 6px; color: var(--green); font-weight: 700; font-size: 0.85rem; }
-.coach-head .link-btn { margin-left: auto; }
-.coach h2 { margin: 8px 0 4px; font-size: 1.15rem; }
-.coach p { margin: 0 0 10px; line-height: 1.5; }
-.coach-status { color: var(--muted); font-style: italic; }
-.link-btn { background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; padding: 4px; font: inherit; font-size: 0.85rem; }
 .line-breakdown { background: var(--quote-bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px; margin-bottom: 10px; }
 .line-head { display: flex; align-items: center; gap: 6px; }
 .line-text { font-size: 1.4rem; line-height: 2; }
@@ -374,7 +367,7 @@ ruby rt { font-size: 0.6rem; color: var(--muted); font-family: system-ui, sans-s
 .todays-words summary { cursor: pointer; font-weight: 700; line-height: 2; }
 .word-group h4 { margin: 8px 0 4px; font-size: 0.85rem; color: var(--muted); }
 .day-card .btn.small { margin-top: 8px; }
-.coach p, .day-card p { line-height: 2; }
+.day-card p { line-height: 2; }
 .btn.primary ruby rt, .badge ruby rt, .days button.active ruby rt { color: inherit; opacity: 0.85; }
 .why-text { line-height: 2; }
 /* Each word is a small column (pinyin over hanzi), so long pinyin never overlaps the next word. */
@@ -382,3 +375,16 @@ ruby { display: inline-flex; flex-direction: column-reverse; align-items: center
 ruby rt { display: block; line-height: 1; white-space: nowrap; }
 /* In the palette a tap anywhere on a block places it; its words explain themselves after placing. */
 .palette-item .word, .palette-item .slot { pointer-events: none; }
+
+/* Levels: 1-1, 1-2, … inside each day */
+.levels { display: flex; gap: 6px; overflow-x: auto; margin: 0 0 10px; scrollbar-width: none; }
+.levels button {
+  flex: none; display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 0.85rem; cursor: pointer;
+}
+.levels button.active { border-color: var(--red); color: var(--red); font-weight: 700; }
+.levels button:disabled { opacity: 0.45; cursor: not-allowed; }
+.level-label { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.new-lines { border: 2px solid var(--green); background: var(--surface); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 14px; }
+.new-lines h3 { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; color: var(--green); font-size: 0.95rem; }
+.new-line + .new-line { margin-top: 10px; }

@@ -60,7 +60,46 @@
           "modelEn": "You're welcome."
         }
       ]
-    }
+    },
+    "levels": [
+      {
+        "title": "第一位客人 First customer",
+        "newPatterns": [
+          "p_order",
+          "p_enjoy"
+        ],
+        "customers": 3,
+        "maxQty": 2,
+        "heat": 0
+      },
+      {
+        "title": "多少钱 How much?",
+        "newPatterns": [
+          "p_price_q",
+          "p_price"
+        ],
+        "customers": 5,
+        "maxQty": 3,
+        "heat": 0.3
+      },
+      {
+        "title": "谢谢 Thank you",
+        "newPatterns": [
+          "p_thanks",
+          "p_welcome"
+        ],
+        "customers": 6,
+        "maxQty": 5,
+        "heat": 0.6
+      },
+      {
+        "title": "午饭高峰 Lunch peak",
+        "newPatterns": [],
+        "customers": 10,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
   },
   {
     "day": 2,
@@ -125,7 +164,44 @@
           "modelEn": "You're welcome."
         }
       ]
-    }
+    },
+    "levels": [
+      {
+        "title": "卖完了 Sold out",
+        "newPatterns": [
+          "p_sold_out"
+        ],
+        "customers": 5,
+        "maxQty": 3,
+        "heat": 0.2
+      },
+      {
+        "title": "有…吗 Do you have…?",
+        "newPatterns": [
+          "p_have_q",
+          "p_have"
+        ],
+        "customers": 6,
+        "maxQty": 4,
+        "heat": 0.4
+      },
+      {
+        "title": "来… Bring me…",
+        "newPatterns": [
+          "p_bring"
+        ],
+        "customers": 7,
+        "maxQty": 5,
+        "heat": 0.7
+      },
+      {
+        "title": "午饭高峰 Lunch peak",
+        "newPatterns": [],
+        "customers": 10,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
   },
   {
     "day": 3,
@@ -195,7 +271,46 @@
           "modelEn": "You're welcome."
         }
       ]
-    }
+    },
+    "levels": [
+      {
+        "title": "不要辣 Not spicy",
+        "newPatterns": [
+          "p_no_spice",
+          "p_mild"
+        ],
+        "customers": 5,
+        "maxQty": 3,
+        "heat": 0.2
+      },
+      {
+        "title": "打包 To go",
+        "newPatterns": [
+          "p_takeaway",
+          "p_eat_here",
+          "p_packing"
+        ],
+        "customers": 6,
+        "maxQty": 4,
+        "heat": 0.5
+      },
+      {
+        "title": "还是 Here or to go?",
+        "newPatterns": [
+          "p_here_or_go"
+        ],
+        "customers": 7,
+        "maxQty": 5,
+        "heat": 0.7
+      },
+      {
+        "title": "午饭高峰 Lunch peak",
+        "newPatterns": [],
+        "customers": 10,
+        "maxQty": 5,
+        "heat": 1
+      }
+    ]
   },
   {
     "day": 4,
@@ -266,7 +381,35 @@
           "modelEn": "You're welcome."
         }
       ]
-    }
+    },
+    "levels": [
+      {
+        "title": "一共 Altogether",
+        "newPatterns": [
+          "p_total"
+        ],
+        "customers": 5,
+        "maxQty": 6,
+        "heat": 0.3
+      },
+      {
+        "title": "扫码 Paying",
+        "newPatterns": [
+          "p_scan",
+          "p_cash"
+        ],
+        "customers": 7,
+        "maxQty": 8,
+        "heat": 0.6
+      },
+      {
+        "title": "午饭高峰 Lunch peak",
+        "newPatterns": [],
+        "customers": 10,
+        "maxQty": 9,
+        "heat": 1
+      }
+    ]
   },
   {
     "day": 5,
@@ -337,6 +480,33 @@
           "modelEn": "45 yuan in total."
         }
       ]
-    }
+    },
+    "levels": [
+      {
+        "title": "再来一个 One more",
+        "newPatterns": [
+          "p_again"
+        ],
+        "customers": 6,
+        "maxQty": 5,
+        "heat": 0.4
+      },
+      {
+        "title": "算了 Forget it",
+        "newPatterns": [
+          "p_change"
+        ],
+        "customers": 7,
+        "maxQty": 6,
+        "heat": 0.7
+      },
+      {
+        "title": "最后的高峰 Final rush",
+        "newPatterns": [],
+        "customers": 12,
+        "maxQty": 9,
+        "heat": 1
+      }
+    ]
   }
 ]

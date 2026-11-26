@@ -73,6 +73,24 @@ export interface Day {
   sampleScript: string;
   /** The evening 代班 shift: an unusual customer the player serves by speaking. */
   vip: { name: string; situation: string; turns: ShiftTurn[] };
+  /** The day's lunch, split into levels that get harder; together they introduce all of newPatterns. */
+  levels: LevelSpec[];
+  /**
+   * Patterns customers may use and the palette may offer. Set for one level (see src/levels.ts);
+   * when missing, every pattern up to this day.
+   */
+  allowed?: string[];
+  /** 0 = slow, plain customers; 1 = their full difficulty dials. Set for one level. */
+  heat?: number;
+}
+
+export interface LevelSpec {
+  title: string;
+  /** Patterns this level adds (customer lines and the answers that go with them). */
+  newPatterns: string[];
+  customers: number;
+  maxQty: number;
+  heat: number;
 }
 
 export interface Content {
