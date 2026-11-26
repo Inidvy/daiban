@@ -1,0 +1,17 @@
+{
+  "name": "代班 Dàibān · Learn spoken Chinese",
+  "short_name": "代班",
+  "description": "Learn everyday spoken Chinese by running a shop with a robot you program in Chinese.",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf4ea",
+  "theme_color": "#b3261e",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
