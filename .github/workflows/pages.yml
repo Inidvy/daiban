@@ -26,7 +26,9 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
+      # Not `npm ci`: the lock file is written on Windows and lacks Linux-only optional packages
+      # (rolldown's wasm binding wants @emnapi/*), which npm ci rejects. See npm/cli#4828.
+      - run: npm install --no-audit --no-fund
       - run: npm test
       - run: npm run build
       - uses: actions/configure-pages@v5
